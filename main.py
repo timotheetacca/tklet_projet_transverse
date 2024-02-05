@@ -23,8 +23,6 @@ circle_x = 0
 circle_y = 0
 time_step = 0
 
-show_trail = False
-
 # Main game loop
 while True:
     for event in pygame.event.get():
