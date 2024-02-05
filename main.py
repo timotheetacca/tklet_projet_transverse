@@ -1,3 +1,4 @@
+
 import pygame
 import sys
 import math
@@ -12,22 +13,15 @@ pygame.display.set_caption("Efreispace")
 clock = pygame.time.Clock()
 fps = 120  # Set FPS rate for frame rate
 
-# Create a player at the center of the screen
-player_velocity = 5
-player = pygame.Rect((screen_width // 2), (screen_height // 2), 45, 55)
+def y(t, g, v, h, alpha):
+    return (-1/2) * g * t**2 + v * math.sin(math.radians(alpha)) * t + h
 
-# Load the rocket image
-rocket_image = pygame.image.load("Assets/rocket.png")
-rocket_image = pygame.transform.scale(rocket_image, (45, 55))  # Resize if needed
+def x(t, v, alpha):
+    return v * math.cos(math.radians(alpha)) * t
 
-# Background image
-background_image = pygame.image.load('Assets/background.png')
-
-# Define font
-font = pygame.font.Font("Fonts/Pixel.ttf", 30)
-
-# Button Rectangle
-button = pygame.Rect(1236, 824, 300, 40)
+first_time=True
+# Clear the screen
+screen.fill((0, 0, 0))
 
 # Main game loop
 while True:
@@ -36,9 +30,17 @@ while True:
             pygame.quit()
             sys.exit()
 
+
+    if first_time:
+        for i in range(20):
+            circle_x = int(x(i, 100, 45))
+            circle_y = int(y(i, 9.81, 100, 0, 45))
+            pygame.draw.circle(screen, (255, 255, 255), (circle_x, circle_y), 5)
+            print(f"y({i}) = {y(i, 9.81, 100, 0, 45)} - x({i}) = {x(i, 100, 45)}")
+        first_time = False
+
     # Update the display
     pygame.display.update()
 
     # Control the frame rate
     clock.tick(fps)
-
