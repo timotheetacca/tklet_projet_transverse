@@ -11,6 +11,7 @@ pygame.display.set_caption("Efreispace")
 
 clock = pygame.time.Clock()
 fps = 120  # Set FPS rate for frame rate
+font = pygame.font.Font(None, 36)
 
 def y(t, g, v, h, alpha):
     return (-1/2) * g * t**2 + v * math.sin(math.radians(alpha)) * t + h
@@ -22,14 +23,7 @@ circle_radius = 5
 circle_x = 0
 circle_y = 0
 time_step = 0
-frame_time = 0
 
-<<<<<<< HEAD
-# Create a separate surface for the trail
-trail_surface = pygame.Surface((screen_width, screen_height))
-
-=======
->>>>>>> origin/main
 # Main game loop
 while True:
     for event in pygame.event.get():
@@ -38,26 +32,22 @@ while True:
             sys.exit()
 
     # Calculate the time difference since the last frame
-    current_time = pygame.time.get_ticks()
-    time_diff = current_time - frame_time
-    frame_time = current_time
+    time_diff = clock.tick(fps) / 1000.0  # Convert to seconds
 
     # Update circle position based on the time difference
-    circle_x = int(x(time_step + time_diff / 1000, 100, 45))
-    circle_y = screen_height - int(y(time_step + time_diff / 1000, 9.81, 100, 0, 45))
+    circle_x = int(x(time_step, 100, 45))
+    circle_y = screen_height - int(y(time_step, 9.81, 100, 0, 45))
 
-    # Draw the circle on the trail surface
-    pygame.draw.circle(trail_surface, (255, 255, 255, 50), (circle_x, circle_y), circle_radius)
-
-    # Update the display
-    screen.blit(trail_surface, (0, 0))  # Blit the trail surface onto the screen
-    pygame.display.update()
-
-    # Control the frame rate
-    clock.tick(fps)
+    # Draw the circle on the screen
+    screen.fill((0, 0, 0))  # Clear the screen
+    pygame.draw.circle(screen, (255, 255, 255, 50), (circle_x, circle_y), circle_radius)
 
     # Increment the time step for the next iteration
-    time_step += time_diff / 1000
+    time_step += time_diff
 
-    # Clear the trail surface after each time step
-    trail_surface.fill((0, 0, 0, 0))
+    #Show FPS
+    fps_text = font.render(f"FPS: {round(clock.get_fps(), 1)}", True, (255, 255, 255))
+    screen.blit(fps_text, (10, 10))
+
+    # Update the display
+    pygame.display.update()
