@@ -19,6 +19,7 @@ def y(t, g, v, h, alpha):
 def x(t, v, alpha):
     return v * math.cos(math.radians(alpha)) * t
 
+#Make the trajectory show only once
 first_time=True
 # Clear the screen
 screen.fill((0, 0, 0))
