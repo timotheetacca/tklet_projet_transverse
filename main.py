@@ -22,8 +22,10 @@ circle_radius = 5
 circle_x = 0
 circle_y = 0
 time_step = 0
+frame_time = 0
 
-show_trail = False
+# Create a separate surface for the trail
+trail_surface = pygame.Surface((screen_width, screen_height))
 
 # Main game loop
 while True:
@@ -32,24 +34,27 @@ while True:
             pygame.quit()
             sys.exit()
 
-    pygame.draw.circle(screen, (255, 255, 255, 50), (circle_x, circle_y), circle_radius)
+    # Calculate the time difference since the last frame
+    current_time = pygame.time.get_ticks()
+    time_diff = current_time - frame_time
+    frame_time = current_time
 
-    # Update circle position
-    circle_x = int(x(time_step, 100, 45))
-    circle_y = screen_height - int(y(time_step, 9.81, 100, 0, 45))
+    # Update circle position based on the time difference
+    circle_x = int(x(time_step + time_diff / 1000, 100, 45))
+    circle_y = screen_height - int(y(time_step + time_diff / 1000, 9.81, 100, 0, 45))
+
+    # Draw the circle on the trail surface
+    pygame.draw.circle(trail_surface, (255, 255, 255, 50), (circle_x, circle_y), circle_radius)
 
     # Update the display
+    screen.blit(trail_surface, (0, 0))  # Blit the trail surface onto the screen
     pygame.display.update()
-
-    # Pause for 0.5 seconds
-    pygame.time.delay(100)  # Delay in milliseconds
 
     # Control the frame rate
     clock.tick(fps)
 
     # Increment the time step for the next iteration
-    time_step += 1
+    time_step += time_diff / 1000
 
-    print(f"y({time_step}) = {circle_y} - x({circle_y} = {circle_x}")
-
-
+    # Clear the trail surface after each time step
+    trail_surface.fill((0, 0, 0, 0))
