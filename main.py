@@ -11,6 +11,7 @@ pygame.display.set_caption("Efreispace")
 
 clock = pygame.time.Clock()
 fps = 120  # Set FPS rate for frame rate
+font = pygame.font.Font(None, 36)
 
 def y(t, g, v, h, alpha):
     return (-1/2) * g * t**2 + v * math.sin(math.radians(alpha)) * t + h
@@ -41,8 +42,12 @@ while True:
     screen.fill((0, 0, 0))  # Clear the screen
     pygame.draw.circle(screen, (255, 255, 255, 50), (circle_x, circle_y), circle_radius)
 
-    # Update the display
-    pygame.display.update()
-
     # Increment the time step for the next iteration
     time_step += time_diff
+
+    #Show FPS
+    fps_text = font.render(f"FPS: {round(clock.get_fps(), 1)}", True, (255, 255, 255))
+    screen.blit(fps_text, (10, 10))
+
+    # Update the display
+    pygame.display.update()
