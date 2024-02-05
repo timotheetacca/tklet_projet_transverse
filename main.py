@@ -1,4 +1,3 @@
-
 import pygame
 import sys
 import math
@@ -19,10 +18,10 @@ def y(t, g, v, h, alpha):
 def x(t, v, alpha):
     return v * math.cos(math.radians(alpha)) * t
 
-#Make the trajectory show only once
-first_time=True
-# Clear the screen
-screen.fill((0, 0, 0))
+circle_radius = 5
+circle_x = 0
+circle_y = 0
+time_step = 0
 
 # Main game loop
 while True:
@@ -32,16 +31,24 @@ while True:
             sys.exit()
 
 
-    if first_time:
-        for i in range(20):
-            circle_x = int(x(i, 100, 45))
-            circle_y = int(y(i, 9.81, 100, 0, 45))
-            pygame.draw.circle(screen, (255, 255, 255), (circle_x, circle_y), 5)
-            print(f"y({i}) = {y(i, 9.81, 100, 0, 45)} - x({i}) = {x(i, 100, 45)}")
-        first_time = False
+    pygame.draw.circle(screen, (255, 255, 255, 50), (circle_x, circle_y), circle_radius)
+
+    # Update circle position
+    circle_x = int(x(time_step, 100, 90))
+    circle_y = screen_height - int(y(time_step, 9.81, 100, 0, 45))
 
     # Update the display
     pygame.display.update()
 
+    # Pause for 0.5 seconds
+    pygame.time.delay(100)  # Delay in milliseconds
+
     # Control the frame rate
     clock.tick(fps)
+
+    # Increment the time step for the next iteration
+    time_step += 1
+    print(f"y({time_step}) = {circle_y} - x({time_step}) = {circle_x}")
+
+    if circle_y > screen_height:
+        pygame.quit()
