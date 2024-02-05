@@ -24,12 +24,9 @@ circle_y = 0
 time_step = 0
 frame_time = 0
 
-<<<<<<< HEAD
 # Create a separate surface for the trail
 trail_surface = pygame.Surface((screen_width, screen_height))
 
-=======
->>>>>>> origin/main
 # Main game loop
 while True:
     for event in pygame.event.get():
