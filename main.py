@@ -21,7 +21,7 @@ time_step = 0
 g = 9.81
 v = 130
 h = 0
-alpha = 45
+alpha = 50
 
 spacebar_pressed = False
 pygame.mouse.set_pos(150, 680)
@@ -34,11 +34,13 @@ def f3():
         (255, 255, 255))
     mouse_texte = font.render(f"mouse(x)={round(mouse_x)}  mouse(y)={round(mouse_y)}", True, (255, 255, 255))
     angle_text = font.render(f"angle={round(alpha)}°", True, (255, 255, 255))
+    velocity_text = font.render(f"v:{round(v)}", True, (255, 255, 255))
     screen.blit(fps_text, (10, 20))
     screen.blit(position_text, (10, 40))
     screen.blit(mouse_texte, (10, 60))
     screen.blit(angle_text, (10, 80))
     screen.blit(time_text, (10, 0))
+    screen.blit(velocity_text, (10,100))
 
 while True:
     for event in pygame.event.get():
@@ -54,6 +56,9 @@ while True:
     dx = mouse_x - screen_height
     # Compute the angle between two points the position of a rocket and the mouse cursor position
     alpha = math.degrees(math.atan2(circle_y - mouse_y, mouse_x - circle_x))
+
+    #Adapt the speed with the mouse position
+    v=90+mouse_x/25
 
 
     if spacebar_pressed == True:
