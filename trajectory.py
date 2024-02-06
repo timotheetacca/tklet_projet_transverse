@@ -68,5 +68,5 @@ def draw_aim(screen, g, v, h, alpha, t, circle_radius,screen_height, distance,):
     None
     """
     for t in range(distance):
-        circle_x, circle_y=calculate_trajectory(g, v, h, alpha, t, screen_height)
-        pygame.draw.circle(screen, (150,150,150), (circle_x+20, circle_y-20), circle_radius+(distance-t)*1.25)
+        circle_x, circle_y=calculate_trajectory(g, v, h, alpha, t/2, screen_height)
+        pygame.draw.circle(screen, (250,250,250), (circle_x+20, circle_y-20), circle_radius-0.1*t)
