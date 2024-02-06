@@ -4,25 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Adding Images">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/main.xml" afterDir="false" />
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="fixing trajectory + draw aim + shoot on space">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Planets/planet1_spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Planets/planet2_spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Planets/planet3_spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Planets/planet4_spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Planets/planet5_spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Planets/planet6_spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Planets/planet7_spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Planets/sun_spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kim crash test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kim's rocket.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kim's trajectory.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trajectory.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +64,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.tailwindcss&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -103,6 +88,9 @@
       <workItem from="1707151286144" duration="4972000" />
       <workItem from="1707221116251" duration="280000" />
       <workItem from="1707221410293" duration="1604000" />
+      <workItem from="1707237794610" duration="366000" />
+      <workItem from="1707238327394" duration="21000" />
+      <workItem from="1707238361392" duration="2860000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Images">
       <option name="closed" value="true" />
@@ -112,7 +100,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707151383250</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fixing trajectory + draw aim + shoot on space">
+      <option name="closed" value="true" />
+      <created>1707237859399</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1707237859399</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,10 +116,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding Images" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding Images" />
+    <MESSAGE value="fixing trajectory + draw aim + shoot on space" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing trajectory + draw aim + shoot on space" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1707222992076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1707241211575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tklet_test$rocket.coverage" NAME="rocket Coverage Results" MODIFIED="1707208852107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tklet_test$trajectory.coverage" NAME="trajectory Coverage Results" MODIFIED="1707206035832" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
