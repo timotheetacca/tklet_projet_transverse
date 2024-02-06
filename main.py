@@ -24,6 +24,7 @@ h = 0
 alpha = 45
 
 spacebar_pressed = False
+pygame.mouse.set_pos(150, 680)
 
 def f3():
     fps_text = font.render(f"FPS: {round(clock.get_fps())}", True, (255, 255, 255))
@@ -32,9 +33,11 @@ def f3():
         f"x({round(time_step)}) : {circle_x} , y({round(time_step)}) : {screen_height - circle_y}", True,
         (255, 255, 255))
     mouse_texte = font.render(f"mouse(x)={round(mouse_x)}  mouse(y)={round(mouse_y)}", True, (255, 255, 255))
+    angle_text = font.render(f"angle={round(alpha)}°", True, (255, 255, 255))
     screen.blit(fps_text, (10, 20))
     screen.blit(position_text, (10, 40))
     screen.blit(mouse_texte, (10, 60))
+    screen.blit(angle_text, (10, 80))
     screen.blit(time_text, (10, 0))
 
 while True:
@@ -69,6 +72,7 @@ while True:
 
             time_step += clock.tick(fps) / 180  # Increment time step for the next iteration
         spacebar_pressed = False
+        pygame.mouse.set_pos(150, 680)
 
 
     else:
