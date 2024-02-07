@@ -69,4 +69,5 @@ def draw_aim(screen, g, v, h, alpha, t, circle_radius,screen_height, distance,):
     """
     for t in range(distance):
         circle_x, circle_y=calculate_trajectory(g, v, h, alpha, t/2, screen_height)
+        # Reduce the radius of the circle to make the aiming less and less visible
         pygame.draw.circle(screen, (250,250,250), (circle_x+20, circle_y-20), circle_radius-0.1*t)
