@@ -6,8 +6,8 @@ from trajectory import draw_trajectory, calculate_trajectory, draw_aim
 pygame.init()
 
 # Set up the window
-screen_width, screen_height = 1536, 864
-screen = pygame.display.set_mode((screen_width, screen_height))
+screen_width, screen_height =  1536, 864
+screen = pygame.display.set_mode((screen_width, screen_height),pygame.RESIZABLE)
 pygame.display.set_caption("Efreispace")
 
 clock = pygame.time.Clock()
@@ -35,14 +35,14 @@ def f3():
         f"x({round(time_step)}) : {circle_x} , y({round(time_step)}) : {screen_height - circle_y}", True,
         (255, 255, 255))
     mouse_texte = font.render(f"mouse(x)={round(mouse_x)}  mouse(y)={round(mouse_y)}", True, (255, 255, 255))
-    angle_text = font.render(f"angle={round(alpha)}°", True, (255, 255, 255))
+    angle_text = font.render(f"ange={round(alpha)}°", True, (255, 255, 255))
     velocity_text = font.render(f"v:{round(v)}", True, (255, 255, 255))
-    screen.blit(fps_text, (10, 20))
-    screen.blit(position_text, (10, 40))
-    screen.blit(mouse_texte, (10, 60))
-    screen.blit(angle_text, (10, 80))
-    screen.blit(time_text, (10, 0))
-    screen.blit(velocity_text, (10,100))
+    screen.blit(fps_text, (10, 25))
+    screen.blit(position_text, (10, 45))
+    screen.blit(mouse_texte, (10, 65))
+    screen.blit(angle_text, (10, 85))
+    screen.blit(time_text, (10, 5))
+    screen.blit(velocity_text, (10,105))
 
 while True:
     for event in pygame.event.get():
@@ -52,6 +52,9 @@ while True:
         elif event.type == pygame.KEYDOWN:  # Check for key press events
             if event.key == pygame.K_SPACE:
                 spacebar_pressed = True  # Set spacebar_pressed to True when spacebar is pressed
+        elif event.type == pygame.VIDEORESIZE:  # Handle window resizing
+            screen_width, screen_height = event.size
+            screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -64,7 +67,7 @@ while True:
     alpha = math.degrees(math.atan2(circle_y - mouse_y+2000, mouse_x ))
 
     # Adapt the speed with the mouse position (⚠ Prototype velocity, it won't stay like this)
-    v = 40 + mouse_x / 22 + (screen_height - mouse_y) / 15
+    v = 40 + mouse_x / 22 + (screen_height - mouse_y) / 16
 
     if spacebar_pressed == True:
         # Reset timer and position for shooting
@@ -90,7 +93,7 @@ while True:
         # If the player isn't shooting, it will show the aiming trail
         screen.fill((0, 0, 0))
         f3()
-        distance= 25-int(((screen_width-mouse_x)*0.01))
+        distance= 25-int(((screen_width-mouse_x)*0.005))
 
         draw_aim(screen, g, v, h, alpha, time_step, 5, screen_height, distance)
 
