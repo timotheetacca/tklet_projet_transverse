@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="fixing trajectory + draw aim + shoot on space" />
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="fixing trajectory + draw aim + shoot on space">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,7 +21,9 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -87,7 +92,10 @@
       <workItem from="1707221410293" duration="1604000" />
       <workItem from="1707237794610" duration="366000" />
       <workItem from="1707238327394" duration="21000" />
-      <workItem from="1707238361392" duration="3172000" />
+      <workItem from="1707238361392" duration="3381000" />
+      <workItem from="1707241780323" duration="3377000" />
+      <workItem from="1707245658178" duration="521000" />
+      <workItem from="1707310274132" duration="4553000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Images">
       <option name="closed" value="true" />
@@ -113,7 +121,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707241418208</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fixing trajectory + draw aim + shoot on space">
+      <option name="closed" value="true" />
+      <created>1707241576576</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1707241576576</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,8 +140,19 @@
     <MESSAGE value="fixing trajectory + draw aim + shoot on space" />
     <option name="LAST_COMMIT_MESSAGE" value="fixing trajectory + draw aim + shoot on space" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1707241429071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1707314727308" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tklet_test$rocket.coverage" NAME="rocket Coverage Results" MODIFIED="1707208852107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tklet_test$trajectory.coverage" NAME="trajectory Coverage Results" MODIFIED="1707206035832" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
