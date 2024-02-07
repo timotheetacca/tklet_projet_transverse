@@ -7,7 +7,7 @@ pygame.init()
 
 # Set up the window
 screen_width, screen_height =  1536, 864
-screen = pygame.display.set_mode((screen_width, screen_height),pygame.RESIZABLE)
+screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Efreispace")
 
 clock = pygame.time.Clock()
@@ -52,9 +52,7 @@ while True:
         elif event.type == pygame.KEYDOWN:  # Check for key press events
             if event.key == pygame.K_SPACE:
                 spacebar_pressed = True  # Set spacebar_pressed to True when spacebar is pressed
-        elif event.type == pygame.VIDEORESIZE:  # Handle window resizing
-            screen_width, screen_height = event.size
-            screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
+
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
