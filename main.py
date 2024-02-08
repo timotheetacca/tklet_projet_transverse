@@ -50,6 +50,10 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        elif event.type == pygame.KEYDOWN:  # Check for key press events
+            if event.key == pygame.K_SPACE:
+                spacebar_pressed = True  # Set spacebar_pressed to True when spacebar is pressed
+        
         elif event.type == pygame.MOUSEBUTTONDOWN: # Check for mouse press events
             if event.button == 1:
                 mouse_pressed = True
