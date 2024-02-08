@@ -13,6 +13,12 @@ pygame.display.set_caption("Efreispace")
 
 transparent_surface_planet = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
 
+#Set the cursor image and scale it to cursor size
+cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
+cursor_image = pygame.transform.scale(cursor_image, (32, 32))
+
+pygame.mouse.set_visible(False)
+
 clock = pygame.time.Clock()
 fps = 120  # Set FPS rate for frame rate
 font = pygame.font.Font(None, 22)
@@ -63,11 +69,19 @@ while True:
 
         elif event.type == pygame.MOUSEBUTTONDOWN: # Check for mouse press events
             if event.button == 1:
+                # Blit the hold cursor image and scale it
+                cursor_image = pygame.image.load("Assets/Cursor/cursor_hold.png")
+                cursor_image = pygame.transform.scale(cursor_image, (32, 32))
+
                 mouse_pressed = True
                 position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
+                # Blit the still cursor image and scale it
+                cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
+                cursor_image = pygame.transform.scale(cursor_image, (32, 32))
+
                 mouse_pressed = False
                 shooting_trajectory = True
                 level_completed = False
@@ -128,6 +142,11 @@ while True:
         screen.fill((0, 0, 0))
         level(level_number, screen, transparent_surface_planet)
         debug()
+
+        # Blit the cursor image
+        screen.blit(cursor_image,(mouse_x, mouse_y))
+
+        # Calculate the number of dots depending on the mouse x and y
         distance= 25-int(((mouse_x)*0.005))
         draw_aim(screen, g, v, h, alpha, time_step, 5, screen_height, distance)
 
