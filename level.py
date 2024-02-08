@@ -1,0 +1,28 @@
+import pygame
+screen_width, screen_height =  1536, 864
+def planet(screen, transparent_surface, position, planet_radius, orbit_radius):
+    # Create a surface with the desired transparency
+    transparent_surface_planet = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
+    pygame.draw.circle(transparent_surface, (255, 255, 255, 100), (position[0],position[1]), orbit_radius)
+    pygame.draw.circle(transparent_surface, (255, 255, 255, 250), ((position[0],position[1])),planet_radius)
+
+def level(lever_number, screen ,transparent_surface):
+    if lever_number == 1:
+        planet_radius = 45
+        orbit_radius = 130
+        position = (900,425)
+        screen.blit(transparent_surface, (0, 0))
+        planet(screen, transparent_surface, position, planet_radius , orbit_radius )
+
+        return orbit_radius, position
+
+    if lever_number == 2:
+        planet_radius = 35
+        orbit_radius = 85
+        position = (1200,300)
+        screen.blit(transparent_surface, (0, 0))
+        planet(screen, transparent_surface, position, planet_radius , orbit_radius )
+
+        return orbit_radius, position
+
+
