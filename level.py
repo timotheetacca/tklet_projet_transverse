@@ -27,7 +27,6 @@ def level(lever_number, screen ,transparent_surface):
 
         obstacles = []
         obstacle_rect = pygame.Rect(700, 420, 40, 40)
-        #pygame.draw.rect(transparent_surface, (100, 65, 23), obstacle_rect)
         obstacles.append(obstacle_rect)
 
         return orbit_radius, position, obstacles
