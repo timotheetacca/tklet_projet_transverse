@@ -24,7 +24,7 @@ h = 0
 alpha = 50
 
 mouse_pressed = False
-spacebar_pressed = False
+shooting_trajectory = False
 # Reset the mouse position to avoid angle error on the next throw
 
 def f3():
@@ -50,10 +50,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == pygame.KEYDOWN:  # Check for key press events
-            if event.key == pygame.K_SPACE:
-                spacebar_pressed = True  # Set spacebar_pressed to True when spacebar is pressed
-        
+
         elif event.type == pygame.MOUSEBUTTONDOWN: # Check for mouse press events
             if event.button == 1:
                 mouse_pressed = True
@@ -62,7 +59,7 @@ while True:
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
                 mouse_pressed = False
-
+                shooting_trajectory = True
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -78,7 +75,8 @@ while True:
 
 
 
-    if spacebar_pressed == True:
+
+    if shooting_trajectory == True:
         # Reset timer and position for shooting
         clock = pygame.time.Clock()
         circle_x = 864
@@ -94,7 +92,8 @@ while True:
 
 
             time_step += clock.tick(fps) / 180  # Increment time step for the next iteration
-        spacebar_pressed = False
+
+        shooting_trajectory = False
         # Reset the mouse position to avoid angle error on the next throw
         pygame.mouse.set_pos(screen_width//2, screen_height//2)
 
