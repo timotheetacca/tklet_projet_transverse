@@ -14,6 +14,8 @@ clock = pygame.time.Clock()
 fps = 120  # Set FPS rate for frame rate
 font = pygame.font.Font(None, 22)
 
+deplacement_x = 0
+deplacement_y = 0
 circle_radius = 5
 circle_x = 864
 circle_y = 0
@@ -21,13 +23,12 @@ time_step = 0
 g = 9.81
 v = 130
 h = 0
-alpha = 50
+alpha = 0
 
 mouse_pressed = False
 shooting_trajectory = False
-# Reset the mouse position to avoid angle error on the next throw
 
-def f3():
+def debug():
     # Set and blit information (fps, time, etc...) in upper left corner
     fps_text = font.render(f"FPS: {round(clock.get_fps())}", True, (255, 255, 255))
     time_text = font.render(f"T: {time_step}", True, (255, 255, 255))
@@ -36,13 +37,17 @@ def f3():
         (255, 255, 255))
     mouse_texte = font.render(f"mouse(x)={round(mouse_x)}  mouse(y)={round(screen_height-mouse_y)}", True, (255, 255, 255))
     angle_text = font.render(f"angle={round(alpha)}°", True, (255, 255, 255))
-    velocity_text = font.render(f"v:{round(v)}", True, (255, 255, 255))
+    velocity_text = font.render(f"velocity:{round(v)}", True, (255, 255, 255))
+    shooting_text= font.render(f"deplacement_x: {deplacement_x}   deplacement_y: {deplacement_y} ", True, (255, 255, 255))
+    velocity_augment_text = font.render(f"added  velocity: {deplacement_x / 7} + {-deplacement_y / 7}", True, (255, 255, 255))
     screen.blit(fps_text, (10, 25))
     screen.blit(position_text, (10, 45))
     screen.blit(mouse_texte, (10, 65))
     screen.blit(angle_text, (10, 85))
     screen.blit(time_text, (10, 5))
-    screen.blit(velocity_text, (10,105))
+    screen.blit(shooting_text, (10, 105))
+    screen.blit(velocity_augment_text, (10, 125))
+    screen.blit(velocity_text, (10,145))
 
 
 while True:
@@ -60,6 +65,7 @@ while True:
             if event.button == 1:
                 mouse_pressed = False
                 shooting_trajectory = True
+
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -68,14 +74,16 @@ while True:
         deplacement_x = position_initiale_x - mouse_x
         deplacement_y = position_initiale_y - mouse_y
 
+        #Calculate the vector from the ball to the mouse
         vector_mouse = math.sqrt(mouse_x ** 2 + (screen_height-mouse_y) ** 2)
 
-        #alpha = math.acos((mouse_x*screen_width)/(vector_mouse*screen_height))   # u*v / ||u||*||v||  with u= vector_mouse  and v=(1536,0)
-        v = 40 + deplacement_x / 7 + deplacement_y / 7
+        #Calculate the angle between the x-axis
+        alpha = math.degrees(math.acos(mouse_x / vector_mouse))
 
+        # Get a velocity from the mouse deplacement
+        v = 40 + deplacement_x / 10 - deplacement_y / 10
 
-
-
+    # Projectile motion loop
     if shooting_trajectory == True:
         # Reset timer and position for shooting
         clock = pygame.time.Clock()
@@ -87,10 +95,8 @@ while True:
 
             # Call the draw_trajectory function from trajectory.py
             circle_x, circle_y = draw_trajectory(screen, g, v, h, alpha, time_step, circle_radius, screen_height, (255, 255, 255))
-            f3()
+            debug()
             pygame.display.update()
-
-
             time_step += clock.tick(fps) / 180  # Increment time step for the next iteration
 
         shooting_trajectory = False
@@ -98,9 +104,9 @@ while True:
         pygame.mouse.set_pos(screen_width//2, screen_height//2)
 
     else:
-        # If the player isn't shooting, it will show the aiming trail
+        # Display aiming trail if the player isn't shooting
         screen.fill((0, 0, 0))
-        f3()
+        debug()
         distance= 25-int(((mouse_x)*0.005))
         draw_aim(screen, g, v, h, alpha, time_step, 5, screen_height, distance)
 
