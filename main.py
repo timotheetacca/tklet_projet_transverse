@@ -23,9 +23,9 @@ v = 130
 h = 0
 alpha = 50
 
+mouse_pressed = False
 spacebar_pressed = False
 # Reset the mouse position to avoid angle error on the next throw
-pygame.mouse.set_pos(150, 680)
 
 def f3():
     # Set and blit information (fps, time, etc...) in upper left corner
@@ -34,8 +34,8 @@ def f3():
     position_text = font.render(
         f"x({round(time_step)}) : {circle_x} , y({round(time_step)}) : {screen_height - circle_y}", True,
         (255, 255, 255))
-    mouse_texte = font.render(f"mouse(x)={round(mouse_x)}  mouse(y)={round(mouse_y)}", True, (255, 255, 255))
-    angle_text = font.render(f"ange={round(alpha)}°", True, (255, 255, 255))
+    mouse_texte = font.render(f"mouse(x)={round(mouse_x)}  mouse(y)={round(screen_height-mouse_y)}", True, (255, 255, 255))
+    angle_text = font.render(f"angle={round(alpha)}°", True, (255, 255, 255))
     velocity_text = font.render(f"v:{round(v)}", True, (255, 255, 255))
     screen.blit(fps_text, (10, 25))
     screen.blit(position_text, (10, 45))
@@ -44,28 +44,35 @@ def f3():
     screen.blit(time_text, (10, 5))
     screen.blit(velocity_text, (10,105))
 
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == pygame.KEYDOWN:  # Check for key press events
-            if event.key == pygame.K_SPACE:
-                spacebar_pressed = True  # Set spacebar_pressed to True when spacebar is pressed
+        elif event.type == pygame.MOUSEBUTTONDOWN: # Check for mouse press events
+            if event.button == 1:
+                mouse_pressed = True
+                position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
 
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
+                mouse_pressed = False
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
-    # Calculates the x and y coordinates of the mouse relative to the bottom left corner
-    dy = mouse_y - screen_width
-    dx = mouse_x - screen_height
+    # Calculate v continuously while mouse button is pressed
+    if mouse_pressed:
+        deplacement_x = position_initiale_x - mouse_x
+        deplacement_y = position_initiale_y - mouse_y
 
-    # Compute the angle between two points the position of a rocket and the mouse cursor position
-    alpha = math.degrees(math.atan2(circle_y - mouse_y+2000, mouse_x ))
+        vector_mouse = math.sqrt(mouse_x ** 2 + (screen_height-mouse_y) ** 2)
 
-    # Adapt the speed with the mouse position (⚠ Prototype velocity, it won't stay like this)
-    v = 40 + mouse_x / 22 + (screen_height - mouse_y) / 16
+        #alpha = math.acos((mouse_x*screen_width)/(vector_mouse*screen_height))   # u*v / ||u||*||v||  with u= vector_mouse  and v=(1536,0)
+        v = 40 + deplacement_x / 7 + deplacement_y / 7
+
+
 
     if spacebar_pressed == True:
         # Reset timer and position for shooting
@@ -85,14 +92,13 @@ while True:
             time_step += clock.tick(fps) / 180  # Increment time step for the next iteration
         spacebar_pressed = False
         # Reset the mouse position to avoid angle error on the next throw
-        pygame.mouse.set_pos(150, 680)
+        pygame.mouse.set_pos(screen_width//2, screen_height//2)
 
     else:
         # If the player isn't shooting, it will show the aiming trail
         screen.fill((0, 0, 0))
         f3()
-        distance= 25-int(((screen_width-mouse_x)*0.005))
-
+        distance= 25-int(((mouse_x)*0.005))
         draw_aim(screen, g, v, h, alpha, time_step, 5, screen_height, distance)
 
     pygame.display.flip()  # Update the display
