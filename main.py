@@ -37,7 +37,7 @@ alpha = 0
 
 mouse_pressed = False
 shooting_trajectory = False
-level_completed=False
+stop_level=False
 
 def debug():
     # Set and blit information (fps, time, etc...) in upper left corner
@@ -84,7 +84,7 @@ while True:
 
                 mouse_pressed = False
                 shooting_trajectory = True
-                level_completed = False
+                stop_level = False
 
     screen.fill((0, 0, 0))
 
@@ -113,14 +113,24 @@ while True:
         circle_y = 864
         time_step = 0
 
-        while 0 <= circle_x <= screen_width and  0 <= (screen_height - circle_y) and level_completed==False:
+        while 0 <= circle_x <= screen_width and  0 <= (screen_height - circle_y) and stop_level==False:
             screen.fill((0, 0, 0))
 
+            # Collect the level info and print it
+            orbit_radius, position, obstacles = level(level_number, screen, transparent_surface_planet)
 
-            orbit_radius, position = level(level_number, screen, transparent_surface_planet)
+            for obstacle in obstacles:
+                pygame.draw.rect(screen, (100, 65, 23), obstacle)
+
+            # Check for collisions with obstacles
+            for obstacle in obstacles:
+                if obstacle.collidepoint(circle_x, circle_y):
+                    stop_level = True
+
 
             # Call the draw_trajectory function from trajectory.py
             circle_x, circle_y = draw_trajectory(screen, g, v, h, alpha, time_step, circle_radius, screen_height, (255, 255, 255))
+
             debug()
             pygame.display.update()
             time_step += clock.tick(fps) / 180  # Increment time step for the next iteration
@@ -128,7 +138,7 @@ while True:
             # Check if the projectile enters the planet's orbit
             if (circle_x - position[0]) ** 2 + (circle_y - position[1]) ** 2 <= orbit_radius ** 2:
                 shooting_trajectory = False  # Stop shooting trajectory
-                level_completed = True
+                stop_level = True
                 level_number += 1
 
 
@@ -140,7 +150,13 @@ while True:
     else:
         # Display aiming trail if the player isn't shooting
         screen.fill((0, 0, 0))
-        level(level_number, screen, transparent_surface_planet)
+
+        # Collect the level info and print it
+        orbit_radius, position, obstacles = level(level_number, screen, transparent_surface_planet)
+
+        for obstacle in obstacles:
+            pygame.draw.rect(screen, (100, 65, 23), obstacle)
+
         debug()
 
         # Blit the cursor image

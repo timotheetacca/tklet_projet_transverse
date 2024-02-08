@@ -14,7 +14,9 @@ def level(lever_number, screen ,transparent_surface):
         screen.blit(transparent_surface, (0, 0))
         planet(screen, transparent_surface, position, planet_radius , orbit_radius )
 
-        return orbit_radius, position
+        obstacles = []
+
+        return orbit_radius, position, obstacles
 
     if lever_number == 2:
         planet_radius = 35
@@ -23,6 +25,21 @@ def level(lever_number, screen ,transparent_surface):
         screen.blit(transparent_surface, (0, 0))
         planet(screen, transparent_surface, position, planet_radius , orbit_radius )
 
-        return orbit_radius, position
+        obstacles = []
+        obstacle_rect = pygame.Rect(700, 420, 40, 40)
+        #pygame.draw.rect(transparent_surface, (100, 65, 23), obstacle_rect)
+        obstacles.append(obstacle_rect)
+
+        return orbit_radius, position, obstacles
+
+    if lever_number == 3:
+        planet_radius = 0
+        orbit_radius = 0
+        position = (0, 0)
+
+
+        obstacles = []
+
+        return orbit_radius, position, obstacles
 
 

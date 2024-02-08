@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="fixing trajectory + draw aim + shoot on space">
-      <change afterPath="$PROJECT_DIR$/level.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trajectory.py" afterDir="false" />
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="adding cursor">
+      <change afterPath="$PROJECT_DIR$/.idea/tklet_test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/level.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,6 +98,7 @@
       <workItem from="1707241780323" duration="3377000" />
       <workItem from="1707245658178" duration="521000" />
       <workItem from="1707310274132" duration="4553000" />
+      <workItem from="1707427217725" duration="2282000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Images">
       <option name="closed" value="true" />
@@ -131,7 +132,23 @@
       <option name="project" value="LOCAL" />
       <updated>1707241576576</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="adding cursor">
+      <option name="closed" value="true" />
+      <created>1707427623744</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1707427623744</updated>
+    </task>
+    <task id="LOCAL-00006" summary="adding cursor">
+      <option name="closed" value="true" />
+      <created>1707427661587</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1707427661587</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,22 +157,23 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding Images" />
     <MESSAGE value="fixing trajectory + draw aim + shoot on space" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing trajectory + draw aim + shoot on space" />
+    <MESSAGE value="adding cursor" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding cursor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>29</line>
+          <line>35</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1707425704335" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/tklet_test$rocket.coverage" NAME="rocket Coverage Results" MODIFIED="1707208852107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tklet_test$trajectory.coverage" NAME="trajectory Coverage Results" MODIFIED="1707206035832" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tklet_test$rocket.coverage" NAME="rocket Coverage Results" MODIFIED="1707208852107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1707429511817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
