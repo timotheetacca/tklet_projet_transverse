@@ -34,7 +34,7 @@ class TrajectorySimulation:
 
         return orbit_radius, position, obstacles
 
-    def projectile_aim(self, screen, g, v, h, alpha, t, screen_height, mouse_x, level_number):
+    def projectile_aim(self, screen, g, v, h, alpha, t, screen_height, level_number):
         """
         Display the aim trajectory on the screen.
 
@@ -47,7 +47,6 @@ class TrajectorySimulation:
         alpha(int) : Launch angle in degrees
         t(int) : Time
         screen_height(int) : Height of the screen
-        mouse_x(int) : Current x-coordinate of the mouse
         level_number(int) : Current level number
 
         Returns
@@ -55,8 +54,7 @@ class TrajectorySimulation:
         None
         """
         self.level_display(screen, level_number)
-        distance = 25 - int((mouse_x * 0.005))
-        draw_aim(screen, g, v, h, alpha, t, self.circle_radius, screen_height, distance)
+        draw_aim(screen, g, v, h, alpha, t, self.circle_radius, screen_height, 22)
 
     def projectile_motion(self, screen, circle_x, circle_y, g, v, h, alpha, level_number):
         """

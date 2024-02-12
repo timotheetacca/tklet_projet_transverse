@@ -6,7 +6,7 @@ from trajectory_simulation import TrajectorySimulation
 pygame.init()
 
 # Set up the window
-screen_width, screen_height =  1536, 864
+screen_width, screen_height = 1536, 864
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.SRCALPHA)
 pygame.display.set_caption("Efreispace")
 
@@ -16,13 +16,12 @@ fps = 120  # Set FPS rate for frame rate
 trajectory_simulation = TrajectorySimulation()
 
 level_number = 1
-alpha = 0
-time_step=0
 circle_x = 864
 circle_y = 0
-circle_radius = 5
+time_step = 0
+v = 100
+alpha = 45
 g = 9.81
-v=130
 h = 0
 
 mouse_pressed = False
@@ -69,6 +68,6 @@ while True:
     if shooting_trajectory:
         shooting_trajectory, level_number = trajectory_simulation.projectile_motion(screen, circle_x, circle_y, g , v, h, alpha, level_number)
     else:
-        trajectory_simulation.projectile_aim(screen, g, v, h, alpha, time_step, screen_height, mouse_x, level_number)
+        trajectory_simulation.projectile_aim(screen, g, v, h, alpha, time_step, screen_height, level_number)
 
     pygame.display.flip()  # Update the display
