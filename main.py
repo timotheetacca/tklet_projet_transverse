@@ -10,6 +10,10 @@ screen_width, screen_height = 1536, 864
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.SRCALPHA)
 pygame.display.set_caption("Efreispace")
 
+cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
+cursor = pygame.transform.scale(cursor_image, (32,32))
+pygame.mouse.set_visible(False)
+
 fps = 120  # Set FPS rate for frame rate
 
 # Initialize TrajectorySimulation instance
@@ -35,11 +39,18 @@ while True:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
+                cursor_image = pygame.image.load("Assets/Cursor/cursor_hold.png")
+                cursor = pygame.transform.scale(cursor_image, (32, 32))
+
                 mouse_pressed = True
                 position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
 
+
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
+                cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
+                cursor = pygame.transform.scale(cursor_image, (32, 32))
+
                 mouse_pressed = False
                 shooting_trajectory = True
                 stop_level = False
@@ -70,4 +81,5 @@ while True:
     else:
         trajectory_simulation.projectile_aim(screen, g, v, h, alpha, time_step, screen_height, level_number)
 
+    screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
