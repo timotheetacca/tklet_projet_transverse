@@ -41,13 +41,13 @@ def draw_trajectory(screen, g, v, h, alpha, t, circle_radius, screen_height, col
 
     Returns
     -------
-    None
+    circle_x, circle_y (int) : Coordinates of the circle
     """
     circle_x, circle_y = calculate_trajectory(g, v, h, alpha, t, screen_height)
     pygame.draw.circle(screen, color, (circle_x, circle_y), circle_radius)
     return circle_x, circle_y
 
-def draw_aim(screen, g, v, h, alpha, t, circle_radius,screen_height, distance,):
+def draw_aim(screen, g, v, h, alpha, t, circle_radius,screen_height, distance):
     """
     Draw a trajectory for aiming on a given pygame surface.
 
