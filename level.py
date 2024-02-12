@@ -6,7 +6,7 @@ def planet(screen, transparent_surface, position, planet_radius, orbit_radius):
     pygame.draw.circle(transparent_surface, (255, 255, 255, 100), (position[0],position[1]), orbit_radius)
     pygame.draw.circle(transparent_surface, (255, 255, 255, 250), ((position[0],position[1])),planet_radius)
 
-def level(lever_number, screen ,transparent_surface):
+def level(level_number, screen ,transparent_surface):
     if lever_number == 1:
         planet_radius = 45
         orbit_radius = 130
@@ -18,7 +18,7 @@ def level(lever_number, screen ,transparent_surface):
 
         return orbit_radius, position, obstacles
 
-    if lever_number == 2:
+    if level_number == 2:
         planet_radius = 35
         orbit_radius = 85
         position = (1200,300)
@@ -34,7 +34,7 @@ def level(lever_number, screen ,transparent_surface):
 
         return orbit_radius, position, obstacles
 
-    if lever_number == 3:
+    if level_number == 3:
         planet_radius = 0
         orbit_radius = 0
         position = (0, 0)
