@@ -17,8 +17,8 @@ pygame.mouse.set_visible(False)
 fps = 120  # Set FPS rate for frame rate
 
 # Initialize TrajectorySimulation instance
-trajectory_simulation = TrajectorySimulation(5)
-orbital_phase = OrbitalPhase(5)
+trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height)
+orbital_phase = OrbitalPhase(5, screen)
 
 level_number = 1
 circle_x = 864
@@ -80,7 +80,8 @@ while True:
             vector_mouse = math.sqrt(mouse_x ** 2 + (screen_height - mouse_y) ** 2)
 
             # Calculate the angle between the x-axis
-            alpha = math.degrees(math.acos(mouse_x / vector_mouse))
+            if vector_mouse != 0:
+                alpha = math.degrees(math.acos(mouse_x / vector_mouse))
 
             # Get a velocity from the mouse deplacement
             v = 40 + deplacement_x / 10 - deplacement_y / 10
@@ -88,16 +89,16 @@ while True:
         # Projectile motion loop
 
         if shooting_trajectory:
-            shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(screen, circle_x, circle_y, g , v, h, alpha, level_number)
+            shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g , v, h, alpha, level_number)
         else:
-            trajectory_simulation.projectile_aim(screen, g, v, h, alpha, time_step, screen_height, level_number)
+            trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
 
     else:
         # Increment angle for rotation
         angle -= 0.1
 
         # Draw the circle with updated angle
-        orbital_game_phase = orbital_phase.draw_circle(screen, radius, angle)
+        orbital_game_phase = orbital_phase.draw_circle(radius, angle)
 
 
     screen.blit(cursor, (mouse_x, mouse_y))

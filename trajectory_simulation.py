@@ -6,17 +6,19 @@ screen_width, screen_height = 1536, 864
 fps = 120
 
 class TrajectorySimulation:
-    def __init__(self,circle_radius):
+    def __init__(self,circle_radius, screen, screen_width, screen_height ):
         self.transparent_surface = pygame.Surface((1536, 864), pygame.SRCALPHA)
         self.circle_radius = circle_radius
+        self.screen = screen
+        self.screen_width = screen_width
+        self.screen_height = screen_height
 
-    def level_display(self, screen, level_number):
+    def level_display(self, level_number):
         """
         Draw a level on a screen.
 
         Parameters
         ----------
-        screen(pygame.Surface) : The pygame surface where the trajectory will be drawn
         level_number(int) : Current level
 
         Returns
@@ -27,42 +29,38 @@ class TrajectorySimulation:
         """
 
         # Collect the level info and print it
-        orbit_radius, position, obstacles = level(level_number, screen, self.transparent_surface)
+        orbit_radius, position, obstacles = level(level_number, self.screen, self.transparent_surface)
 
         for obstacle in obstacles:
             pygame.draw.rect(self.transparent_surface, (100, 65, 23), obstacle)
 
         return orbit_radius, position, obstacles
 
-    def projectile_aim(self, screen, g, v, h, alpha, t, screen_height, level_number):
+    def projectile_aim(self, g, v, h, alpha, t, level_number):
         """
         Display the aim trajectory on the screen.
 
         Parameters
         ----------
-        screen(pygame.Surface) : The pygame surface where the aim trajectory will be drawn.
         g(int) : Gravitational acceleration
         v(int) : Initial velocity
         h(int) : Initial height
         alpha(int) : Launch angle in degrees
-        t(int) : Time
-        screen_height(int) : Height of the screen
         level_number(int) : Current level number
 
         Returns
         -------
         None
         """
-        self.level_display(screen, level_number)
-        draw_aim(screen, g, v, h, alpha, t, self.circle_radius, screen_height, 22)
+        self.level_display(level_number)
+        draw_aim(self.screen, g, v, h, alpha, t, self.circle_radius, self.screen_height, 22)
 
-    def projectile_motion(self, screen, circle_x, circle_y, g, v, h, alpha, level_number):
+    def projectile_motion(self, circle_x, circle_y, g, v, h, alpha, level_number):
         """
         Display the motion of the projectile.
 
         Parameters
         ----------
-        screen(pygame.Surface) : The pygame surface where the projectile motion will be simulated
         circle_x(int) : Initial x-coordinate
         circle_y(int) : Initial y-coordinate
         g(int) : Gravitational acceleration
@@ -83,8 +81,8 @@ class TrajectorySimulation:
         stop_level = False
 
         while 0 <= circle_x <= 1536 and 0 <= circle_y <= 864 and not stop_level:
-            screen.fill((0, 0, 0))
-            orbit_radius, position, obstacles = self.level_display(screen, level_number)
+            self.screen.fill((0, 0, 0))
+            orbit_radius, position, obstacles = self.level_display(level_number)
 
             # Check for collisions with obstacles
             for obstacle in obstacles:
@@ -92,8 +90,8 @@ class TrajectorySimulation:
                     stop_level = True
 
             # Call the draw_trajectory function from trajectory.py
-            circle_x, circle_y = draw_trajectory(screen, g, v, h, alpha, time_step,
-                                                 self.circle_radius, screen_height, (255, 255, 255))
+            circle_x, circle_y = draw_trajectory(self.screen, g, v, h, alpha, time_step,
+                                                 self.circle_radius, self.screen_height, (255, 255, 255))
 
             pygame.display.update()
             time_step += clock.tick(fps) / 180  # Increment time step for the next iteration
@@ -108,7 +106,7 @@ class TrajectorySimulation:
                 return shooting_trajectory, level_number, True
 
         # Reset the mouse position to avoid angle error on the next throw
-        pygame.mouse.set_pos(screen_width // 2, screen_height // 2)
+        pygame.mouse.set_pos(self.screen_width // 2, self.screen_height // 2)
         self.transparent_surface.fill((0, 0, 0))
 
         return shooting_trajectory, level_number, False
