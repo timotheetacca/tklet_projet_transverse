@@ -1,7 +1,7 @@
 import pygame
-from trajectory import draw_aim
 import math
 from trajectory_simulation import TrajectorySimulation
+from orbital_phase import OrbitalPhase
 
 pygame.init()
 
@@ -17,7 +17,8 @@ pygame.mouse.set_visible(False)
 fps = 120  # Set FPS rate for frame rate
 
 # Initialize TrajectorySimulation instance
-trajectory_simulation = TrajectorySimulation()
+trajectory_simulation = TrajectorySimulation(5)
+orbital_phase = OrbitalPhase(5)
 
 level_number = 1
 circle_x = 864
@@ -28,9 +29,14 @@ alpha = 45
 g = 9.81
 h = 0
 
+angle = 0
+radius = 390
+
 mouse_pressed = False
 shooting_trajectory = False
 stop_level = False
+orbital_game_phase = False
+
 
 while True:
     for event in pygame.event.get():
@@ -42,8 +48,9 @@ while True:
                 cursor_image = pygame.image.load("Assets/Cursor/cursor_hold.png")
                 cursor = pygame.transform.scale(cursor_image, (32, 32))
 
-                mouse_pressed = True
-                position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
+                if orbital_game_phase is False:
+                    mouse_pressed = True
+                    position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
 
 
         elif event.type == pygame.MOUSEBUTTONUP:
@@ -51,35 +58,47 @@ while True:
                 cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
                 cursor = pygame.transform.scale(cursor_image, (32, 32))
 
-                mouse_pressed = False
-                shooting_trajectory = True
-                stop_level = False
+                if orbital_game_phase is False:
+                    mouse_pressed = False
+                    shooting_trajectory = True
+                    stop_level = False
 
     screen.fill((0, 0, 0))
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
-    # Calculate v continuously while mouse button is pressed
-    if mouse_pressed:
-        deplacement_x = position_initiale_x - mouse_x
-        deplacement_y = position_initiale_y - mouse_y
+    if orbital_game_phase is False:
+        angle = 0
 
-        # Calculate the vector from the ball to the mouse
-        vector_mouse = math.sqrt(mouse_x ** 2 + (screen_height - mouse_y) ** 2)
+        # Calculate v continuously while mouse button is pressed
+        if mouse_pressed:
+            deplacement_x = position_initiale_x - mouse_x
+            deplacement_y = position_initiale_y - mouse_y
 
-        # Calculate the angle between the x-axis
-        alpha = math.degrees(math.acos(mouse_x / vector_mouse))
+            # Calculate the vector from the ball to the mouse
+            vector_mouse = math.sqrt(mouse_x ** 2 + (screen_height - mouse_y) ** 2)
 
-        # Get a velocity from the mouse deplacement
-        v = 40 + deplacement_x / 10 - deplacement_y / 10
+            # Calculate the angle between the x-axis
+            alpha = math.degrees(math.acos(mouse_x / vector_mouse))
 
-    # Projectile motion loop
+            # Get a velocity from the mouse deplacement
+            v = 40 + deplacement_x / 10 - deplacement_y / 10
 
-    if shooting_trajectory:
-        shooting_trajectory, level_number = trajectory_simulation.projectile_motion(screen, circle_x, circle_y, g , v, h, alpha, level_number)
+        # Projectile motion loop
+
+        if shooting_trajectory:
+            shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(screen, circle_x, circle_y, g , v, h, alpha, level_number)
+        else:
+            trajectory_simulation.projectile_aim(screen, g, v, h, alpha, time_step, screen_height, level_number)
+
     else:
-        trajectory_simulation.projectile_aim(screen, g, v, h, alpha, time_step, screen_height, level_number)
+        # Increment angle for rotation
+        angle -= 0.1
+
+        # Draw the circle with updated angle
+        orbital_game_phase = orbital_phase.draw_circle(screen, radius, angle)
+
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display

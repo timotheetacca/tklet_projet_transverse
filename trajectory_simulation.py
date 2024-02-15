@@ -6,9 +6,9 @@ screen_width, screen_height = 1536, 864
 fps = 120
 
 class TrajectorySimulation:
-    def __init__(self):
+    def __init__(self,circle_radius):
         self.transparent_surface = pygame.Surface((1536, 864), pygame.SRCALPHA)
-        self.circle_radius = 5
+        self.circle_radius = circle_radius
 
     def level_display(self, screen, level_number):
         """
@@ -102,12 +102,13 @@ class TrajectorySimulation:
             if (circle_x - position[0]) ** 2 + (circle_y - position[1]) ** 2 <= orbit_radius ** 2:
                 stop_level = True
                 shooting_trajectory = False
+                orbital_game_phase = True
                 level_number += 1
                 self.transparent_surface.fill((0, 0, 0))
-                return shooting_trajectory, level_number  # Always return both values
+                return shooting_trajectory, level_number, True
 
         # Reset the mouse position to avoid angle error on the next throw
         pygame.mouse.set_pos(screen_width // 2, screen_height // 2)
         self.transparent_surface.fill((0, 0, 0))
 
-        return shooting_trajectory, level_number
+        return shooting_trajectory, level_number, False
