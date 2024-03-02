@@ -80,7 +80,7 @@ class TrajectorySimulation:
         shooting_trajectory = False
         stop_level = False
 
-        while 0 <= circle_x <= 1536 and 0 <= circle_y <= 864 and not stop_level:
+        while 0 <= circle_x <= screen_width and 0 <= circle_y <= screen_height and not stop_level:
             self.screen.fill((0, 0, 0))
             orbit_radius, position, obstacles = self.level_display(level_number)
 
