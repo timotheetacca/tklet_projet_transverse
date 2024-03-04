@@ -36,6 +36,7 @@ mouse_pressed = False
 shooting_trajectory = False
 stop_level = False
 orbital_game_phase = False
+menu = True
 
 
 while True:
@@ -51,6 +52,11 @@ while True:
                 if orbital_game_phase is False:
                     mouse_pressed = True
                     position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
+
+                if menu :
+                    # Check if mouse click is inside the rectangle
+                    if button_rect.collidepoint(event.pos):
+                        menu = False  # Set menu to False on click
 
 
         elif event.type == pygame.MOUSEBUTTONUP:
@@ -68,37 +74,46 @@ while True:
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
-    if orbital_game_phase is False:
-        angle = 0
+    if menu:
+        # Draw the button
+        button_rect = pygame.Rect(screen_width // 2 - 100, screen_height // 2 - 50, 200, 100)
+        pygame.draw.rect(screen, (255, 255, 255), button_rect)
+        # Update the button's collision rectangle
 
-        # Calculate v continuously while mouse button is pressed
-        if mouse_pressed:
-            deplacement_x = position_initiale_x - mouse_x
-            deplacement_y = position_initiale_y - mouse_y
-
-            # Calculate the vector from the ball to the mouse
-            vector_mouse = math.sqrt(mouse_x ** 2 + (screen_height - mouse_y) ** 2)
-
-            # Calculate the angle between the x-axis
-            if vector_mouse != 0:
-                alpha = math.degrees(math.acos(mouse_x / vector_mouse))
-
-            # Get a velocity from the mouse deplacement
-            v = 40 + deplacement_x / 10 - deplacement_y / 10
-
-        # Projectile motion loop
-
-        if shooting_trajectory:
-            shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g , v, h, alpha, level_number)
-        else:
-            trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
 
     else:
-        # Increment angle for rotation
-        angle -= 0.1
+        if orbital_game_phase is False:
+            angle = 0
 
-        # Draw the circle with updated angle
-        orbital_game_phase = orbital_phase.draw_circle(radius, angle)
+            # Calculate v continuously while mouse button is pressed
+            if mouse_pressed:
+                deplacement_x = position_initiale_x - mouse_x
+                deplacement_y = position_initiale_y - mouse_y
+
+                # Calculate the vector from the ball to the mouse
+                vector_mouse = math.sqrt(mouse_x ** 2 + (screen_height - mouse_y) ** 2)
+
+                # Calculate the angle between the x-axis
+                if vector_mouse != 0:
+                    alpha = math.degrees(math.acos(mouse_x / vector_mouse))
+
+                # Get a velocity from the mouse deplacement
+                v = 40 + deplacement_x / 10 - deplacement_y / 10
+
+            # Projectile motion loop
+
+            if shooting_trajectory:
+                shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g , v, h, alpha, level_number)
+            else:
+                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
+
+        else:
+            # Increment angle for rotation
+            angle -= 0.1
+
+            # Draw the circle with updated angle
+            orbital_game_phase = orbital_phase.draw_circle(radius, angle)
+            orbital_phase.orbital_requirements()
 
 
     screen.blit(cursor, (mouse_x, mouse_y))
