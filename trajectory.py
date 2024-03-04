@@ -1,6 +1,7 @@
 import pygame
 import math
 
+
 def calculate_trajectory(g, v, h, alpha, t, screen_height):
     """
     Calculate the x and y coordinates of a projectile's trajectory at a given time.
@@ -19,9 +20,10 @@ def calculate_trajectory(g, v, h, alpha, t, screen_height):
     A tuple containing the x and y coordinates of the projectile.
     """
     # Removes the screens height for trajectory to appear on the bottom
-    circle_y = screen_height - int((-1/2) * g * t**2 + v * math.sin(math.radians(alpha)) * t + h)
-    circle_x = int (v * math.cos(math.radians(alpha)) * t)
+    circle_y = screen_height - int((-1 / 2) * g * t ** 2 + v * math.sin(math.radians(alpha)) * t + h)
+    circle_x = int(v * math.cos(math.radians(alpha)) * t)
     return circle_x, circle_y
+
 
 def draw_trajectory(screen, g, v, h, alpha, t, circle_radius, screen_height, color):
     """
@@ -47,7 +49,8 @@ def draw_trajectory(screen, g, v, h, alpha, t, circle_radius, screen_height, col
     pygame.draw.circle(screen, color, (circle_x, circle_y), circle_radius)
     return circle_x, circle_y
 
-def draw_aim(screen, g, v, h, alpha, t, circle_radius,screen_height, distance):
+
+def draw_aim(screen, g, v, h, alpha, circle_radius, screen_height, nb_points):
     """
     Draw a trajectory for aiming on a given pygame surface.
 
@@ -61,13 +64,13 @@ def draw_aim(screen, g, v, h, alpha, t, circle_radius,screen_height, distance):
     t(float) : Time
     circle_radius(int) : Radius of the circle to be drawn
     screen_height(int) : Height of the screen
-    distance(int) : How far should it aims
+    nb_points(int) : The number of points display
 
     Returns
     -------
     None
     """
-    for t in range(distance):
-        circle_x, circle_y=calculate_trajectory(g, v, h, alpha, t/2, screen_height)
+    for t in range(nb_points):
+        circle_x, circle_y = calculate_trajectory(g, v, h, alpha, t / 2, screen_height)
         # Reduce the radius of the circle to make the aiming less and less visible
-        pygame.draw.circle(screen, (250,250,250), (circle_x+20, circle_y-20), circle_radius-0.1*t)
+        pygame.draw.circle(screen, (250, 250, 250), (circle_x + 20, circle_y - 20), circle_radius - 0.1 * t)

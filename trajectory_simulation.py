@@ -53,7 +53,7 @@ class TrajectorySimulation:
         None
         """
         self.level_display(level_number)
-        draw_aim(self.screen, g, v, h, alpha, t, self.circle_radius, self.screen_height, 22)
+        draw_aim(self.screen, g, v, h, alpha, self.circle_radius, self.screen_height, 22)
 
     def projectile_motion(self, circle_x, circle_y, g, v, h, alpha, level_number):
         """
