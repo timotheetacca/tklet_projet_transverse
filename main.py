@@ -1,9 +1,11 @@
 import pygame
+import pygame.mixer
 import math
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 
 pygame.init()
+pygame.mixer.init()
 
 # Set up the window
 screen_width, screen_height = 1536, 864
@@ -13,6 +15,10 @@ pygame.display.set_caption("Efreispace")
 cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
 cursor = pygame.transform.scale(cursor_image, (32,32))
 pygame.mouse.set_visible(False)
+
+music_file = pygame.mixer.music.load("musicTKLET.mp3")
+music_file.set_volume(0.5)
+pygame.mixer.music.play(-1)
 
 fps = 120  # Set FPS rate for frame rate
 
@@ -28,6 +34,7 @@ v = 100
 alpha = 45
 g = 9.81
 h = 0
+size_music_button = 50
 
 angle = 0
 radius = 390
@@ -42,6 +49,7 @@ menu = True
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            pygame.mixer.music.stop()
             pygame.quit()
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -74,12 +82,14 @@ while True:
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
+    # Music button
+    pygame.draw.rect(screen, (0, 255, 0), (screen_width-size_music_button, screen_height-size_music_button, size_music_button, size_music_button))
+
     if menu:
         # Draw the button
         button_rect = pygame.Rect(screen_width // 2 - 100, screen_height // 2 - 50, 200, 100)
         pygame.draw.rect(screen, (255, 255, 255), button_rect)
         # Update the button's collision rectangle
-
 
     else:
         if orbital_game_phase is False:
@@ -118,3 +128,7 @@ while True:
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
+
+
+pygame.mixer.quit()
+pygame.quit()
