@@ -16,8 +16,8 @@ cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
 cursor = pygame.transform.scale(cursor_image, (32,32))
 pygame.mouse.set_visible(False)
 
-music_file = pygame.mixer.music.load("musicTKLET.mp3")
-music_file.set_volume(0.5)
+pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
+pygame.mixer.music.set_volume(0.25)
 pygame.mixer.music.play(-1)
 
 fps = 120  # Set FPS rate for frame rate
