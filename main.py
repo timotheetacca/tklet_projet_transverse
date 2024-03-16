@@ -16,10 +16,11 @@ cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
 cursor = pygame.transform.scale(cursor_image, (32,32))
 pygame.mouse.set_visible(False)
 
+#Music parameters
+
 pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
 pygame.mixer.music.set_volume(0.25)
 pygame.mixer.music.play(-1)
-
 
 size_music_button = 90
 green_music_button = pygame.image.load("Assets/Music/Green Music Button.png")
@@ -28,8 +29,10 @@ green_music_button = pygame.transform.scale(green_music_button, (size_music_butt
 red_music_button = pygame.image.load("Assets/Music/Red Music Button.png")
 red_music_button = pygame.transform.scale(red_music_button, (size_music_button,size_music_button))
 
-
-
+image_button = green_music_button
+coordinate_music_button = (screen_width-size_music_button+20, screen_height-size_music_button+20)
+music_button_rect = green_music_button.get_rect(topleft=coordinate_music_button)
+music_position = 0
 
 fps = 120  # Set FPS rate for frame rate
 
@@ -53,6 +56,7 @@ mouse_pressed = False
 shooting_trajectory = False
 stop_level = False
 orbital_game_phase = False
+music_playing = True
 menu = True
 
 
@@ -75,6 +79,24 @@ while True:
                     # Check if mouse click is inside the rectangle
                     if button_rect.collidepoint(event.pos):
                         menu = False  # Set menu to False on click
+
+                if music_button_rect.collidepoint(pygame.mouse.get_pos()):
+
+                    if image_button == red_music_button:
+
+                        image_button = green_music_button
+                        pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
+                        pygame.mixer.music.play(start=music_position/1000)
+
+                    else:
+
+                        image_button = red_music_button
+                        music_position += pygame.mixer.music.get_pos()
+                        pygame.mixer.music.stop()
+
+
+
+
 
 
         elif event.type == pygame.MOUSEBUTTONUP:
@@ -133,7 +155,7 @@ while True:
 
 
     #Display the music button
-    screen.blit(green_music_button, (screen_width-size_music_button+20, screen_height-size_music_button+20))
+    screen.blit(image_button, coordinate_music_button)
 
 
     screen.blit(cursor, (mouse_x, mouse_y))
