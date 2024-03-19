@@ -93,8 +93,8 @@ while True:
 
         # Draw and handle events for the slider
         slider.draw(screen)
-        slider_value = slider.value  # Get the current value of the slider
-        print("Slider value:", slider_value)  # Print slider value to console
+        slider_value = slider.slider_value  # Get the current value of the slider
+        print("Slider 1:", slider_value)  # Print slider value to console
 
     else:
         if orbital_game_phase is False:
