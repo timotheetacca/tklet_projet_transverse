@@ -13,10 +13,10 @@ screen = pygame.display.set_mode((screen_width, screen_height), pygame.SRCALPHA)
 pygame.display.set_caption("Efreispace")
 
 cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
-cursor = pygame.transform.scale(cursor_image, (32,32))
+cursor = pygame.transform.scale(cursor_image, (32, 32))
 pygame.mouse.set_visible(False)
 
-#Music parameters
+# Music parameters
 
 pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
 pygame.mixer.music.set_volume(0.25)
@@ -24,15 +24,14 @@ pygame.mixer.music.play(-1)
 
 size_music_button = 90
 green_music_button = pygame.image.load("Assets/Music/Green Music Button.png")
-green_music_button = pygame.transform.scale(green_music_button, (size_music_button,size_music_button))
+green_music_button = pygame.transform.scale(green_music_button, (size_music_button, size_music_button))
 
 red_music_button = pygame.image.load("Assets/Music/Red Music Button.png")
-red_music_button = pygame.transform.scale(red_music_button, (size_music_button,size_music_button))
+red_music_button = pygame.transform.scale(red_music_button, (size_music_button, size_music_button))
 
-image_button = green_music_button
-coordinate_music_button = (screen_width-size_music_button+20, screen_height-size_music_button+20)
+image_music_button = green_music_button
+coordinate_music_button = (screen_width - size_music_button + 20, screen_height - size_music_button + 20)
 music_button_rect = green_music_button.get_rect(topleft=coordinate_music_button)
-music_position = 0
 
 fps = 120  # Set FPS rate for frame rate
 
@@ -59,7 +58,6 @@ orbital_game_phase = False
 music_playing = True
 menu = True
 
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -82,17 +80,15 @@ while True:
 
                 if music_button_rect.collidepoint(pygame.mouse.get_pos()):
 
-                    if image_button == red_music_button:
+                    if image_music_button == red_music_button:
 
-                        image_button = green_music_button
-                        pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
-                        pygame.mixer.music.play(start=music_position/1000)
+                        image_music_button = green_music_button
+                        pygame.mixer.music.unpause()
 
                     else:
 
-                        image_button = red_music_button
-                        music_position += pygame.mixer.music.get_pos()
-                        pygame.mixer.music.stop()
+                        image_music_button = red_music_button
+                        pygame.mixer.music.pause()
 
 
 
@@ -141,7 +137,8 @@ while True:
 
             # Projectile motion loop
             if shooting_trajectory:
-                shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g , v, h, alpha, level_number)
+                shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(
+                    circle_x, circle_y, g, v, h, alpha, level_number)
             else:
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
 
@@ -153,14 +150,11 @@ while True:
             orbital_game_phase = orbital_phase.draw_circle(radius, angle)
             orbital_phase.orbital_requirements()
 
-
-    #Display the music button
-    screen.blit(image_button, coordinate_music_button)
-
+    # Display the music button
+    screen.blit(image_music_button, coordinate_music_button)
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
-
 
 pygame.mixer.quit()
 pygame.quit()
