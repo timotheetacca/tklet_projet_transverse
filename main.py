@@ -2,6 +2,7 @@ import pygame
 import math
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
+from slider import Slider  # Assuming Slider class is defined in slider.py
 
 pygame.init()
 
@@ -11,7 +12,7 @@ screen = pygame.display.set_mode((screen_width, screen_height), pygame.SRCALPHA)
 pygame.display.set_caption("Efreispace")
 
 cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
-cursor = pygame.transform.scale(cursor_image, (32,32))
+cursor = pygame.transform.scale(cursor_image, (32, 32))
 pygame.mouse.set_visible(False)
 
 fps = 120  # Set FPS rate for frame rate
@@ -38,6 +39,8 @@ stop_level = False
 orbital_game_phase = False
 menu = True
 
+# Initialize the slider
+slider = Slider((50, 50), 200, 0, 100, 50)  # Example position, width, min_value, max_value, and initial_value
 
 while True:
     for event in pygame.event.get():
@@ -53,11 +56,13 @@ while True:
                     mouse_pressed = True
                     position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
 
-                if menu :
+                if menu:
                     # Check if mouse click is inside the rectangle
                     if button_rect.collidepoint(event.pos):
                         menu = False  # Set menu to False on click
 
+                    if slider.is_over_handle(event.pos):
+                        slider.dragging = True
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
@@ -69,6 +74,13 @@ while True:
                     shooting_trajectory = True
                     stop_level = False
 
+                if menu:
+                    slider.dragging = False
+
+        elif event.type == pygame.MOUSEMOTION:
+            if slider.dragging:  # Check if slider is being dragged
+                slider.update_value(event.pos)  # Update slider value based on mouse position
+
     screen.fill((0, 0, 0))
 
     # Get the mouse x and y
@@ -78,8 +90,11 @@ while True:
         # Draw the button
         button_rect = pygame.Rect(screen_width // 2 - 100, screen_height // 2 - 50, 200, 100)
         pygame.draw.rect(screen, (255, 255, 255), button_rect)
-        # Update the button's collision rectangle
 
+        # Draw and handle events for the slider
+        slider.draw(screen)
+        slider_value = slider.value  # Get the current value of the slider
+        print("Slider value:", slider_value)  # Print slider value to console
 
     else:
         if orbital_game_phase is False:
@@ -91,19 +106,18 @@ while True:
                 deplacement_y = position_initiale_y - mouse_y
 
                 # Calculate the vector from the ball to the mouse
-                vector_mouse = math.sqrt(mouse_x ** 2 + (screen_height - mouse_y) ** 2)
+                vector_mouse = math.sqrt((mouse_x - position_initiale_x) ** 2 + (mouse_y - position_initiale_y) ** 2)
 
                 # Calculate the angle between the x-axis
                 if vector_mouse != 0:
-                    alpha = math.degrees(math.acos(mouse_x / vector_mouse))
+                    alpha = math.degrees(math.acos(deplacement_x / vector_mouse))
 
-                # Get a velocity from the mouse deplacement
+                # Get a velocity from the mouse displacement
                 v = 40 + deplacement_x / 10 - deplacement_y / 10
 
             # Projectile motion loop
-
             if shooting_trajectory:
-                shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g , v, h, alpha, level_number)
+                shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_number)
             else:
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
 
@@ -113,8 +127,6 @@ while True:
 
             # Draw the circle with updated angle
             orbital_game_phase = orbital_phase.draw_circle(radius, angle)
-            orbital_phase.orbital_requirements()
-
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
