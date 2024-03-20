@@ -69,26 +69,31 @@ while True:
                 cursor_image = pygame.image.load("Assets/Cursor/cursor_hold.png")
                 cursor = pygame.transform.scale(cursor_image, (32, 32))
 
-                if orbital_game_phase is False:
-                    mouse_pressed = True
-                    position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
+                left_click_pos = event.pos
 
-                if menu:
-                    # Check if mouse click is inside the rectangle
-                    if button_rect.collidepoint(event.pos):
-                        menu = False  # Set menu to False on click
+                if not music_button_rect.collidepoint(left_click_pos):
 
-                if music_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    if orbital_game_phase is False:
+                        mouse_pressed = True
+                        position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
 
-                    if image_music_button == red_music_button:
+                    if menu:
+                        # Check if mouse click is inside the rectangle
+                        if button_rect.collidepoint(event.pos):
+                            menu = False  # Set menu to False on click
 
-                        image_music_button = green_music_button
-                        pygame.mixer.music.unpause()
+                else:
+                    if music_button_rect.collidepoint(pygame.mouse.get_pos()):
 
-                    else:
+                        if image_music_button == red_music_button:
 
-                        image_music_button = red_music_button
-                        pygame.mixer.music.pause()
+                            image_music_button = green_music_button
+                            pygame.mixer.music.unpause()
+
+                        else:
+
+                            image_music_button = red_music_button
+                            pygame.mixer.music.pause()
 
 
 
@@ -100,10 +105,11 @@ while True:
                 cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
                 cursor = pygame.transform.scale(cursor_image, (32, 32))
 
-                if orbital_game_phase is False:
-                    mouse_pressed = False
-                    shooting_trajectory = True
-                    stop_level = False
+            if not music_button_rect.collidepoint(left_click_pos):
+                    if orbital_game_phase is False:
+                        mouse_pressed = False
+                        shooting_trajectory = True
+                        stop_level = False
 
     screen.fill((0, 0, 0))
 
