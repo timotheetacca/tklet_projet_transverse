@@ -118,10 +118,10 @@ while True:
                 cursor = pygame.transform.scale(cursor_image, (32, 32))
 
             if not music_button_rect.collidepoint(left_click_pos):
-                    if orbital_game_phase is False:
-                        mouse_pressed = False
-                        shooting_trajectory = True
-                        stop_level = False
+                if orbital_game_phase is False:
+                    mouse_pressed = False
+                    shooting_trajectory = True
+                    stop_level = False
 
                 if menu:
                     slider.dragging = False
