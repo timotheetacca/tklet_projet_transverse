@@ -150,7 +150,7 @@ while True:
     else:
 
         if scenario:
-            level(level_number=-1, screen=screen, transparent_surface=pygame.Surface((screen_width,screen_height)))
+            level(level_number=-1, screen=screen, transparent_surface=None)
             scenario = False
 
         if orbital_game_phase is False:
