@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="I wrote the entire scenario.">
-      <change afterPath="$PROJECT_DIR$/scenario.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Added a font, created the function for the display of the scenario">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Font/qsdsq" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenario.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711197986394</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Added a font, created the function for the display of the scenario">
+      <option name="closed" value="true" />
+      <created>1711217010334</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1711217010334</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,6 +241,7 @@
     <MESSAGE value="New images for the music button" />
     <MESSAGE value="Started the &quot;scenario&quot;" />
     <MESSAGE value="I wrote the entire scenario." />
-    <option name="LAST_COMMIT_MESSAGE" value="I wrote the entire scenario." />
+    <MESSAGE value="Added a font, created the function for the display of the scenario" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a font, created the function for the display of the scenario" />
   </component>
 </project>
