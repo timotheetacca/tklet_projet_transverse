@@ -1,4 +1,3 @@
-import pygame
 import pygame.mixer
 import math
 from trajectory_simulation import TrajectorySimulation
