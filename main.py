@@ -135,7 +135,6 @@ while True:
     # Main game loop
     screen.fill((0, 0, 0))
     level_number, lives = update_save_information("game_save.txt")
-    print(level_number, lives)
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
