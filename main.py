@@ -4,6 +4,7 @@ import math
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 from slider import Slider  # Assuming Slider class is defined in slider.py
+from level import level
 
 pygame.init()
 pygame.mixer.init()
@@ -57,6 +58,7 @@ shooting_trajectory = False
 stop_level = False
 orbital_game_phase = False
 music_playing = True
+scenario = True
 menu = True
 
 
@@ -146,6 +148,11 @@ while True:
         print("Slider 1:", slider_value)  # Print slider value to console
 
     else:
+
+        if scenario:
+            level(level_number=-1, screen=screen, transparent_surface=pygame.Surface((screen_width,screen_height)))
+            scenario = False
+
         if orbital_game_phase is False:
             angle = 0
 

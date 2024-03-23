@@ -7,6 +7,15 @@ def planet(screen, transparent_surface, position, planet_radius, orbit_radius):
     pygame.draw.circle(transparent_surface, (255, 255, 255, 250), ((position[0],position[1])),planet_radius)
 
 def level(level_number, screen ,transparent_surface):
+
+    if level_number == -1:
+
+        screen.fill((0, 0, 0))
+
+        scenario = True
+        while scenario:
+            print("IN SCENARIO")
+
     if level_number == 1:
         planet_radius = 45
         orbit_radius = 130

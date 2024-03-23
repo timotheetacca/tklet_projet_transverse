@@ -7,7 +7,7 @@ fps = 120
 
 class TrajectorySimulation:
     def __init__(self,circle_radius, screen, screen_width, screen_height ):
-        self.transparent_surface = pygame.Surface((1536, 864), pygame.SRCALPHA)
+        self.transparent_surface = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
         self.circle_radius = circle_radius
         self.screen = screen
         self.screen_width = screen_width
