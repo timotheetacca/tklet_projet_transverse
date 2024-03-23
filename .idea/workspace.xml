@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="a">
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Slider comments + name change">
+      <change afterPath="$PROJECT_DIR$/save.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slider.py" beforeDir="false" afterPath="$PROJECT_DIR$/slider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trajectory_simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/trajectory_simulation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +105,8 @@
       <workItem from="1707771348467" duration="1056000" />
       <workItem from="1707993493108" duration="65000" />
       <workItem from="1708005524746" duration="2579000" />
-      <workItem from="1710868580446" duration="6037000" />
+      <workItem from="1710868580446" duration="6745000" />
+      <workItem from="1711198166580" duration="5976000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Images">
       <option name="closed" value="true" />
@@ -193,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710873052157</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Slider comments + name change">
+      <option name="closed" value="true" />
+      <created>1710878585571</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1710878585571</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,11 +218,12 @@
     <MESSAGE value="adding a second obstacle to level 3" />
     <MESSAGE value="small fixes" />
     <MESSAGE value="a" />
-    <option name="LAST_COMMIT_MESSAGE" value="a" />
+    <MESSAGE value="Slider comments + name change" />
+    <option name="LAST_COMMIT_MESSAGE" value="Slider comments + name change" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/tklet_test$trajectory.coverage" NAME="trajectory Coverage Results" MODIFIED="1707206035832" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tklet_test$rocket.coverage" NAME="rocket Coverage Results" MODIFIED="1707208852107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1710878474933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1711207048129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

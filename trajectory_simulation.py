@@ -1,6 +1,7 @@
 import pygame
 from trajectory import draw_trajectory, draw_aim
 from level import level
+from save import add_level, remove_life
 
 screen_width, screen_height = 1536, 864
 fps = 120
@@ -88,6 +89,7 @@ class TrajectorySimulation:
             for obstacle in obstacles:
                 if obstacle.collidepoint(circle_x, circle_y):
                     stop_level = True
+                    remove_life("game_save.txt")
 
             # Call the draw_trajectory function from trajectory.py
             circle_x, circle_y = draw_trajectory(self.screen, g, v, h, alpha, time_step,
@@ -101,12 +103,12 @@ class TrajectorySimulation:
                 stop_level = True
                 shooting_trajectory = False
                 orbital_game_phase = True
-                level_number += 1
                 self.transparent_surface.fill((0, 0, 0))
-                return shooting_trajectory, level_number, True
+                add_level("game_save.txt")
+                return shooting_trajectory, True
 
         # Reset the mouse position to avoid angle error on the next throw
         pygame.mouse.set_pos(self.screen_width // 2, self.screen_height // 2)
         self.transparent_surface.fill((0, 0, 0))
 
-        return shooting_trajectory, level_number, False
+        return shooting_trajectory, False

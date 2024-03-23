@@ -1,19 +1,46 @@
 import pygame
+import pygame.mixer
 import math
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
-from slider import Slider  # Assuming Slider class is defined in slider.py
+from slider import Slider
+from save import update_save_information
 
 pygame.init()
+pygame.mixer.init()
+
+# Load and save game information
+level_number, lives = update_save_information("game_save.txt")
+
 
 # Set up the window
 screen_width, screen_height = 1536, 864
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.SRCALPHA)
 pygame.display.set_caption("Efreispace")
+pygame_icon = pygame.image.load("Assets/Icons/tklet_icon.png")
+pygame.display.set_icon(pygame_icon)
 
+
+# Set up the cursor
 cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
 cursor = pygame.transform.scale(cursor_image, (32, 32))
 pygame.mouse.set_visible(False)
+
+# Music parameters
+pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
+pygame.mixer.music.set_volume(0.25)
+pygame.mixer.music.play(-1)
+
+size_music_button = 90
+green_music_button = pygame.image.load("Assets/Music/Green Music Button.png")
+green_music_button = pygame.transform.scale(green_music_button, (size_music_button, size_music_button))
+
+red_music_button = pygame.image.load("Assets/Music/Red Music Button.png")
+red_music_button = pygame.transform.scale(red_music_button, (size_music_button, size_music_button))
+
+image_music_button = green_music_button
+coordinate_music_button = (screen_width - size_music_button + 20, screen_height - size_music_button + 20)
+music_button_rect = green_music_button.get_rect(topleft=coordinate_music_button)
 
 fps = 120  # Set FPS rate for frame rate
 
@@ -21,7 +48,6 @@ fps = 120  # Set FPS rate for frame rate
 trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height)
 orbital_phase = OrbitalPhase(5, screen)
 
-level_number = 1
 circle_x = 864
 circle_y = 0
 time_step = 0
@@ -37,6 +63,7 @@ mouse_pressed = False
 shooting_trajectory = False
 stop_level = False
 orbital_game_phase = False
+music_playing = True
 menu = True
 
 # Initialize the slider
@@ -45,6 +72,7 @@ slider = Slider((50, 50), 200, 0, 100, 50)  # Example position, width, min_value
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            pygame.mixer.music.stop()
             pygame.quit()
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -52,16 +80,38 @@ while True:
                 cursor_image = pygame.image.load("Assets/Cursor/cursor_hold.png")
                 cursor = pygame.transform.scale(cursor_image, (32, 32))
 
-                if orbital_game_phase is False:
-                    mouse_pressed = True
-                    position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
+                left_click_pos = event.pos
+
+                if not music_button_rect.collidepoint(left_click_pos):
+
+                    if orbital_game_phase is False:
+                        mouse_pressed = True
+                        position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
+
+                    if menu:
+                        # Check if mouse click is inside the rectangle
+                        if button_rect.collidepoint(event.pos):
+                            menu = False  # Set menu to False on click
+
+                else:
+                    if music_button_rect.collidepoint(pygame.mouse.get_pos()):
+
+                        if image_music_button == red_music_button:
+
+                            image_music_button = green_music_button
+                            pygame.mixer.music.unpause()
+
+                        else:
+
+                            image_music_button = red_music_button
+                            pygame.mixer.music.pause()
 
                 if menu:
                     # Check if mouse click is inside the rectangle
                     if button_rect.collidepoint(event.pos):
                         menu = False  # Set menu to False on click
 
-                    if slider.is_over_handle(event.pos):
+                if slider.is_over_handle(event.pos):
                         slider.dragging = True
 
         elif event.type == pygame.MOUSEBUTTONUP:
@@ -69,19 +119,23 @@ while True:
                 cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
                 cursor = pygame.transform.scale(cursor_image, (32, 32))
 
+            if not music_button_rect.collidepoint(left_click_pos):
                 if orbital_game_phase is False:
                     mouse_pressed = False
                     shooting_trajectory = True
                     stop_level = False
 
-                if menu:
-                    slider.dragging = False
+                slider.dragging = False
 
         elif event.type == pygame.MOUSEMOTION:
             if slider.dragging:  # Check if slider is being dragged
                 slider.update_value(event.pos)  # Update slider value based on mouse position
 
+
+    # Main game loop
     screen.fill((0, 0, 0))
+    level_number, lives = update_save_information("game_save.txt")
+    print(level_number, lives)
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -91,10 +145,6 @@ while True:
         button_rect = pygame.Rect(screen_width // 2 - 100, screen_height // 2 - 50, 200, 100)
         pygame.draw.rect(screen, (255, 255, 255), button_rect)
 
-        # Draw and handle events for the slider
-        slider.draw(screen)
-        slider_value = slider.slider_value  # Get the current value of the slider
-        print("Slider 1:", slider_value)  # Print slider value to console
 
     else:
         if orbital_game_phase is False:
@@ -117,7 +167,8 @@ while True:
 
             # Projectile motion loop
             if shooting_trajectory:
-                shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_number)
+                shooting_trajectory, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_number)
+
             else:
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
 
@@ -125,8 +176,19 @@ while True:
             # Increment angle for rotation
             angle -= 0.1
 
+            # Draw and handle events for the slider
+            slider.draw(screen)
+            slider_value = slider.slider_value  # Get the current value of the slider
+
             # Draw the circle with updated angle
             orbital_game_phase = orbital_phase.draw_circle(radius, angle)
 
+
+    # Display the music button
+    screen.blit(image_music_button, coordinate_music_button)
+
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
+
+pygame.mixer.quit()
+pygame.quit()
