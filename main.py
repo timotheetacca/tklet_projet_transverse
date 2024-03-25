@@ -1,10 +1,9 @@
-import pygame
 import pygame.mixer
 import math
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 from slider import Slider
-from save import update_save_information
+from save import update_save_information, remove_life
 
 pygame.init()
 pygame.mixer.init()
@@ -48,6 +47,7 @@ fps = 120  # Set FPS rate for frame rate
 trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height)
 orbital_phase = OrbitalPhase(5, screen)
 
+level_attempts = 0
 circle_x = 864
 circle_y = 0
 time_step = 0
@@ -95,14 +95,10 @@ while True:
 
                 else:
                     if music_button_rect.collidepoint(pygame.mouse.get_pos()):
-
                         if image_music_button == red_music_button:
-
                             image_music_button = green_music_button
                             pygame.mixer.music.unpause()
-
                         else:
-
                             image_music_button = red_music_button
                             pygame.mixer.music.pause()
 
@@ -112,7 +108,7 @@ while True:
                         menu = False  # Set menu to False on click
 
                 if slider.is_over_handle(event.pos):
-                        slider.dragging = True
+                    slider.dragging = True
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
@@ -131,7 +127,6 @@ while True:
             if slider.dragging:  # Check if slider is being dragged
                 slider.update_value(event.pos)  # Update slider value based on mouse position
 
-
     # Main game loop
     screen.fill((0, 0, 0))
     level_number, lives = update_save_information("game_save.txt")
@@ -144,32 +139,36 @@ while True:
         button_rect = pygame.Rect(screen_width // 2 - 100, screen_height // 2 - 50, 200, 100)
         pygame.draw.rect(screen, (255, 255, 255), button_rect)
 
-
     else:
         if orbital_game_phase is False:
-            angle = 0
+            if level_attempts < 3:
+                angle = 0
 
-            # Calculate v continuously while mouse button is pressed
-            if mouse_pressed:
-                deplacement_x = position_initiale_x - mouse_x
-                deplacement_y = position_initiale_y - mouse_y
+                # Calculate v continuously while mouse button is pressed
+                if mouse_pressed:
+                    deplacement_x = position_initiale_x - mouse_x
+                    deplacement_y = position_initiale_y - mouse_y
 
-                # Calculate the vector from the ball to the mouse
-                vector_mouse = math.sqrt((mouse_x - position_initiale_x) ** 2 + (mouse_y - position_initiale_y) ** 2)
+                    # Calculate the vector from the ball to the mouse
+                    vector_mouse = math.sqrt((mouse_x - position_initiale_x) ** 2 + (mouse_y - position_initiale_y) ** 2)
 
-                # Calculate the angle between the x-axis
-                if vector_mouse != 0:
-                    alpha = math.degrees(math.acos(deplacement_x / vector_mouse))
+                    # Calculate the angle between the x-axis
+                    if vector_mouse != 0:
+                        alpha = math.degrees(math.acos(deplacement_x / vector_mouse))
 
-                # Get a velocity from the mouse displacement
-                v = 40 + deplacement_x / 10 - deplacement_y / 10
+                    # Get a velocity from the mouse displacement
+                    v = 40 + deplacement_x / 10 - deplacement_y / 10
 
-            # Projectile motion loop
-            if shooting_trajectory:
-                shooting_trajectory, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_number)
+                # Projectile motion loop
+                if shooting_trajectory:
+                    shooting_trajectory, orbital_game_phase, level_attempts = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_number, level_attempts)
 
+                else:
+                    trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
             else:
-                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
+                # ⚠ Should call back to menu
+                remove_life("game_save.txt")
+                level_attempts = 0
 
         else:
             # Increment angle for rotation
@@ -180,8 +179,7 @@ while True:
             slider_value = slider.slider_value  # Get the current value of the slider
 
             # Draw the circle with updated angle
-            orbital_game_phase = orbital_phase.draw_circle(radius, angle)
-
+            orbital_game_phase, level_attempts = orbital_phase.draw_circle(radius, angle)
 
     # Display the music button
     screen.blit(image_music_button, coordinate_music_button)

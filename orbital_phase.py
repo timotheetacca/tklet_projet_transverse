@@ -26,7 +26,8 @@ class OrbitalPhase:
 
         # Check if a full turn is made
         if angle <= -360:
+            return False, 0
 
-            return False
+        return True, 0
 
 

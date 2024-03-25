@@ -10,7 +10,7 @@ def update_save_information(save_file_name):
         level_number, lives = informations.split("|")
         return int(level_number), int(lives)
 
-# Update level and lives
+# General functions to update level and lives
 def update_lives(save_file_name,new_lives):
     with open(save_file_name, 'r') as save:
         informations = save.read().strip().split("|")
@@ -24,6 +24,7 @@ def update_level(save_file_name,new_level):
         lives = int(informations[1])
     with open(save_file_name, 'w') as save:
         save.write(f"{new_level}|{lives}")
+
 
 # Remove 1 life using update level functions
 def remove_life(save_file_name):
@@ -40,3 +41,4 @@ def add_level(save_file_name):
         level_number = int(informations[0])
     new_level = level_number + 1
     update_level(save_file_name, new_level)
+
