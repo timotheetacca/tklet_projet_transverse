@@ -11,10 +11,12 @@ pygame.mixer.init()
 # Load and save game information
 level_number, lives = update_save_information("game_save.txt")
 
+
 # Set up the window
 screen_width, screen_height = 1536, 864
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.SRCALPHA)
 pygame.display.set_caption("Efreispace")
+
 
 # Set up the cursor
 cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
@@ -61,7 +63,6 @@ stop_level = False
 orbital_game_phase = False
 music_playing = True
 menu = True
-
 
 # Initialize the slider
 slider = Slider((50, 50), 200, 0, 100, 50)  # Example position, width, min_value, max_value, and initial_value
@@ -162,7 +163,6 @@ while True:
 
                 else:
                     trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
-              
             else:
                 # ⚠ Should call back to menu
                 remove_life("game_save.txt")
@@ -181,10 +181,6 @@ while True:
 
     # Display the music button
     screen.blit(image_music_button, coordinate_music_button)
-
-    # Display the music button
-    screen.blit(image_music_button, coordinate_music_button)
-
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
