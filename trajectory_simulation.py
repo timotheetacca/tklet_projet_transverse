@@ -1,6 +1,7 @@
 import pygame
 from trajectory import draw_trajectory, draw_aim
 from level import level
+from save import add_level, remove_life
 
 screen_width, screen_height = 1536, 864
 fps = 120
@@ -55,7 +56,7 @@ class TrajectorySimulation:
         self.level_display(level_number)
         draw_aim(self.screen, g, v, h, alpha, self.circle_radius, self.screen_height, 22)
 
-    def projectile_motion(self, circle_x, circle_y, g, v, h, alpha, level_number):
+    def projectile_motion(self, circle_x, circle_y, g, v, h, alpha, level_number, level_attempts):
         """
         Display the motion of the projectile.
 
@@ -68,12 +69,14 @@ class TrajectorySimulation:
         h(int) : Initial height
         alpha(int) : Launch angle in degrees
         level_number(int) : Current level number
+        level_attempts(int) : Number of attempts on the current level
 
         Returns
         -------
-        shooting_trajectory(bool) : Indicates whether the projectile is still in motion.
-        level_number(int) : Updated level number if the projectile entered a new level.
+        shooting_trajectory(bool) : Indicates whether the projectile is still in motion
+        bool : Indicates whether the projectile has successfully hit the target
         """
+
         # Reset timer and position for shooting
         time_step = 0
         clock = pygame.time.Clock()
@@ -88,6 +91,7 @@ class TrajectorySimulation:
             for obstacle in obstacles:
                 if obstacle.collidepoint(circle_x, circle_y):
                     stop_level = True
+                    level_attempts+=1
 
             # Call the draw_trajectory function from trajectory.py
             circle_x, circle_y = draw_trajectory(self.screen, g, v, h, alpha, time_step,
@@ -100,13 +104,14 @@ class TrajectorySimulation:
             if (circle_x - position[0]) ** 2 + (circle_y - position[1]) ** 2 <= orbit_radius ** 2:
                 stop_level = True
                 shooting_trajectory = False
-                orbital_game_phase = True
-                level_number += 1
                 self.transparent_surface.fill((0, 0, 0))
-                return shooting_trajectory, level_number, True
+                add_level("game_save.txt")
+                return shooting_trajectory, True, level_attempts
+
+        level_attempts += 1
 
         # Reset the mouse position to avoid angle error on the next throw
         pygame.mouse.set_pos(self.screen_width // 2, self.screen_height // 2)
         self.transparent_surface.fill((0, 0, 0))
 
-        return shooting_trajectory, level_number, False
+        return shooting_trajectory, False, level_attempts
