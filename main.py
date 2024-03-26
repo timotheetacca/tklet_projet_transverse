@@ -15,9 +15,6 @@ level_number, lives = update_save_information("game_save.txt")
 screen_width, screen_height = 1536, 864
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.SRCALPHA)
 pygame.display.set_caption("Efreispace")
-pygame_icon = pygame.image.load("Assets/Icons/tklet_icon.png")
-pygame.display.set_icon(pygame_icon)
-
 
 # Set up the cursor
 cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
@@ -184,8 +181,6 @@ while True:
 
     # Display the music button
     screen.blit(image_music_button, coordinate_music_button)
-
-            orbital_phase.orbital_requirements()
 
     # Display the music button
     screen.blit(image_music_button, coordinate_music_button)
