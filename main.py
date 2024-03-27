@@ -57,6 +57,7 @@ h = 0
 angle = 0
 radius = 390
 
+mouse_held = False
 mouse_pressed = False
 shooting_trajectory = False
 stop_level = False
@@ -65,7 +66,7 @@ music_playing = True
 menu = True
 
 # Initialize the slider
-slider = Slider((50, 50), 200, 0, 100, 50)  # Example position, width, min_value, max_value, and initial_value
+slider = Slider((50, 50), 200, 0, 100, 50)
 
 while True:
     for event in pygame.event.get():
@@ -74,52 +75,38 @@ while True:
             pygame.quit()
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                cursor_image = pygame.image.load("Assets/Cursor/cursor_hold.png")
-                cursor = pygame.transform.scale(cursor_image, (32, 32))
+            mouse_held = True
 
-                left_click_pos = event.pos
+            if event.button == 1 and not music_button_rect.collidepoint(pygame.mouse.get_pos()):
+                mouse_pressed = True
+                position_initial_x, position_initial_y = pygame.mouse.get_pos()
 
-                if not music_button_rect.collidepoint(left_click_pos):
+            if event.button == 3:
+                # Cancel aiming when right mouse button is pressed
+                mouse_pressed = False
+                angle = 0
 
-                    if orbital_game_phase is False:
-                        mouse_pressed = True
-                        position_initiale_x, position_initiale_y = pygame.mouse.get_pos()
-
-                    if menu:
-                        # Check if mouse click is inside the rectangle
-                        if button_rect.collidepoint(event.pos):
-                            menu = False  # Set menu to False on click
-
+            if music_button_rect.collidepoint(pygame.mouse.get_pos()):
+                if image_music_button == red_music_button:
+                    image_music_button = green_music_button
+                    pygame.mixer.music.unpause()
                 else:
-                    if music_button_rect.collidepoint(pygame.mouse.get_pos()):
-                        if image_music_button == red_music_button:
-                            image_music_button = green_music_button
-                            pygame.mixer.music.unpause()
-                        else:
-                            image_music_button = red_music_button
-                            pygame.mixer.music.pause()
-
-                if menu:
-                    # Check if mouse click is inside the rectangle
-                    if button_rect.collidepoint(event.pos):
-                        menu = False  # Set menu to False on click
-
-                if slider.is_over_handle(event.pos):
-                    slider.dragging = True
+                    image_music_button = red_music_button
+                    pygame.mixer.music.pause()
 
         elif event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
-                cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
-                cursor = pygame.transform.scale(cursor_image, (32, 32))
+            mouse_held = False
 
-            if not music_button_rect.collidepoint(left_click_pos):
-                if orbital_game_phase is False:
-                    mouse_pressed = False
-                    shooting_trajectory = True
-                    stop_level = False
+            if event.button == 1 and mouse_pressed:
+                mouse_pressed = False
+                shooting_trajectory = True
+                stop_level = False
 
-                slider.dragging = False
+            if slider.dragging:  # Check if slider is being dragged
+                slider.dragging = False  # Stop dragging when left mouse button is released
+
+            if menu and button_rect.collidepoint(event.pos):  # Check if menu is active and button is clicked
+                menu = False  # Set menu to False on click
 
         elif event.type == pygame.MOUSEMOTION:
             if slider.dragging:  # Check if slider is being dragged
@@ -131,6 +118,11 @@ while True:
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
+
+    if mouse_held:
+        cursor = pygame.transform.scale(pygame.image.load("Assets/Cursor/cursor_hold.png"), (32, 32))
+    else:
+        cursor = pygame.transform.scale(pygame.image.load("Assets/Cursor/cursor_still.png"), (32, 32))
 
     if menu:
         # Draw the button
@@ -144,11 +136,11 @@ while True:
 
                 # Calculate v continuously while mouse button is pressed
                 if mouse_pressed:
-                    deplacement_x = position_initiale_x - mouse_x
-                    deplacement_y = position_initiale_y - mouse_y
+                    deplacement_x = position_initial_x - mouse_x
+                    deplacement_y = position_initial_y - mouse_y
 
                     # Calculate the vector from the ball to the mouse
-                    vector_mouse = math.sqrt((mouse_x - position_initiale_x) ** 2 + (mouse_y - position_initiale_y) ** 2)
+                    vector_mouse = math.sqrt((mouse_x - position_initial_x) ** 2 + (mouse_y - position_initial_y) ** 2)
 
                     # Calculate the angle between the x-axis
                     if vector_mouse != 0:
@@ -164,13 +156,14 @@ while True:
                 else:
                     trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
             else:
+                print("Should go back to planet selection, -1 life for now")
                 # ⚠ Should call back to menu
                 remove_life("game_save.txt")
                 level_attempts = 0
 
         else:
             # Increment angle for rotation
-            angle -= 0.1
+            angle -= 0.5
 
             # Draw and handle events for the slider
             slider.draw(screen)
@@ -185,5 +178,4 @@ while True:
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
 
-pygame.mixer.quit()
 pygame.quit()
