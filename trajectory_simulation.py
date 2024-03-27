@@ -98,12 +98,9 @@ class TrajectorySimulation:
 
         # 'For' loop to avoid code locking with while and optimization in case of bugs, will stop after 1000 steps
         for steps in range(1000):
+            # Stops if the level is finished
             if not (0 <= circle_x <= screen_width and 0 <= circle_y <= screen_height) or stop_level:
                 level_attempts += 1
-
-                # Reset the mouse position to avoid angle error on the next throw
-                pygame.mouse.set_pos(self.screen_width // 2, self.screen_height // 2)
-
                 return shooting_trajectory, False, level_attempts
 
             self.screen.fill((0, 0, 0))
@@ -129,8 +126,10 @@ class TrajectorySimulation:
 
             # Draw a circle around the ball to indicate it has an object
             if object_status:
-                pygame.draw.circle(self.screen, (38, 125, 125), (circle_x, circle_y),
-                                   self.circle_radius + 10)
+                shield_image = (pygame.image.load('shield.png'))
+                shield_image = pygame.transform.scale(shield_image, (50, 50))
+                shield_rect = shield_image.get_rect(center=(circle_x, circle_y))
+                self.screen.blit(shield_image, shield_rect)
 
             # Call the draw_trajectory function from trajectory.py
             circle_x, circle_y = draw_trajectory(self.screen, g, v, h, alpha, time_step,
