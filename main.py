@@ -4,6 +4,7 @@ from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 from slider import Slider
 from save import update_save_information, remove_life
+from level_map import level_selection
 
 pygame.init()
 pygame.mixer.init()
@@ -37,6 +38,35 @@ image_music_button = green_music_button
 coordinate_music_button = (screen_width - size_music_button + 20, screen_height - size_music_button + 20)
 music_button_rect = green_music_button.get_rect(topleft=coordinate_music_button)
 
+# For Level Map
+background_image = pygame.image.load("Assets/Cinematic/background.jpg").convert()
+background = pygame.transform.scale(background_image, (screen_width // 2, screen_height))
+all_planets = [{"image_path": "Assets/Switch_Level/planet1.png", "x": 250},
+    {"image_path": "Assets/Switch_Level/planet2.png", "x": 1250},
+    {"image_path": "Assets/Switch_Level/planet3.png", "x": 2250}]
+planets = []
+planet_rects = []
+for data in all_planets:
+    planet_image = pygame.image.load(data["image_path"]).convert_alpha()
+    planet = pygame.transform.scale(planet_image, (250, 250))
+    planet_rect = planet.get_rect()
+    planet_rect.x = data["x"]
+    planet_rect.y = screen_height / 2 - 150
+    planets.append(planet)
+    planet_rects.append(planet_rect)
+arrow_data = [{"image_path": "Assets/Switch_Level/left_arrow.png", "x": 75},
+    {"image_path": "Assets/Switch_Level/right_arrow.png", "x": screen_width - 150}]
+arrows = []
+arrow_rects = []
+for data in arrow_data:
+    arrow_image = pygame.image.load(data["image_path"]).convert_alpha()
+    arrow = pygame.transform.scale(arrow_image, (100, 80))
+    arrow_rect = arrow.get_rect()
+    arrow_rect.x = data["x"]
+    arrow_rect.y = screen_height / 2 - 60
+    arrows.append(arrow)
+    arrow_rects.append(arrow_rect)
+
 fps = 120  # Set FPS rate for frame rate
 
 # Initialize TrajectorySimulation instance
@@ -61,7 +91,7 @@ stop_level = False
 orbital_game_phase = False
 music_playing = True
 menu = True
-
+loaded_level=False
 
 # Initialize the slider
 slider = Slider((50, 50), 200, 0, 100, 50)  # Example position, width, min_value, max_value, and initial_value
@@ -137,7 +167,11 @@ while True:
         pygame.draw.rect(screen, (255, 255, 255), button_rect)
 
     else:
-        if orbital_game_phase is False:
+        if not orbital_game_phase and not loaded_level:
+            loaded_level,level_chosen=level_selection(screen, background, planets, planet_rects, arrows, arrow_rects)
+
+        if loaded_level:
+            screen.fill((0, 0, 0))
             if level_attempts < 3:
                 angle = 0
 
@@ -158,17 +192,14 @@ while True:
 
                 # Projectile motion loop
                 if shooting_trajectory:
-                    shooting_trajectory, orbital_game_phase, level_attempts = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_number, level_attempts)
-
+                        shooting_trajectory, orbital_game_phase, level_attempts,loaded_level = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_chosen, level_attempts)
                 else:
-                    trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
-              
+                    trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_chosen)
             else:
                 # ⚠ Should call back to menu
                 remove_life("game_save.txt")
                 level_attempts = 0
-
-        else:
+        if orbital_game_phase:
             # Increment angle for rotation
             angle -= 0.1
 
