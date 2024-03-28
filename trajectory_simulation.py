@@ -31,18 +31,50 @@ class TrajectorySimulation:
         position(tuple) : Coordinates of the planet
         obstacles(list) : List of all the obstacles in the level
         """
+        # Paths to the asteroid images
+        asteroid_paths = [
+            "Assets/Level/Asteroids/asteroid_1.png",
+            "Assets/Level/Asteroids/asteroid_2.png",
+            "Assets/Level/Asteroids/asteroid_3.png",
+            "Assets/Level/Asteroids/asteroid_4.png"
+        ]
+
+        # Load asteroid images
+        asteroid_images = []
+        for path in asteroid_paths:
+            img = pygame.image.load(path).convert_alpha()
+            img = pygame.transform.scale(img, (48, 48))
+            asteroid_images.append(img)
+
+        # Index to keep track of current asteroid image
+        asteroid_index = 0
+
         # Collect the level info and print it
         orbit_radius, position, obstacles, objects = level(level_number, self.screen, self.transparent_surface)
 
         if len(obstacles) > len(modified_obstacles) and not full_level:
             for obstacle in modified_obstacles:
-                pygame.draw.rect(self.transparent_surface, (100, 65, 23), obstacle)
+                # Draw scaled asteroid image instead of rectangle
+                self.transparent_surface.blit(asteroid_images[asteroid_index], obstacle)
+                # Move to the next asteroid image
+                asteroid_index = (asteroid_index + 1) % len(asteroid_images)
         else:
             for obstacle in obstacles:
-                pygame.draw.rect(self.transparent_surface, (100, 65, 23), obstacle)
+                # Draw scaled asteroid image instead of rectangle
+                self.transparent_surface.blit(asteroid_images[asteroid_index], obstacle)
+                # Move to the next asteroid image
+                asteroid_index = (asteroid_index + 1) % len(asteroid_images)
 
         for object in objects:
-            pygame.draw.rect(self.transparent_surface, (169, 169, 169), object)
+            # Draw a shield icon for objects
+            if object[0] == "shield":
+                # Load and blit shield icon
+                shield_icon_img = pygame.image.load("Assets/Level/Items/shield_icon.png").convert_alpha()
+                shield_icon_img = pygame.transform.scale(shield_icon_img, (40, 40))
+                self.transparent_surface.blit(shield_icon_img, object[1])
+            else:
+                # Draw rectangles for other objects
+                pygame.draw.rect(self.transparent_surface, (169, 169, 169), object)
 
         return orbit_radius, position, obstacles, objects
 
@@ -121,12 +153,12 @@ class TrajectorySimulation:
 
             # Check for collisions with objects
             for object in objects:
-                if object.collidepoint(circle_x, circle_y):
+                if object[1].collidepoint(circle_x, circle_y):
                     object_status = True
 
             # Draw a circle around the ball to indicate it has an object
             if object_status:
-                shield_image = (pygame.image.load('shield.png'))
+                shield_image = (pygame.image.load('Assets/Level/Items/shield.png'))
                 shield_image = pygame.transform.scale(shield_image, (50, 50))
                 shield_rect = shield_image.get_rect(center=(circle_x, circle_y))
                 self.screen.blit(shield_image, shield_rect)
