@@ -23,6 +23,9 @@ cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
 cursor = pygame.transform.scale(cursor_image, (32, 32))
 pygame.mouse.set_visible(False)
 
+# Load a background image
+background_image = pygame.image.load("Assets/Level/background_space.png")
+
 # Music parameters
 pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
 pygame.mixer.music.set_volume(0.25)
@@ -42,7 +45,7 @@ music_button_rect = green_music_button.get_rect(topleft=coordinate_music_button)
 fps = 120  # Set FPS rate for frame rate
 
 # Initialize TrajectorySimulation instance
-trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height)
+trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height,background_image)
 orbital_phase = OrbitalPhase(5, screen)
 
 clock = pygame.time.Clock()
@@ -85,7 +88,6 @@ while True:
             if event.button == 3:
                 # Cancel aiming when right mouse button is pressed
                 mouse_pressed = False
-                angle = 0
 
             if music_button_rect.collidepoint(pygame.mouse.get_pos()):
                 if image_music_button == red_music_button:

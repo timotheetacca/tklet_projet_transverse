@@ -6,14 +6,14 @@ from save import add_level
 screen_width, screen_height = 1536, 864
 fps = 120
 
-
 class TrajectorySimulation:
-    def __init__(self, circle_radius, screen, screen_width, screen_height):
+    def __init__(self, circle_radius, screen, screen_width, screen_height, background_image):
         self.transparent_surface = pygame.Surface((1536, 864), pygame.SRCALPHA)
         self.circle_radius = circle_radius
         self.screen = screen
         self.screen_width = screen_width
         self.screen_height = screen_height
+        self.background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
 
     def level_display(self, level_number, full_level,time_step ,modified_obstacles=[]):
         """
@@ -96,6 +96,7 @@ class TrajectorySimulation:
         -------
         None
         """
+        self.screen.blit(self.background_image, (0, 0))
         self.level_display(level_number, True, time_step)
         draw_aim(self.screen, g, v, h, alpha, self.circle_radius, self.screen_height, 22)
 
@@ -136,7 +137,7 @@ class TrajectorySimulation:
                 level_attempts += 1
                 return shooting_trajectory, False, level_attempts
 
-            self.screen.fill((0, 0, 0))
+            self.screen.blit(self.background_image, (0, 0))
             self.level_display(level_number, False, time_step,obstacles)
 
             # Check for collisions with obstacles
@@ -149,7 +150,7 @@ class TrajectorySimulation:
                     else:
                         # Removes the obstacle if it touched with an object
                         obstacles.remove(obstacle)
-                        self.transparent_surface.fill((0, 0, 0))
+                        self.transparent_surface.blit(self.background_image, (0, 0))
                         object_status = False
 
             # Check for collisions with objects
@@ -175,7 +176,7 @@ class TrajectorySimulation:
             if (circle_x - position[0]) ** 2 + (circle_y - position[1]) ** 2 <= orbit_radius ** 2:
                 stop_level = True
                 shooting_trajectory = False
-                self.transparent_surface.fill((0, 0, 0))
+                self.transparent_surface.blit(self.background_image, (0, 0))
                 add_level("game_save.txt")
                 return shooting_trajectory, True, level_attempts
 

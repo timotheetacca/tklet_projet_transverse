@@ -14,7 +14,7 @@ def display_advice(screen, text, time_step):
     # Set the speech bubble for the text
     frame_img = pygame.image.load("Assets/Level/Character/frame.png").convert_alpha()
     frame_img = pygame.transform.scale(frame_img, (400, 145))
-    screen.blit(frame_img, (55, 70))
+    screen.blit(frame_img, (50, 70))
 
     # Load the character's sprite
     character_paths = [
@@ -27,10 +27,10 @@ def display_advice(screen, text, time_step):
     frame = int((time_step + 1) % len(character_paths))
 
     # Display the advice on the screen
-    animate_images(screen, character_paths, (60, 60), (20, 25), frame)
+    animate_images(screen, character_paths, (65, 65), (15, 15), frame)
     font = (pygame.font.Font("Assets/pixel_art_font.ttf", 25))
     text = font.render(text, True, (0, 0, 0))
-    screen.blit(text, (75, 105))
+    screen.blit(text, (70, 105))
 
 
 def planet(transparent_surface, position, planet_radius, orbit_radius, level_number):
@@ -57,7 +57,7 @@ def level(level_number, screen, transparent_surface, time_step):
 
         # Load the character's text
         text = ("Drag your mouse backward to set the angle"
-                "\nand power of the shot, then releasing it"
+                "\nand power of the shot, then release it"
                 "\nto launch ! You can cancel your shoot by"
                 "\nright clicking when aiming !")
 
