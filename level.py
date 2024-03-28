@@ -2,13 +2,35 @@ import pygame
 
 screen_width, screen_height = 1536, 864
 
+
 def animate_images(screen, list_images, size, position, current_image):
+    # Animate an image using as a gif
     animation_img = pygame.image.load(list_images[current_image]).convert_alpha()
     animation_img = pygame.transform.scale(animation_img, size)
     screen.blit(animation_img, position)
 
-def current_frame(frame, list_images):
-    return int((frame+1) % len(list_images))
+
+def display_advice(screen, text, time_step):
+    # Set the speech bubble for the text
+    frame_img = pygame.image.load("Assets/Level/Character/frame.png").convert_alpha()
+    frame_img = pygame.transform.scale(frame_img, (400, 145))
+    screen.blit(frame_img, (55, 70))
+
+    # Load the character's sprite
+    character_paths = [
+        "Assets/Level/Character/character_1.png",
+        "Assets/Level/Character/character_2.png",
+        "Assets/Level/Character/character_3.png"
+    ]
+
+    # Calculate which frame to display based on time _step
+    frame = int((time_step + 1) % len(character_paths))
+
+    # Display the advice on the screen
+    animate_images(screen, character_paths, (60, 60), (20, 25), frame)
+    font = (pygame.font.Font("Assets/pixel_art_font.ttf", 25))
+    text = font.render(text, True, (0, 0, 0))
+    screen.blit(text, (75, 105))
 
 
 def planet(transparent_surface, position, planet_radius, orbit_radius, level_number):
@@ -33,32 +55,16 @@ def level(level_number, screen, transparent_surface, time_step):
         screen.blit(transparent_surface, (0, 0))
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
 
-        frame_img = pygame.image.load("Assets/Level/Character/frame.png").convert_alpha()
-        frame_img = pygame.transform.scale(frame_img, (342, 87))
-        screen.blit(frame_img, (10, 10))
+        # Load the character's text
+        text = ("Drag your mouse backward to set the angle"
+                "\nand power of the shot, then releasing it"
+                "\nto launch ! You can cancel your shoot by"
+                "\nright clicking when aiming !")
 
-        character_paths = [
-            "Assets/Level/Character/character_1.png",
-            "Assets/Level/Character/character_2.png",
-            "Assets/Level/Character/character_3.png"
-        ]
-
-        frame = current_frame(time_step, character_paths)
-
-        animate_images(screen, character_paths, (60,60), (20,25), frame)
-
-        font = (pygame.font.Font("Assets/pixel_art_font.ttf", 22))
-        text = font.render("Drag your mouse backward to set ", True, (255, 255, 255))
-        text2 = font.render("the angle and power of the shot,", True, (255, 255, 255))
-        text3 = font.render("then releasing it to launch !", True, (255, 255, 255))
-        screen.blit(text, (100,28))
-        screen.blit(text2, (100, 45))
-        screen.blit(text3, (100, 62))
-
+        display_advice(screen, text, time_step)
 
         return orbit_radius, position, [], []
 
-
     if level_number == 2:
         planet_radius = 35
         orbit_radius = 85
@@ -68,6 +74,14 @@ def level(level_number, screen, transparent_surface, time_step):
 
         # Add all the obstacles contained in the level
         obstacles = [pygame.Rect(700, 460, 40, 40), pygame.Rect(700, 250, 40, 40)]
+
+        # Load the character's text
+        text = ("Hey, watch out for the asteroids! They"
+                "\ncould destroy your ship if you crash into"
+                "\nthem! So you'd better do everything you can"
+                "\nto avoid them !")
+
+        display_advice(screen, text, time_step)
 
         return orbit_radius, position, obstacles, []
 
@@ -83,7 +97,15 @@ def level(level_number, screen, transparent_surface, time_step):
                      pygame.Rect(850, 260, 40, 40)]
 
         # Add all the objects contained in the level
-        objects = [["shield", pygame.Rect(500, 500, 30, 30)]]
+        objects = [["shield", pygame.Rect(500, 500, 40, 40)]]
+
+        # Load the character's text
+        text = ("Hey, look over there! Isn't that an asteroid"
+                "\nshield over there ?! Go and get it, you"
+                "\nmight be able to protect your ship against"
+                "\nat least one asteroid.")
+
+        display_advice(screen, text, time_step)
 
         return orbit_radius, position, obstacles, objects
 
@@ -100,44 +122,3 @@ def level(level_number, screen, transparent_surface, time_step):
 
         return orbit_radius, position, obstacles, objects
 
-
-    if level_number == 2:
-        planet_radius = 35
-        orbit_radius = 85
-        position = (1200, 300)
-        screen.blit(transparent_surface, (0, 0))
-        planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
-
-        # Add all the obstacles contained in the level
-        obstacles = [pygame.Rect(700, 460, 40, 40), pygame.Rect(700, 250, 40, 40)]
-
-        return orbit_radius, position, obstacles, []
-
-    if level_number == 3:
-        planet_radius = 35
-        orbit_radius = 85
-        position = (1200, 250)
-        screen.blit(transparent_surface, (0, 0))
-        planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
-
-        # Add all the obstacles contained in the level
-        obstacles = [pygame.Rect(700, 350, 40, 40), pygame.Rect(700, 410, 40, 40), pygame.Rect(760, 470, 40, 40),
-                     pygame.Rect(850, 260, 40, 40)]
-
-        # Add all the objects contained in the level
-        objects = [["shield", pygame.Rect(500, 500, 30, 30)]]
-
-        return orbit_radius, position, obstacles, objects
-
-    if level_number == 4:
-        planet_radius = 35
-        orbit_radius = 85
-        position = (1200, 300)
-
-        # Add all the obstacles contained in the level
-        obstacles = []
-
-        # Add all the objects contained in the level
-        objects = []
-
-        return orbit_radius, position, obstacles, objects
