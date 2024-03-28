@@ -45,6 +45,7 @@ fps = 120  # Set FPS rate for frame rate
 trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height)
 orbital_phase = OrbitalPhase(5, screen)
 
+clock = pygame.time.Clock()
 level_attempts = 0
 circle_x = 864
 circle_y = 0
@@ -114,6 +115,7 @@ while True:
 
     # Main game loop
     screen.fill((0, 0, 0))
+    time_step += clock.tick(fps) / 180
     level_number, lives = update_save_information("game_save.txt")
 
     # Get the mouse x and y
@@ -151,7 +153,7 @@ while True:
 
                 # Projectile motion loop
                 if shooting_trajectory:
-                    shooting_trajectory, orbital_game_phase, level_attempts = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_number, level_attempts)
+                    shooting_trajectory, orbital_game_phase, level_attempts = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_number, level_attempts, clock)
 
                 else:
                     trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)

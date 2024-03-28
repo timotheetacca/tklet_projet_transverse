@@ -15,7 +15,7 @@ class TrajectorySimulation:
         self.screen_width = screen_width
         self.screen_height = screen_height
 
-    def level_display(self, level_number, full_level, modified_obstacles=[]):
+    def level_display(self, level_number, full_level,time_step ,modified_obstacles=[]):
         """
         Draw a level on a screen.
 
@@ -23,6 +23,7 @@ class TrajectorySimulation:
         ----------
         level_number(int) : Current level
         full_level(bool) : Indicates whether the level should be fully displayed
+        time_step(int) : Current frame for character animation
         modified_obstacles(list, optional) : List of modified obstacles
 
         Returns
@@ -50,7 +51,7 @@ class TrajectorySimulation:
         asteroid_index = 0
 
         # Collect the level info and print it
-        orbit_radius, position, obstacles, objects = level(level_number, self.screen, self.transparent_surface)
+        orbit_radius, position, obstacles, objects = level(level_number, self.screen, self.transparent_surface, time_step)
 
         if len(obstacles) > len(modified_obstacles) and not full_level:
             for obstacle in modified_obstacles:
@@ -78,7 +79,7 @@ class TrajectorySimulation:
 
         return orbit_radius, position, obstacles, objects
 
-    def projectile_aim(self, g, v, h, alpha, t, level_number):
+    def projectile_aim(self, g, v, h, alpha, time_step, level_number):
         """
         Display the aim trajectory on the screen.
 
@@ -88,16 +89,17 @@ class TrajectorySimulation:
         v(int) : Initial velocity
         h(int) : Initial height
         alpha(int) : Launch angle in degrees
+        time_step(int): Current frame for character animation
         level_number(int) : Current level number
 
         Returns
         -------
         None
         """
-        self.level_display(level_number, True)
+        self.level_display(level_number, True, time_step)
         draw_aim(self.screen, g, v, h, alpha, self.circle_radius, self.screen_height, 22)
 
-    def projectile_motion(self, circle_x, circle_y, g, v, h, alpha, level_number, level_attempts):
+    def projectile_motion(self, circle_x, circle_y, g, v, h, alpha, level_number, level_attempts, clock):
         """
         Display the motion of the projectile.
 
@@ -121,12 +123,11 @@ class TrajectorySimulation:
 
         # Reset timer and position for shooting
         time_step = 0
-        clock = pygame.time.Clock()
         shooting_trajectory = False
         stop_level = False
         object_status = False
 
-        orbit_radius, position, obstacles, objects = self.level_display(level_number, True)
+        orbit_radius, position, obstacles, objects = self.level_display(level_number, True, time_step)
 
         # 'For' loop to avoid code locking with while and optimization in case of bugs, will stop after 1000 steps
         for steps in range(1000):
@@ -136,7 +137,7 @@ class TrajectorySimulation:
                 return shooting_trajectory, False, level_attempts
 
             self.screen.fill((0, 0, 0))
-            self.level_display(level_number, False, obstacles)
+            self.level_display(level_number, False, time_step,obstacles)
 
             # Check for collisions with obstacles
             for obstacle in obstacles:
