@@ -74,15 +74,17 @@ def display_text_scenario(story):
                 pygame.display.flip()
                 time.sleep(0.025)
 
-        state = True
-        while state:
+        message_finished_display = True
+
+        while message_finished_display:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     return
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     j += 1
-                    state = False
+                    message_finished_display = False
+                    break
 
         screen.fill((0, 0, 0))
         pygame.display.flip()

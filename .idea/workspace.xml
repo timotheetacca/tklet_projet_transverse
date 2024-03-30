@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="I finished the main part of the function.">
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Started the feature consisting of : When the user presses the space button, it goes to the next message">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenario.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario.py" afterDir="false" />
     </list>
@@ -262,7 +262,23 @@
       <option name="project" value="LOCAL" />
       <updated>1711786141128</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Now, the scenario appears like if we were typing it">
+      <option name="closed" value="true" />
+      <created>1711787256522</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1711787256522</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Started the feature consisting of : When the user presses the space button, it goes to the next message">
+      <option name="closed" value="true" />
+      <created>1711788688510</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1711788688510</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -282,6 +298,8 @@
     <MESSAGE value="Added a font, created the function for the display of the scenario" />
     <MESSAGE value="I continued the function of the scenario" />
     <MESSAGE value="I finished the main part of the function." />
-    <option name="LAST_COMMIT_MESSAGE" value="I finished the main part of the function." />
+    <MESSAGE value="Now, the scenario appears like if we were typing it" />
+    <MESSAGE value="Started the feature consisting of : When the user presses the space button, it goes to the next message" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started the feature consisting of : When the user presses the space button, it goes to the next message" />
   </component>
 </project>
