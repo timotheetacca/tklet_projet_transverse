@@ -144,7 +144,7 @@ while True:
         # Draw and handle events for the slider
         slider.draw(screen)
         slider_value = slider.slider_value  # Get the current value of the slider
-        print("Slider 1:", slider_value)  # Print slider value to console
+        #print("Slider 1:", slider_value)  # Print slider value to console
 
     else:
 
