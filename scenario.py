@@ -51,18 +51,29 @@ def display_text_scenario(story, time_message):
                 rect.height += line_surface.get_rect().height
 
             rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
-            rect.topleft = (screen_width_divided_by_two/2, (screen_height-rect.height)/2)
+            rect.topleft = (screen_width_divided_by_two / 2, (screen_height - rect.height) / 2)
 
             height_line = 0
             for line in lines:
-                line_surface = font.render(line, True, white)
-                line_rect = line_surface.get_rect()
-                line_rect.topleft = (rect.topleft[0], rect.topleft[1] + height_line)
-                height_line += line_rect.height
-                screen.blit(line_surface, line_rect)
+                for i in range(len(line) + 1):
+                    displayed_text = line[:i]
+                    displayed_text_surface = font.render(displayed_text, True, white)
+                    displayed_text_rect = displayed_text_surface.get_rect(
+                        topleft=(rect.topleft[0], rect.topleft[1] + height_line))
+                    screen.blit(displayed_text_surface, displayed_text_rect)
+                    pygame.display.flip()
+                    time.sleep(0.025)
+                height_line += displayed_text_rect.height
         else:
             text_rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
-            screen.blit(text, text_rect)
+            for i in range(len(sentence_story[j]) + 1):
+                displayed_text = sentence_story[j][:i]
+                displayed_text_surface = font.render(displayed_text, True, white)
+                displayed_text_rect = text_rect
+                screen.blit(displayed_text_surface, displayed_text_rect)
+                pygame.display.flip()
+                time.sleep(0.025)
+
 
         j += 1
         pygame.display.flip()

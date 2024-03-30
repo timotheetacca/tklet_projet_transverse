@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="I continued the function of the scenario">
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="I finished the main part of the function.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenario.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario.py" afterDir="false" />
     </list>
@@ -254,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711783012269</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="I finished the main part of the function.">
+      <option name="closed" value="true" />
+      <created>1711786141128</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1711786141128</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,6 +281,7 @@
     <MESSAGE value="I wrote the entire scenario." />
     <MESSAGE value="Added a font, created the function for the display of the scenario" />
     <MESSAGE value="I continued the function of the scenario" />
-    <option name="LAST_COMMIT_MESSAGE" value="I continued the function of the scenario" />
+    <MESSAGE value="I finished the main part of the function." />
+    <option name="LAST_COMMIT_MESSAGE" value="I finished the main part of the function." />
   </component>
 </project>
