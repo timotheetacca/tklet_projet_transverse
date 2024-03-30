@@ -12,10 +12,11 @@ font = pygame.font.Font(path_font, 30)
 
 def display_text_scenario(story, time_message):
     screen_width_divided_by_two = screen_width / 2
+    screen_height_divided_by_two = screen_height / 2
     j = 0
     sentence_story = story.split(". ")
     rect = pygame.Rect(0, 0, 0, 0)
-    rect.center = (screen_width_divided_by_two, screen_height / 2)
+    rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
     white = (255, 255, 255)
 
     for i in range(len(sentence_story) - 1):
@@ -43,11 +44,14 @@ def display_text_scenario(story, time_message):
                 lines.append(line_temp)
 
             rect.height = 0
-            rect.center = (screen_width_divided_by_two, screen_height / 2)
+            rect.width = screen_width_divided_by_two
 
             for line in lines:
                 line_surface = font.render(line, True, white)
                 rect.height += line_surface.get_rect().height
+
+            rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
+            rect.topleft = (screen_width_divided_by_two/2, (screen_height-rect.height)/2)
 
             height_line = 0
             for line in lines:
@@ -57,7 +61,7 @@ def display_text_scenario(story, time_message):
                 height_line += line_rect.height
                 screen.blit(line_surface, line_rect)
         else:
-            text_rect.center = (screen_width_divided_by_two, screen_height / 2)
+            text_rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
             screen.blit(text, text_rect)
 
         j += 1
