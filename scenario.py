@@ -10,7 +10,7 @@ path_font = "Assets/Font/pixela-extreme.ttf"
 font = pygame.font.Font(path_font, 30)
 
 
-def display_text_scenario(story, time_message):
+def display_text_scenario(story):
     screen_width_divided_by_two = screen_width / 2
     screen_height_divided_by_two = screen_height / 2
     j = 0
@@ -74,11 +74,15 @@ def display_text_scenario(story, time_message):
                 pygame.display.flip()
                 time.sleep(0.025)
 
-
-        j += 1
-        pygame.display.flip()
-
-        time.sleep(time_message)
+        state = True
+        while state:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    return
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    j += 1
+                    state = False
 
         screen.fill((0, 0, 0))
         pygame.display.flip()
