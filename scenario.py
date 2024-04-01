@@ -10,19 +10,27 @@ path_font = "Assets/Font/pixela-extreme.ttf"
 font = pygame.font.Font(path_font, 30)
 
 
+def darken_screen(transparency_level):
+    surface = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+    surface.fill((0, 0, 0, transparency_level))
+    screen.blit(surface, (0, 0))
+
+
 def display_text_scenario(story):
     screen_width_divided_by_two = screen_width / 2
     screen_height_divided_by_two = screen_height / 2
     j = 0
     sentence_story = story.split(". ")
+    number_of_sentences = len(sentence_story)
     rect = pygame.Rect(0, 0, 0, 0)
     rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
     white = (255, 255, 255)
+    transparency = 0
 
-    for i in range(len(sentence_story) - 1):
+    for i in range(number_of_sentences - 1):
         sentence_story[i] += "."
 
-    while j != len(sentence_story):
+    while j != number_of_sentences:
         text = font.render(sentence_story[j], True, white)
         text_rect = text.get_rect()
 
@@ -74,7 +82,7 @@ def display_text_scenario(story):
                 pygame.display.flip()
                 time.sleep(0.025)
 
-        fully_displayed= True
+        fully_displayed = True
 
         while fully_displayed:
             for event in pygame.event.get():
@@ -83,6 +91,16 @@ def display_text_scenario(story):
                         j += 1
                         fully_displayed = False
                         break
+
+        if j == number_of_sentences:
+            time.sleep(0.5)
+            fading = True
+            while fading:
+                darken_screen(transparency)
+                transparency += 1
+                pygame.display.flip()
+                if transparency >= 255:
+                    fading = False
 
         screen.fill((0, 0, 0))
         pygame.display.flip()
