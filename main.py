@@ -60,7 +60,6 @@ music_playing = True
 scenario = True
 menu = True
 
-
 # Initialize the slider
 slider = Slider((50, 50), 200, 0, 100, 50)  # Example position, width, min_value, max_value, and initial_value
 
@@ -101,14 +100,10 @@ while True:
                             image_music_button = red_music_button
                             pygame.mixer.music.pause()
 
-
-
-
                 if menu:
                     # Check if mouse click is inside the rectangle
                     if button_rect.collidepoint(event.pos):
                         menu = False  # Set menu to False on click
-
 
                     if slider.is_over_handle(event.pos):
                         slider.dragging = True
@@ -144,7 +139,7 @@ while True:
         # Draw and handle events for the slider
         slider.draw(screen)
         slider_value = slider.slider_value  # Get the current value of the slider
-        #print("Slider 1:", slider_value)  # Print slider value to console
+        # print("Slider 1:", slider_value)  # Print slider value to console
 
     else:
 
@@ -173,7 +168,8 @@ while True:
             # Projectile motion loop
             if shooting_trajectory:
 
-                shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, level_number)
+                shooting_trajectory, level_number, orbital_game_phase = trajectory_simulation.projectile_motion(
+                    circle_x, circle_y, g, v, h, alpha, level_number)
 
             else:
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, level_number)
@@ -189,7 +185,6 @@ while True:
 
     # Display the music button
     screen.blit(image_music_button, coordinate_music_button)
-
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display

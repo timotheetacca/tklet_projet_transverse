@@ -21,8 +21,8 @@ cursor = pygame.transform.scale(cursor_image, (32, 32))
 
 def draw_cursor():
     mouse_pos = pygame.mouse.get_pos()
+    screen.fill((0, 0, 0), (mouse_pos[0], mouse_pos[1], cursor.get_width(), cursor.get_height()))
     screen.blit(cursor, (mouse_pos[0], mouse_pos[1]))
-    pygame.display.update()
 
 
 def darken_screen(transparency_level):
@@ -55,12 +55,11 @@ def display_text_scenario(story):
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and skip_button_rect.collidepoint(
                     event.pos):
                 return
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    if not displaying_text:
-                        j += 1  # Move to the next sentence
-                        go_to_next_message = True
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not displaying_text:
+                j += 1  # Move to the next sentence
+                go_to_next_message = True
 
+        screen.fill((0, 0, 0))
         screen.blit(skip_button, skip_button_rect)
 
         text = font.render(sentence_story[j], True, white)
@@ -132,5 +131,6 @@ def display_text_scenario(story):
             go_to_next_message = False
         else:
             displaying_text = False
+
         draw_cursor()
         pygame.display.flip()

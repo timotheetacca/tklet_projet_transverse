@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Implemented a fade-out for the last message">
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="I FIXED A MAJOR BUG. LESSGOOOO">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenario.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -301,7 +302,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711957253236</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="I FIXED A MAJOR BUG. LESSGOOOO">
+      <option name="closed" value="true" />
+      <created>1712174348868</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1712174348868</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -326,6 +335,7 @@
     <MESSAGE value="Changed the scenario so that it is more fluid. Began to fix a bug" />
     <MESSAGE value="Implemented the functionality of : when the user presses space, it goes to the next message" />
     <MESSAGE value="Implemented a fade-out for the last message" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented a fade-out for the last message" />
+    <MESSAGE value="I FIXED A MAJOR BUG. LESSGOOOO" />
+    <option name="LAST_COMMIT_MESSAGE" value="I FIXED A MAJOR BUG. LESSGOOOO" />
   </component>
 </project>
