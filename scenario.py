@@ -9,6 +9,19 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 path_font = "Assets/Font/pixela-extreme.ttf"
 font = pygame.font.Font(path_font, 30)
 
+skip_image = pygame.image.load('Assets/skip.png')
+skip_button = pygame.transform.scale(skip_image, (150, 60))
+skip_button_rect = skip_button.get_rect()
+skip_button_rect.x = 1300
+skip_button_rect.y = 50
+
+cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
+cursor = pygame.transform.scale(cursor_image, (32, 32))
+
+def draw_cursor():
+    mouse_pos = pygame.mouse.get_pos()
+    screen.blit(cursor, (mouse_pos[0], mouse_pos[1]))
+    pygame.display.update()
 
 def darken_screen(transparency_level):
     surface = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
@@ -30,10 +43,21 @@ def display_text_scenario(story):
     for i in range(number_of_sentences - 1):
         sentence_story[i] += "."
 
-    while j != number_of_sentences:
+    while True:
+
+        for event in pygame.event.get():
+            if event.type == pygame.quit():
+                return
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and skip_button_rect.collidepoint(event.pos):
+                return
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    j += 1  # Move to the next sentence
+
+        screen.blit(skip_button, skip_button_rect)
+
         text = font.render(sentence_story[j], True, white)
         text_rect = text.get_rect()
-
         if text_rect.width > screen_width_divided_by_two:
             lines = []
             line_temp = ""
@@ -72,6 +96,7 @@ def display_text_scenario(story):
                     pygame.display.flip()
                     time.sleep(0.025)
                 height_line += displayed_text_rect.height
+
         else:
             text_rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
             for i in range(len(sentence_story[j]) + 1):
@@ -101,6 +126,9 @@ def display_text_scenario(story):
                 pygame.display.flip()
                 if transparency >= 255:
                     fading = False
+            break
 
+        draw_cursor()
+        pygame.display.update()
         screen.fill((0, 0, 0))
         pygame.display.flip()
