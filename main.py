@@ -3,14 +3,11 @@ import math
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 from slider import Slider
-from save import update_save_information, remove_life
+from save import update_save_information, update_level
 from level_map import level_selection
 
 pygame.init()
 pygame.mixer.init()
-
-# Load and save game information
-level_number, lives = update_save_information("game_save.txt")
 
 # Set up the window
 screen_width, screen_height = 1536, 864
@@ -148,7 +145,6 @@ while True:
     # Main game loop
     screen.fill((0, 0, 0))
     time_step += clock.tick(fps) / 180
-    level_number, lives = update_save_information("game_save.txt")
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
