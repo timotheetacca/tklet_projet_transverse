@@ -73,7 +73,7 @@ def level(level_number, screen, transparent_surface, time_step):
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
 
         # Add all the obstacles contained in the level
-        obstacles = [pygame.Rect(700, 460, 40, 40), pygame.Rect(700, 250, 40, 40)]
+        obstacles = [[pygame.Rect(700, 460, 40, 40),1], [pygame.Rect(700, 250, 40, 40),2]]
 
         # Load the character's text
         text = ("Hey, watch out for the asteroids! They"
@@ -93,8 +93,8 @@ def level(level_number, screen, transparent_surface, time_step):
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
 
         # Add all the obstacles contained in the level
-        obstacles = [pygame.Rect(700, 350, 40, 40), pygame.Rect(700, 410, 40, 40), pygame.Rect(760, 470, 40, 40),
-                     pygame.Rect(850, 260, 40, 40)]
+        obstacles = [[pygame.Rect(700, 350, 40, 40),1], [pygame.Rect(700, 410, 40, 40),2], [pygame.Rect(760, 470, 40, 40),3],
+                     [pygame.Rect(850, 260, 40, 40),4]]
 
         # Add all the objects contained in the level
         objects = [["shield", pygame.Rect(500, 500, 40, 40)]]

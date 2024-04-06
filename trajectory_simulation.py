@@ -54,17 +54,17 @@ class TrajectorySimulation:
         orbit_radius, position, obstacles, objects = level(level_number, self.screen, self.transparent_surface, time_step)
 
         if len(obstacles) > len(modified_obstacles) and not full_level:
-            for obstacle in modified_obstacles:
+            for obstacle, number in modified_obstacles:
+                # Determine the index of the asteroid image to be used based on the number associated with the obstacle
+                asteroid_index = (number - 1) % len(asteroid_images)
                 # Draw scaled asteroid image instead of rectangle
                 self.transparent_surface.blit(asteroid_images[asteroid_index], obstacle)
-                # Move to the next asteroid image
-                asteroid_index = (asteroid_index + 1) % len(asteroid_images)
         else:
-            for obstacle in obstacles:
+            for obstacle, number in obstacles:
+                # Determine the index of the asteroid image to be used based on the number associated with the obstacle
+                asteroid_index = (number - 1) % len(asteroid_images)
                 # Draw scaled asteroid image instead of rectangle
                 self.transparent_surface.blit(asteroid_images[asteroid_index], obstacle)
-                # Move to the next asteroid image
-                asteroid_index = (asteroid_index + 1) % len(asteroid_images)
 
         for object in objects:
             # Draw a shield icon for objects
@@ -142,7 +142,7 @@ class TrajectorySimulation:
 
             # Check for collisions with obstacles
             for obstacle in obstacles:
-                if obstacle.collidepoint(circle_x, circle_y):
+                if obstacle[0].collidepoint(circle_x, circle_y):
                     if not object_status:
                         stop_level = True
                         level_attempts += 1
