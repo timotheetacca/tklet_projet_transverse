@@ -1,6 +1,7 @@
 import pygame
 from trajectory import draw_trajectory, draw_aim
 from level import level
+from save import add_level
 
 screen_width, screen_height = 1536, 864
 fps = 120
@@ -14,7 +15,7 @@ class TrajectorySimulation:
         self.screen_height = screen_height
         self.background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
 
-    def level_display(self, level_number, full_level, time_step, modified_obstacles=[]):
+    def level_display(self, level_number, full_level,time_step ,modified_obstacles=[]):
         """
         Draw a level on a screen.
 
@@ -50,8 +51,7 @@ class TrajectorySimulation:
         asteroid_index = 0
 
         # Collect the level info and print it
-        orbit_radius, position, obstacles, objects = level(level_number, self.screen, self.transparent_surface,
-                                                           time_step)
+        orbit_radius, position, obstacles, objects = level(level_number, self.screen, self.transparent_surface, time_step)
 
         if len(obstacles) > len(modified_obstacles) and not full_level:
             for obstacle, number in modified_obstacles:
@@ -125,23 +125,28 @@ class TrajectorySimulation:
         # Reset timer and position for shooting
         time_step = 0
         shooting_trajectory = False
+        stop_level = False
         object_status = False
 
         orbit_radius, position, obstacles, objects = self.level_display(level_number, True, time_step)
 
         # 'For' loop to avoid code locking with while and optimization in case of bugs, will stop after 1000 steps
         for steps in range(1000):
-            if not (0 <= circle_x <= screen_width and 0 <= circle_y <= screen_height):
+            # Stops if the level is finished
+            if not (0 <= circle_x <= screen_width and 0 <= circle_y <= screen_height) or stop_level:
                 level_attempts += 1
+                return shooting_trajectory, False, level_attempts
 
             self.screen.blit(self.background_image, (0, 0))
-            self.level_display(level_number, False, time_step, obstacles)
+            self.level_display(level_number, False, time_step,obstacles)
 
             # Check for collisions with obstacles
             for obstacle in obstacles:
                 if obstacle[0].collidepoint(circle_x, circle_y):
                     if not object_status:
+                        stop_level = True
                         level_attempts += 1
+
                     else:
                         # Removes the obstacle if it touched with an object
                         obstacles.remove(obstacle)
@@ -161,15 +166,18 @@ class TrajectorySimulation:
                 self.screen.blit(shield_image, shield_rect)
 
             # Call the draw_trajectory function from trajectory.py
-            circle_x, circle_y = draw_trajectory(self.screen, g, v, h, alpha, time_step,self.circle_radius, self.screen_height, (255, 255, 255))
+            circle_x, circle_y = draw_trajectory(self.screen, g, v, h, alpha, time_step,
+                                                 self.circle_radius, self.screen_height, (255, 255, 255))
 
             pygame.display.update()
             time_step += clock.tick(fps) / 180  # Increment time step for the next iteration
 
             # Check if the projectile enters the planet's orbit
             if (circle_x - position[0]) ** 2 + (circle_y - position[1]) ** 2 <= orbit_radius ** 2:
+                stop_level = True
                 shooting_trajectory = False
-                return shooting_trajectory, True, False
+                self.transparent_surface.blit(self.background_image, (0, 0))
+                add_level("game_save.txt")
+                return shooting_trajectory, True, level_attempts
 
-        return shooting_trajectory, False, True
-
+        return shooting_trajectory, False, level_attempts

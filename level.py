@@ -2,11 +2,13 @@ import pygame
 
 screen_width, screen_height = 1536, 864
 
+
 def animate_images(screen, list_images, size, position, current_image):
     # Animate an image using as a gif
     animation_img = pygame.image.load(list_images[current_image]).convert_alpha()
     animation_img = pygame.transform.scale(animation_img, size)
     screen.blit(animation_img, position)
+
 
 def display_advice(screen, text, time_step):
     # Set the speech bubble for the text
@@ -30,6 +32,7 @@ def display_advice(screen, text, time_step):
     text = font.render(text, True, (0, 0, 0))
     screen.blit(text, (70, 105))
 
+
 def planet(transparent_surface, position, planet_radius, orbit_radius, level_number):
     # Create a surface with the desired transparency
     pygame.draw.circle(transparent_surface, (255, 255, 255, 100), (position[0], position[1]), orbit_radius)
@@ -42,6 +45,7 @@ def planet(transparent_surface, position, planet_radius, orbit_radius, level_num
 
     # Blit the planet image onto the transparent surface
     transparent_surface.blit(planet_img, (position[0] - planet_radius, position[1] - planet_radius))
+
 
 def level(level_number, screen, transparent_surface, time_step):
     if level_number == 1:
@@ -69,7 +73,7 @@ def level(level_number, screen, transparent_surface, time_step):
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
 
         # Add all the obstacles contained in the level
-        obstacles = [[pygame.Rect(700, 460, 40, 40), 1], [pygame.Rect(700, 250, 40, 40), 2]]
+        obstacles = [[pygame.Rect(700, 460, 40, 40),1], [pygame.Rect(700, 250, 40, 40),2]]
 
         # Load the character's text
         text = ("Hey, watch out for the asteroids! They"
@@ -89,9 +93,8 @@ def level(level_number, screen, transparent_surface, time_step):
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
 
         # Add all the obstacles contained in the level
-        obstacles = [[pygame.Rect(700, 350, 40, 40), 1], [pygame.Rect(700, 410, 40, 40), 2],
-                     [pygame.Rect(760, 470, 40, 40), 3],
-                     [pygame.Rect(850, 260, 40, 40), 4]]
+        obstacles = [[pygame.Rect(700, 350, 40, 40),1], [pygame.Rect(700, 410, 40, 40),2], [pygame.Rect(760, 470, 40, 40),3],
+                     [pygame.Rect(850, 260, 40, 40),4]]
 
         # Add all the objects contained in the level
         objects = [["shield", pygame.Rect(500, 500, 40, 40)]]
