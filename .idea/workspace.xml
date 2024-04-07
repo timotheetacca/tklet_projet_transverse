@@ -7,6 +7,7 @@
     <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Began to fix another issue">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenario/screen_capture_with_text_scenario.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenario/screen_capture_with_text_scenario.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenario.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -1,5 +1,6 @@
 import pygame
 import time
+import os
 
 pygame.init()
 
@@ -59,90 +60,92 @@ def display_text_scenario(story):
                 j += 1  # Move to the next sentence
                 go_to_next_message = True
 
-        if screen_fill_black_time:
-            screen.fill((0, 0, 0))
-        else:
-            screen.blit(background, (0, 0))
+        if j < number_of_sentences:
 
-        screen.blit(skip_button, skip_button_rect)
+            if screen_fill_black_time:
+                screen.fill((0, 0, 0))
+            else:
+                screen.blit(background, (0, 0))
 
-        text = font.render(sentence_story[j], True, white)
-        text_rect = text.get_rect()
+            screen.blit(skip_button, skip_button_rect)
+            text = font.render(sentence_story[j], True, white)
+            text_rect = text.get_rect()
 
-        if go_to_next_message:
-            displaying_text = True
-            screen.fill((0, 0, 0))
-            if text_rect.width > screen_width_divided_by_two:
-                lines = []
-                line_temp = ""
-                words = sentence_story[j].split()
+            if go_to_next_message:
+                displaying_text = True
+                screen.fill((0, 0, 0))
+                if text_rect.width > screen_width_divided_by_two:
+                    lines = []
+                    line_temp = ""
+                    words = sentence_story[j].split()
 
-                for word in words:
+                    for word in words:
 
-                    if font.size(line_temp + word + " ")[0] <= screen_width_divided_by_two:
-                        line_temp += word + " "
+                        if font.size(line_temp + word + " ")[0] <= screen_width_divided_by_two:
+                            line_temp += word + " "
 
-                    else:
+                        else:
+                            lines.append(line_temp)
+                            line_temp = word + " "
+
+                    if line_temp:
                         lines.append(line_temp)
-                        line_temp = word + " "
 
-                if line_temp:
-                    lines.append(line_temp)
+                    rect.height = 0
+                    rect.width = screen_width_divided_by_two
 
-                rect.height = 0
-                rect.width = screen_width_divided_by_two
+                    for line in lines:
+                        line_surface = font.render(line, True, white)
+                        rect.height += line_surface.get_rect().height
 
-                for line in lines:
-                    line_surface = font.render(line, True, white)
-                    rect.height += line_surface.get_rect().height
+                    rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
+                    rect.topleft = (screen_width_divided_by_two / 2, (screen_height - rect.height) / 2)
 
-                rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
-                rect.topleft = (screen_width_divided_by_two / 2, (screen_height - rect.height) / 2)
+                    height_line = 0
+                    for line in lines:
+                        for i in range(len(line) + 1):
+                            displayed_text = line[:i]
+                            displayed_text_surface = font.render(displayed_text, True, white)
+                            displayed_text_rect = displayed_text_surface.get_rect(
+                                topleft=(rect.topleft[0], rect.topleft[1] + height_line))
+                            screen.blit(displayed_text_surface, displayed_text_rect)
+                            pygame.display.flip()
+                            time.sleep(0.025)
+                        height_line += displayed_text_rect.height
 
-                height_line = 0
-                for line in lines:
-                    for i in range(len(line) + 1):
-                        displayed_text = line[:i]
+                else:
+                    text_rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
+                    for i in range(len(sentence_story[j]) + 1):
+                        displayed_text = sentence_story[j][:i]
                         displayed_text_surface = font.render(displayed_text, True, white)
-                        displayed_text_rect = displayed_text_surface.get_rect(
-                            topleft=(rect.topleft[0], rect.topleft[1] + height_line))
+                        displayed_text_rect = text_rect
                         screen.blit(displayed_text_surface, displayed_text_rect)
                         pygame.display.flip()
                         time.sleep(0.025)
-                    height_line += displayed_text_rect.height
 
+                screen_capture = pygame.Surface((screen_width, screen_height))
+                screen_capture.blit(screen, (0, 0))
+                os.remove('Assets/Scenario/screen_capture_with_text_scenario.png')
+                pygame.image.save(screen_capture, 'Assets/Scenario/screen_capture_with_text_scenario.png')
+                background = pygame.image.load("./Assets/Scenario/screen_capture_with_text_scenario.png")
+                screen.blit(background, (0, 0))
+                screen_fill_black_time = False
+
+                go_to_next_message = False
             else:
-                text_rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
-                for i in range(len(sentence_story[j]) + 1):
-                    displayed_text = sentence_story[j][:i]
-                    displayed_text_surface = font.render(displayed_text, True, white)
-                    displayed_text_rect = text_rect
-                    screen.blit(displayed_text_surface, displayed_text_rect)
-                    pygame.display.flip()
-                    time.sleep(0.025)
+                displaying_text = False
 
-            screen_capture = pygame.Surface((screen_width, screen_height))
+            draw_cursor()
 
-            screen_capture.blit(screen, (0, 0))
-            pygame.image.save(screen_capture, 'Assets/Scenario/screen_capture_with_text_scenario.png')
-            background = pygame.image.load("./Assets/Scenario/screen_capture_with_text_scenario.png")
-            screen.blit(background, (0, 0))
-            screen_fill_black_time = False
-
-            if j == number_of_sentences:
-                time.sleep(0.5)
-                fading = True
-                while fading:
-                    darken_screen(transparency)
-                    transparency += 1
-                    pygame.display.flip()
-                    if transparency >= 255:
-                        fading = False
-                break
-
-            go_to_next_message = False
         else:
-            displaying_text = False
+            time.sleep(0.5)
+            fading = True
+            while fading:
+                darken_screen(transparency)
+                transparency += 1
+                pygame.display.flip()
+                if transparency >= 255:
+                    fading = False
+            return
 
-        draw_cursor()
         pygame.display.flip()
