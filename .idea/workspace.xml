@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Fixed an index issue">
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="I fixed the animation of the cursor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenario/screen_capture_with_text_scenario.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenario/screen_capture_with_text_scenario.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenario.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -325,7 +326,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712477118080</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="I fixed the animation of the cursor">
+      <option name="closed" value="true" />
+      <created>1712478176664</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1712478176664</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,6 +362,7 @@
     <MESSAGE value="I FIXED A MAJOR BUG. LESSGOOOO" />
     <MESSAGE value="Began to fix another issue" />
     <MESSAGE value="Fixed an index issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed an index issue" />
+    <MESSAGE value="I fixed the animation of the cursor" />
+    <option name="LAST_COMMIT_MESSAGE" value="I fixed the animation of the cursor" />
   </component>
 </project>

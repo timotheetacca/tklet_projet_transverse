@@ -19,6 +19,21 @@ skip_button_rect.y = 50
 cursor_image_still = pygame.image.load("Assets/Cursor/cursor_still.png")
 cursor_image_hold = pygame.image.load("Assets/Cursor/cursor_hold.png")
 
+pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
+pygame.mixer.music.set_volume(0.25)
+pygame.mixer.music.play(-1)
+
+size_music_button = 90
+green_music_button = pygame.image.load("Assets/Music/Green Music Button.png")
+green_music_button = pygame.transform.scale(green_music_button, (size_music_button, size_music_button))
+
+red_music_button = pygame.image.load("Assets/Music/Red Music Button.png")
+red_music_button = pygame.transform.scale(red_music_button, (size_music_button, size_music_button))
+
+image_music_button = green_music_button
+coordinate_music_button = (screen_width - size_music_button + 20, screen_height - size_music_button + 20)
+music_button_rect = green_music_button.get_rect(topleft=coordinate_music_button)
+
 
 def draw_cursor(cursor):
     mouse_pos = pygame.mouse.get_pos()
@@ -32,6 +47,7 @@ def darken_screen(transparency_level):
 
 
 def display_text_scenario(story):
+    global image_music_button
     screen_width_divided_by_two = screen_width / 2
     screen_height_divided_by_two = screen_height / 2
     j = 0
@@ -44,7 +60,7 @@ def display_text_scenario(story):
     go_to_next_message = True
     displaying_text = False
     screen_fill_black_time = True
-    cursor = pygame.transform.scale(cursor_image_still, (32,32))
+    cursor = pygame.transform.scale(cursor_image_still, (32, 32))
 
     for i in range(number_of_sentences - 1):
         sentence_story[i] += "."
@@ -58,6 +74,18 @@ def display_text_scenario(story):
                 cursor = pygame.transform.scale(cursor_image_hold, (32, 32))
                 if skip_button_rect.collidepoint(event.pos):
                     return
+
+                if music_button_rect.collidepoint(pygame.mouse.get_pos()):
+
+                    if image_music_button == red_music_button:
+
+                        image_music_button = green_music_button
+                        pygame.mixer.music.unpause()
+
+                    else:
+
+                        image_music_button = red_music_button
+                        pygame.mixer.music.pause()
 
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 cursor = pygame.transform.scale(cursor_image_still, (32, 32))
@@ -141,6 +169,7 @@ def display_text_scenario(story):
             else:
                 displaying_text = False
 
+            screen.blit(image_music_button, coordinate_music_button)
             draw_cursor(cursor)
 
         else:
