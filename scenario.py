@@ -19,7 +19,7 @@ skip_button_rect.y = 50
 cursor_image_still = pygame.image.load("Assets/Cursor/cursor_still.png")
 cursor_image_hold = pygame.image.load("Assets/Cursor/cursor_hold.png")
 
-pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
+pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
 pygame.mixer.music.set_volume(0.25)
 pygame.mixer.music.play(-1)
 
