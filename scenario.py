@@ -21,7 +21,6 @@ cursor = pygame.transform.scale(cursor_image, (32, 32))
 
 def draw_cursor():
     mouse_pos = pygame.mouse.get_pos()
-    screen.fill((0, 0, 0), (mouse_pos[0], mouse_pos[1], cursor.get_width(), cursor.get_height()))
     screen.blit(cursor, (mouse_pos[0], mouse_pos[1]))
 
 
@@ -43,6 +42,7 @@ def display_text_scenario(story):
     transparency = 0
     go_to_next_message = True
     displaying_text = False
+    screen_fill_black_time = True
 
     for i in range(number_of_sentences - 1):
         sentence_story[i] += "."
@@ -59,7 +59,11 @@ def display_text_scenario(story):
                 j += 1  # Move to the next sentence
                 go_to_next_message = True
 
-        screen.fill((0, 0, 0))
+        if screen_fill_black_time:
+            screen.fill((0, 0, 0))
+        else:
+            screen.blit(background, (0, 0))
+
         screen.blit(skip_button, skip_button_rect)
 
         text = font.render(sentence_story[j], True, white)
@@ -116,6 +120,14 @@ def display_text_scenario(story):
                     screen.blit(displayed_text_surface, displayed_text_rect)
                     pygame.display.flip()
                     time.sleep(0.025)
+
+            screen_capture = pygame.Surface((screen_width, screen_height))
+
+            screen_capture.blit(screen, (0, 0))
+            pygame.image.save(screen_capture, 'Assets/Scenario/screen_capture_with_text_scenario.png')
+            background = pygame.image.load("./Assets/Scenario/screen_capture_with_text_scenario.png")
+            screen.blit(background, (0, 0))
+            screen_fill_black_time = False
 
             if j == number_of_sentences:
                 time.sleep(0.5)
