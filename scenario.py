@@ -16,11 +16,11 @@ skip_button_rect = skip_button.get_rect()
 skip_button_rect.x = 1300
 skip_button_rect.y = 50
 
-cursor_image = pygame.image.load("Assets/Cursor/cursor_still.png")
-cursor = pygame.transform.scale(cursor_image, (32, 32))
+cursor_image_still = pygame.image.load("Assets/Cursor/cursor_still.png")
+cursor_image_hold = pygame.image.load("Assets/Cursor/cursor_hold.png")
 
 
-def draw_cursor():
+def draw_cursor(cursor):
     mouse_pos = pygame.mouse.get_pos()
     screen.blit(cursor, (mouse_pos[0], mouse_pos[1]))
 
@@ -44,6 +44,7 @@ def display_text_scenario(story):
     go_to_next_message = True
     displaying_text = False
     screen_fill_black_time = True
+    cursor = pygame.transform.scale(cursor_image_still, (32,32))
 
     for i in range(number_of_sentences - 1):
         sentence_story[i] += "."
@@ -53,9 +54,14 @@ def display_text_scenario(story):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and skip_button_rect.collidepoint(
-                    event.pos):
-                return
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                cursor = pygame.transform.scale(cursor_image_hold, (32, 32))
+                if skip_button_rect.collidepoint(event.pos):
+                    return
+
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                cursor = pygame.transform.scale(cursor_image_still, (32, 32))
+
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not displaying_text:
                 j += 1  # Move to the next sentence
                 go_to_next_message = True
@@ -135,7 +141,7 @@ def display_text_scenario(story):
             else:
                 displaying_text = False
 
-            draw_cursor()
+            draw_cursor(cursor)
 
         else:
             time.sleep(0.5)
