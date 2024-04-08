@@ -51,8 +51,9 @@ def add_level(save_file_name):
     # Function to add a level to the save file
     with open(save_file_name, 'r') as save:
         informations = save.read().strip().split("|")
-        level_number = int(informations[0])  # Get current level number
+        last_level = int(informations[0])  # Get current level number
 
     # Increase level by 1
-    new_level = level_number + 1
+    new_level = last_level + 1
     update_level(save_file_name, new_level)  # Update level in the save file
+    return last_level, new_level

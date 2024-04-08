@@ -3,7 +3,7 @@ import math
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 from slider import Slider
-from save import update_save_information, update_level
+from save import update_save_information, add_level, remove_life
 from level_map import level_selection
 
 pygame.init()
@@ -56,6 +56,20 @@ for data in all_planets_data:
     planet_rect.y = screen_height / 2 - 150
     planets.append(planet)
     planet_rects.append(planet_rect)
+
+all_locked_planets_data = [{"image_path": "Assets/Switch_Level/planet2_locked.png", "x": 1600},
+    {"image_path": "Assets/Switch_Level/planet3_locked.png", "x": 2250},
+    {"image_path": "Assets/Switch_Level/planet4_locked.png", "x": 2900}]
+locked_planets=[]
+locked_planet_rects = []
+for data in all_locked_planets_data:
+    locked_planet_image = pygame.image.load(data["image_path"]).convert_alpha()
+    locked_planet = pygame.transform.scale(locked_planet_image, (250, 250))
+    locked_planet_rect = locked_planet.get_rect()
+    locked_planet_rect.x = data["x"]
+    locked_planet_rect.y = screen_height / 2 - 150
+    locked_planets.append(locked_planet)
+    locked_planet_rects.append(locked_planet_rect)
 
 arrow_data = [{"image_path": "Assets/Switch_Level/left_arrow.png", "x": 75},
     {"image_path": "Assets/Switch_Level/right_arrow.png", "x": screen_width - 150}]
@@ -130,6 +144,7 @@ while True:
 
             if loaded_level:
                 if event.button == 1 and mouse_pressed:
+                    mouse_pressed = False
                     shooting_trajectory = True
 
             if slider.dragging:  # Check if slider is being dragged
@@ -161,8 +176,12 @@ while True:
 
     else:
         if not orbital_game_phase and not loaded_level:
-            loaded_level, chosen_level = level_selection(screen, background_level_map, planets, planet_rects, arrows,arrow_rects)
-            level_attempts=0
+            player_save=update_save_information("game_save.txt")
+            last_level = player_save[0]
+            chosen_level = level_selection(screen, background_level_map, planets, planet_rects,locked_planets, locked_planet_rects, arrows,arrow_rects,last_level)
+            if chosen_level!=0 and chosen_level<=last_level:
+                loaded_level=True
+                level_attempts=0
 
         if loaded_level:
             angle = 0
@@ -186,6 +205,7 @@ while True:
                 shooting_trajectory, orbital_game_phase, loaded_level,level_attempts = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, chosen_level, level_attempts, clock)
                 if level_attempts > 2:
                     loaded_level=False
+                    remove_life("game_save.txt")
             else:
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level)
 
