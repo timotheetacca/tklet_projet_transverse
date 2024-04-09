@@ -125,7 +125,7 @@ def display_text_scenario(story):
                                 topleft=(rect.topleft[0], rect.topleft[1] + height_line))
                             screen.blit(displayed_text_surface, displayed_text_rect)
                             pygame.display.flip()
-                            time.sleep(0.025)
+                            time.sleep(0.020)
                         height_line += displayed_text_rect.height
 
                 else:
@@ -136,7 +136,7 @@ def display_text_scenario(story):
                         displayed_text_rect = text_rect
                         screen.blit(displayed_text_surface, displayed_text_rect)
                         pygame.display.flip()
-                        time.sleep(0.025)
+                        time.sleep(0.020)
 
                 screen_capture = pygame.Surface((screen_width, screen_height))
                 screen_capture.blit(screen, (0, 0))

@@ -21,7 +21,7 @@ pygame.mouse.set_visible(False)
 
 pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
 pygame.mixer.music.set_volume(0.25)
-pygame.mixer.music.play(-1)
+
 
 size_music_button = 90
 green_music_button = pygame.image.load("Assets/Music/Green Music Button.png")
@@ -56,7 +56,7 @@ mouse_pressed = False
 shooting_trajectory = False
 stop_level = False
 orbital_game_phase = False
-music_playing = True
+music_playing = False
 scenario = True
 menu = True
 
@@ -146,6 +146,10 @@ while True:
         if scenario:
             level(level_number=-1, screen=screen, transparent_surface=None)
             scenario = False
+
+        if not music_playing:
+            pygame.mixer.music.play(-1)
+            music_playing = True
 
         if orbital_game_phase is False:
             angle = 0
