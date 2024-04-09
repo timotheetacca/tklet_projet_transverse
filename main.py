@@ -2,6 +2,7 @@ import pygame.mixer
 import math
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
+
 from slider import Slider
 from save import update_save_information, add_level, remove_life
 from level_map import level_selection
@@ -22,10 +23,7 @@ pygame.mouse.set_visible(False)
 # Load a background image
 background_image = pygame.image.load("Assets/Level/background_space.png")
 
-# Music parameters
-pygame.mixer.music.load("Assets/Music/musicTKLET.mp3")
-pygame.mixer.music.set_volume(0.25)
-pygame.mixer.music.play(-1)
+
 
 size_music_button = 90
 green_music_button = pygame.image.load("Assets/Music/Green Music Button.png")
@@ -107,8 +105,10 @@ mouse_held = False
 mouse_pressed = False
 shooting_trajectory = False
 orbital_game_phase = False
-music_playing = True
+music_playing = False
+scenario = True
 menu = True
+music_loaded = False
 loaded_level=False
 
 # Initialize the slider
@@ -175,6 +175,17 @@ while True:
         pygame.draw.rect(screen, (255, 255, 255), button_rect)
 
     else:
+    
+        if scenario:
+            level(level_number=-1, screen=screen, transparent_surface=None)
+            scenario = False
+
+        if not music_playing:
+            pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
+            pygame.mixer.music.set_volume(0.25)
+            pygame.mixer.music.play(-1)
+            music_playing = True
+
         if not orbital_game_phase and not loaded_level:
             player_save=update_save_information("game_save.txt")
             last_level = player_save[0]

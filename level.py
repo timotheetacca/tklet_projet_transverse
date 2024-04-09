@@ -44,12 +44,24 @@ def planet(transparent_surface, position, planet_radius, orbit_radius, level_num
     transparent_surface.blit(planet_img, (position[0] - planet_radius, position[1] - planet_radius))
 
 def level(level_number, screen, transparent_surface, time_step):
+
+    if level_number == -1:
+
+        screen.fill((0, 0, 0))
+        pygame.display.flip()
+
+        story = """In 2378, in a parallel universe called Nebulaëris, the Orion System shines like a beacon in the black immensity. It is an oasis of life in a sea of nebulae and dead stars. You are Kornus, a talented aerospace engineer. Your childhood best friend, Thorne, shares your passion for space exploration. You grew up together, dreaming of traveling to the stars and discovering the secrets of the universe. But one day, your dream turns into a nightmare. Thorne is abducted by aliens from the planet XFE-462, a mysterious planet located in the Orion System. Your world collapses around you. You can't imagine your life without Thorne. You are determined to save him, no matter the cost. Using your engineering skills, you build a revolutionary rocket capable of traveling from planet to planet. It's a crazy bet, a suicide mission, but you're willing to do anything to find your friend. Your journey will take you through the dangers of space.  But you will never give up hope. You know that Thorne is out there somewhere, waiting to be rescued."""
+
+        display_text_scenario(story)
+        
     if level_number == 1:
         planet_radius = 45
         orbit_radius = 130
         position = (900, 425)
         screen.blit(transparent_surface, (0, 0))
+
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
+
 
         # Load the character's text
         text = ("Drag your mouse backward to set the angle"
@@ -118,4 +130,3 @@ def level(level_number, screen, transparent_surface, time_step):
         objects = []
 
         return orbit_radius, position, obstacles, objects
-
