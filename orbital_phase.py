@@ -23,10 +23,9 @@ class OrbitalPhase:
         # Draw the circle
         pygame.draw.circle(self.screen, (255, 255, 255), (int(x), int(y)), 5)
 
-
         # Check if a full turn is made
         if angle <= -360:
 
             return False
 
-
+        return True
