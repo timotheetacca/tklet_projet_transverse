@@ -39,10 +39,10 @@ music_button_rect = green_music_button.get_rect(topleft=coordinate_music_button)
 background_image_level_map = pygame.image.load("Assets/Switch_Level/background.jpg").convert()
 background_level_map = pygame.transform.scale(background_image_level_map, (screen_width // 2, screen_height))
 
-all_planets_data = [{"image_path": "Assets/Switch_Level/planet1.png", "x": 650},
-                    {"image_path": "Assets/Switch_Level/planet2.png", "x": 1600},
-                    {"image_path": "Assets/Switch_Level/planet3.png", "x": 2250},
-                    {"image_path": "Assets/Switch_Level/planet4.png", "x": 2900}]
+all_planets_data = [{"image_path": "Assets/Level/Planets/planet1.png", "x": 650},
+                    {"image_path": "Assets/Level/Planets/planet2.png", "x": 1350},
+                    {"image_path": "Assets/Level/Planets/planet3.png", "x": 2050},
+                    {"image_path": "Assets/Level/Planets/planet4.png", "x": 2750}]
 planets = []
 planet_rects = []
 for data in all_planets_data:
@@ -54,9 +54,9 @@ for data in all_planets_data:
     planets.append(planet)
     planet_rects.append(planet_rect)
 
-all_locked_planets_data = [{"image_path": "Assets/Switch_Level/planet2_locked.png", "x": 1600},
-                           {"image_path": "Assets/Switch_Level/planet3_locked.png", "x": 2250},
-                           {"image_path": "Assets/Switch_Level/planet4_locked.png", "x": 2900}]
+all_locked_planets_data = [{"image_path": "Assets/Switch_Level/planet2_locked.png", "x": 1350},
+                           {"image_path": "Assets/Switch_Level/planet3_locked.png", "x": 2050},
+                           {"image_path": "Assets/Switch_Level/planet4_locked.png", "x": 2750}]
 locked_planets = []
 locked_planet_rects = []
 for data in all_locked_planets_data:
@@ -242,4 +242,3 @@ while True:
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
-

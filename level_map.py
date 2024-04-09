@@ -7,7 +7,7 @@ def level_selection(screen, background, planets, planet_rects, locked_planets, l
     mouse_x, mouse_y = pygame.mouse.get_pos()
     for i in range(2 * screen_width):
         screen.blit(background, (i * (screen_width / 2), 0))
-    for i in range(len(locked_planets)):
+    for i in range(last_level-1, len(locked_planets)):
         screen.blit(locked_planets[i], (locked_planet_rects[i].x, locked_planet_rects[i].y))
     for i in range(last_level):
         screen.blit(planets[i], (planet_rects[i].x, planet_rects[i].y))
