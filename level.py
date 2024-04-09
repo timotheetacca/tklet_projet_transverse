@@ -1,4 +1,5 @@
 import pygame
+from scenario import display_text_scenario
 
 screen_width, screen_height = 1536, 864
 
