@@ -192,6 +192,8 @@ while True:
         if not orbital_game_phase and not loaded_level:
             chosen_level = level_selection(screen, background_level_map, planets, planet_rects, locked_planets,
                                            locked_planet_rects, arrows, arrow_rects, last_level)
+            player_save = update_save_information("game_save.txt")
+            last_level = player_save[0]
             if chosen_level != 0 and chosen_level <= last_level:
                 loaded_level = True
                 level_attempts = 0
