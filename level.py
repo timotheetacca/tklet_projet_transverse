@@ -51,7 +51,16 @@ def level(level_number, screen, transparent_surface, time_step):
         screen.fill((0, 0, 0))
         pygame.display.flip()
 
-        story = """In 2378, in a parallel universe called Nebulaëris, the Orion System shines like a beacon in the black immensity. It is an oasis of life in a sea of nebulae and dead stars. You are Kornus, a talented aerospace engineer. Your childhood best friend, Thorne, shares your passion for space exploration. You grew up together, dreaming of traveling to the stars and discovering the secrets of the universe. But one day, your dream turns into a nightmare. Thorne is abducted by aliens from the planet XFE-462, a mysterious planet located in the Orion System. Your world collapses around you. You can't imagine your life without Thorne. You are determined to save him, no matter the cost. Using your engineering skills, you build a revolutionary rocket capable of traveling from planet to planet. It's a crazy bet, a suicide mission, but you're willing to do anything to find your friend. Your journey will take you through the dangers of space.  But you will never give up hope. You know that Thorne is out there somewhere, waiting to be rescued."""
+        story = """In 2378, in a parallel universe called Nebulaëris, the Orion System shines like a beacon in the black
+        immensity. It is an oasis of life in a sea of nebulae and dead stars. You are Kornus, a talented aerospace 
+        engineer. Your childhood best friend, Thorne, shares your passion for space exploration. You grew up together, 
+        dreaming of traveling to the stars and discovering the secrets of the universe. But one day, your dream turns
+        into a nightmare. Thorne is abducted by aliens from the planet XFE-462, a mysterious planet located in the 
+        Orion System. Your world collapses around you. You can't imagine your life without Thorne. You are determined 
+        to save him, no matter the cost. Using your engineering skills, you build a revolutionary rocket capable of
+        traveling from planet to planet. It's a crazy bet, a suicide mission, but you're willing to do anything to 
+        find your friend. Your journey will take you through the dangers of space.  But you will never give up hope.
+        You know that Thorne is out there somewhere, waiting to be rescued."""
 
         display_text_scenario(story)
         
@@ -107,7 +116,7 @@ def level(level_number, screen, transparent_surface, time_step):
                      [pygame.Rect(850, 260, 40, 40), 4]]
 
         # Add all the objects contained in the level
-        objects = [["shield", pygame.Rect(500, 500, 40, 40)]]
+        objects = [["shield", pygame.Rect(500, 500, 40, 40)],]
 
         # Load the character's text
         text = ("Hey, look over there! Isn't that an asteroid"
@@ -123,6 +132,7 @@ def level(level_number, screen, transparent_surface, time_step):
         planet_radius = 35
         orbit_radius = 85
         position = (1200, 300)
+        screen.blit(transparent_surface, (0, 0))
 
         # Add all the obstacles contained in the level
         obstacles = []

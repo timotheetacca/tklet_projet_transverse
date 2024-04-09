@@ -4,7 +4,7 @@ from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 
 from slider import Slider
-from save import update_save_information, add_level, remove_life
+from save import update_save_information, add_level, remove_life, display_life
 from level_map import level_selection
 from level import level
 
@@ -194,6 +194,8 @@ while True:
                                            locked_planet_rects, arrows, arrow_rects, last_level)
             player_save = update_save_information("game_save.txt")
             last_level = player_save[0]
+            display_life(player_save[1], screen, "Assets/heart_image.png")
+
             if chosen_level != 0 and chosen_level <= last_level:
                 loaded_level = True
                 level_attempts = 0
@@ -223,7 +225,7 @@ while True:
                     loaded_level = False
                     remove_life("game_save.txt")
             else:
-                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level)
+                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts)
 
     if orbital_game_phase:
         # Increment angle for rotation
@@ -241,4 +243,3 @@ while True:
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
 
-pygame.quit()

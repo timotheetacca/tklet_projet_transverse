@@ -1,3 +1,5 @@
+import pygame
+
 def update_save_information(save_file_name):
     # Function to read and update save file information
     with open(save_file_name, 'r') as save:
@@ -46,6 +48,7 @@ def remove_life(save_file_name):
     new_lives = max(0, lives - 1)
     update_lives(save_file_name, new_lives)  # Update lives in the save file
 
+
 # Add 1 level using update functions
 def add_level(save_file_name):
     # Function to add a level to the save file
@@ -57,3 +60,22 @@ def add_level(save_file_name):
     new_level = last_level + 1
     update_level(save_file_name, new_level)  # Update level in the save file
     return last_level, new_level
+
+
+
+def display_life(num_lives, screen, life_image_path):
+    # Load life image and resize it to 50% smaller
+    life_image = pygame.image.load(life_image_path)
+    life_image = pygame.transform.scale(life_image, (int(life_image.get_width() * 0.25), int(life_image.get_height() * 0.25)))
+
+    # Get screen dimensions
+    screen_width, screen_height = screen.get_size()
+
+    # Calculate position to display images (top right)
+    image_width, image_height = life_image.get_size()
+    start_x = screen_width - (10 + num_lives * (image_width + 10))
+    start_y = 10
+
+    # Display lives
+    for i in range(num_lives):
+        screen.blit(life_image, (start_x + i * (image_width + 10), start_y))
