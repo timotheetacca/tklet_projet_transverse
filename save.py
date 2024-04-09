@@ -6,7 +6,7 @@ def update_save_information(save_file_name):
     # If save file is empty, initialize with default values and return
     if not informations:
         with open(save_file_name, 'w') as save:
-            save.write("1|3")  # Default: level_number=1, lives=3
+            save.write("0|3")  # Default: level_number=1, lives=3
         return 1, 3  # Return default values
     else:
         # If save file has content, parse and return level number and lives

@@ -172,11 +172,15 @@ while True:
         # Draw the button
         button_rect = pygame.Rect(screen_width // 2 - 100, screen_height // 2 - 50, 200, 100)
         pygame.draw.rect(screen, (255, 255, 255), button_rect)
+        player_save = update_save_information("game_save.txt")
+        last_level = player_save[0]
+        scenario = (last_level == 0)
 
     else:
 
         if scenario:
-            level(level_number=-1, screen=screen, transparent_surface=None, time_step=None)
+            add_level("game_save.txt")
+            level(level_number=0, screen=screen, transparent_surface=None, time_step=None)
             scenario = False
 
         if not music_playing:
@@ -186,8 +190,6 @@ while True:
             music_playing = True
 
         if not orbital_game_phase and not loaded_level:
-            player_save = update_save_information("game_save.txt")
-            last_level = player_save[0]
             chosen_level = level_selection(screen, background_level_map, planets, planet_rects, locked_planets,
                                            locked_planet_rects, arrows, arrow_rects, last_level)
             if chosen_level != 0 and chosen_level <= last_level:

@@ -46,7 +46,7 @@ def planet(transparent_surface, position, planet_radius, orbit_radius, level_num
 
 def level(level_number, screen, transparent_surface, time_step):
 
-    if level_number == -1:
+    if level_number == 0:
 
         screen.fill((0, 0, 0))
         pygame.display.flip()
