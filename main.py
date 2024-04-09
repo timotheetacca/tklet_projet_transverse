@@ -19,9 +19,6 @@ pygame.mouse.set_visible(False)
 
 # Music parameters
 
-pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
-pygame.mixer.music.set_volume(0.25)
-
 
 size_music_button = 90
 green_music_button = pygame.image.load("Assets/Music/Green Music Button.png")
@@ -59,6 +56,7 @@ orbital_game_phase = False
 music_playing = False
 scenario = True
 menu = True
+music_loaded = False
 
 # Initialize the slider
 slider = Slider((50, 50), 200, 0, 100, 50)  # Example position, width, min_value, max_value, and initial_value
@@ -148,6 +146,8 @@ while True:
             scenario = False
 
         if not music_playing:
+            pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
+            pygame.mixer.music.set_volume(0.25)
             pygame.mixer.music.play(-1)
             music_playing = True
 

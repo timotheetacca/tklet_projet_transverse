@@ -26,6 +26,9 @@ space_bar_button = pygame.transform.scale(space_bar_button, (600, 300))
 space_bar_rect = space_bar_button.get_rect()
 space_bar_rect.center = (screen_width // 2, screen_height * 3 / 4)
 
+# "Music"
+pygame.mixer.music.load("Assets/Scenario/sound_message_appearing.mp3")
+pygame.mixer.music.set_volume(0.25)
 
 def draw_cursor(cursor):
     mouse_pos = pygame.mouse.get_pos()
@@ -74,6 +77,7 @@ def display_text_scenario(story):
                 go_to_next_message = True
 
         if j < number_of_sentences:
+            pygame.mixer.music.play(-1)
 
             if screen_fill_black_time:
                 screen.fill((0, 0, 0))
@@ -151,6 +155,7 @@ def display_text_scenario(story):
                 displaying_text = False
 
             draw_cursor(cursor)
+            pygame.mixer_music.stop()
 
         else:
             time.sleep(0.5)
