@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="I supressed the music option of the scenario, implemented the indication space_bar">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenario.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario.py" afterDir="false" />
-    </list>
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="I FINISHED" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -357,14 +354,21 @@
       <option name="project" value="LOCAL" />
       <updated>1712652753800</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="I FINISHED">
+      <option name="closed" value="true" />
+      <created>1712662437296</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1712662437296</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding Images" />
     <MESSAGE value="fixing trajectory + draw aim + shoot on space" />
     <MESSAGE value="adding cursor" />
     <MESSAGE value="adding obstacles and collisions" />
@@ -389,6 +393,7 @@
     <MESSAGE value="I fixed a music issue" />
     <MESSAGE value="Changed the name of the music file" />
     <MESSAGE value="I supressed the music option of the scenario, implemented the indication space_bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="I supressed the music option of the scenario, implemented the indication space_bar" />
+    <MESSAGE value="I FINISHED" />
+    <option name="LAST_COMMIT_MESSAGE" value="I FINISHED" />
   </component>
 </project>
