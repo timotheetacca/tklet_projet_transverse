@@ -229,6 +229,10 @@ while True:
                 # Display the aim trajectory on the screen.
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts)
 
+        # Display the music button
+
+        screen.blit(image_music_button, coordinate_music_button)
+
     if orbital_game_phase:
         # Increment angle for rotation
         angle -= 0.5
@@ -238,9 +242,6 @@ while True:
 
         # Draw the circle with updated angle
         orbital_game_phase = orbital_phase.draw_circle(radius, angle)
-
-    # Display the music button
-    screen.blit(image_music_button, coordinate_music_button)
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
