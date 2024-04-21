@@ -203,7 +203,7 @@ while True:
         if loaded_level:
             angle = 0
             # Calculate v continuously while mouse button is pressed
-            if mouse_pressed:
+            if mouse_held:
                 deplacement_x = position_initial_x - mouse_x
                 deplacement_y = position_initial_y - mouse_y
 
@@ -219,12 +219,14 @@ while True:
 
             # Projectile motion loop
             if shooting_trajectory:
+                # Display the motion of the projectile.
                 shooting_trajectory, orbital_game_phase, loaded_level, level_attempts = trajectory_simulation.projectile_motion(
                     circle_x, circle_y, g, v, h, alpha, chosen_level, level_attempts, clock)
                 if level_attempts > 2:
                     loaded_level = False
                     remove_life("game_save.txt")
             else:
+                # Display the aim trajectory on the screen.
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts)
 
     if orbital_game_phase:
