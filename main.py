@@ -189,16 +189,20 @@ while True:
             pygame.mixer.music.play(-1)
             music_playing = True
 
-        if not orbital_game_phase and not loaded_level:
-            chosen_level = level_selection(screen, background_level_map, planets, planet_rects, locked_planets,
-                                           locked_planet_rects, arrows, arrow_rects, last_level)
-            player_save = update_save_information("game_save.txt")
-            last_level = player_save[0]
-            display_life(player_save[1], screen, "Assets/heart_image.png")
+        if last_level < 5:
+            if not orbital_game_phase and not loaded_level:
+                chosen_level = level_selection(screen, background_level_map, planets, planet_rects, locked_planets,
+                                               locked_planet_rects, arrows, arrow_rects, last_level)
+                player_save = update_save_information("game_save.txt")
+                last_level = player_save[0]
+                display_life(player_save[1], screen, "Assets/heart_image.png")
 
-            if chosen_level != 0 and chosen_level <= last_level:
-                loaded_level = True
-                level_attempts = 0
+                if chosen_level != 0 and chosen_level <= last_level:
+                    loaded_level = True
+                    level_attempts = 0
+        elif last_level == 5:
+            # Développer ici le scénario de fin
+            pass
 
         if loaded_level:
             angle = 0
@@ -232,6 +236,8 @@ while True:
         # Display the music button
 
         screen.blit(image_music_button, coordinate_music_button)
+
+
 
     if orbital_game_phase:
         # Increment angle for rotation

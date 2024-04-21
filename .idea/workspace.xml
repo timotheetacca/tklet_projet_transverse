@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="I removed the button">
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Commented the scenario.py code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_save.txt" beforeDir="false" afterPath="$PROJECT_DIR$/game_save.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/level_map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenario.py" beforeDir="false" afterPath="$PROJECT_DIR$/scenario.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -327,13 +325,13 @@
       <option name="project" value="LOCAL" />
       <updated>1713680665966</updated>
     </task>
-    <task id="LOCAL-00023" summary="Began to fix another issue">
+    <task id="LOCAL-00023" summary="Commented the scenario.py code">
       <option name="closed" value="true" />
-      <created>1712175674000</created>
+      <created>1713681888056</created>
       <option name="number" value="00023" />
       <option name="presentableId" value="LOCAL-00023" />
       <option name="project" value="LOCAL" />
-      <updated>1712175674000</updated>
+      <updated>1713681888056</updated>
     </task>
     <task id="LOCAL-00024" summary="Fixed an index issue">
       <option name="closed" value="true" />
@@ -383,14 +381,13 @@
       <option name="project" value="LOCAL" />
       <updated>1712662437296</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="small fixes" />
     <MESSAGE value="a" />
     <MESSAGE value="New images for the music button" />
     <MESSAGE value="Started the &quot;scenario&quot;" />
@@ -421,6 +418,7 @@
     <MESSAGE value="added cinematic too saves" />
     <MESSAGE value="Fixed an error i made on kim's code" />
     <MESSAGE value="Fixed the problem" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the problem" />
+    <MESSAGE value="Commented the scenario.py code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commented the scenario.py code" />
   </component>
 </project>
