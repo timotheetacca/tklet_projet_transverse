@@ -27,7 +27,8 @@ def display_advice(screen, text, time_step):
 
     # Display the advice on the screen
     animate_images(screen, character_paths, (65, 65), (15, 15), frame)
-    font = (pygame.font.Font("Assets/pixel_art_font.ttf", 25))
+    path_font = "Assets/Font/pixela-extreme.ttf"
+    font = pygame.font.Font(path_font, 16)
     text = font.render(text, True, (0, 0, 0))
     screen.blit(text, (70, 105))
 
