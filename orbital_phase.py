@@ -1,5 +1,6 @@
 import pygame
 import math
+from save import remove_life, add_level
 
 pygame.init()
 
@@ -25,7 +26,8 @@ class OrbitalPhase:
 
         # Check if a full turn is made
         if angle <= -360:
-
+            angle = 0  # Reset the angle
+            add_level("game_save.txt")
             return False
 
         return True

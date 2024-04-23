@@ -1,5 +1,6 @@
 import pygame.mixer
 import math
+import random
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 
@@ -110,8 +111,19 @@ menu = True
 music_loaded = False
 loaded_level = False
 
-# Initialize the slider
-slider = Slider((50, 50), 200, 0, 100, 50)
+# Initialize the sliders with initial values set to 50
+slider1 = Slider((50, 200), 200, 0, 100, 50)
+slider2 = Slider((50, 400), 200, 0, 100, 50)
+slider3 = Slider((50, 600), 200, 0, 100, 50)
+
+# Initialize variables for value change timer and current values
+value_change_timer_orbital = 0
+current_values_orbital = [50, 50, 50]
+current_color_orbital =[(255, 255, 255),(255, 255, 255),(255, 255, 255)]
+
+# Initialize timer for value check
+value_check_timer = 0
+value_change_timer = 0
 
 while True:
     for event in pygame.event.get():
@@ -130,6 +142,16 @@ while True:
                 # Cancel aiming when right mouse button is pressed
                 mouse_pressed = False
 
+            # Handle the 3 sliders
+            if slider1.is_over_handle(event.pos):
+                slider1.dragging = True
+
+            if slider2.is_over_handle(event.pos):
+                slider2.dragging = True
+
+            if slider3.is_over_handle(event.pos):
+                slider3.dragging = True
+
             if music_button_rect.collidepoint(pygame.mouse.get_pos()):
                 if image_music_button == red_music_button:
                     image_music_button = green_music_button
@@ -146,15 +168,27 @@ while True:
                     mouse_pressed = False
                     shooting_trajectory = True
 
-            if slider.dragging:  # Check if slider is being dragged
-                slider.dragging = False  # Stop dragging when left mouse button is released
+            if slider1.dragging:  # Check if slider is being dragged
+                slider1.dragging = False  # Stop dragging when left mouse button is released
+
+            if slider2.dragging:
+                slider2.dragging = False
+
+            if slider3.dragging:
+                slider3.dragging = False
 
             if menu and button_rect.collidepoint(event.pos):  # Check if menu is active and button is clicked
                 menu = False  # Set menu to False on click
 
         elif event.type == pygame.MOUSEMOTION:
-            if slider.dragging:  # Check if slider is being dragged
-                slider.update_value(event.pos)  # Update slider value based on mouse position
+            if slider1.dragging:  # Check if slider is being dragged
+                slider1.update_value(event.pos)  # Update slider value based on mouse position
+
+            if slider2.dragging:  #
+                slider2.update_value(event.pos)
+
+            if slider3.dragging:
+                slider3.update_value(event.pos)
 
     # Main game loop
     screen.fill((0, 0, 0))
@@ -228,14 +262,71 @@ while True:
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts)
 
     if orbital_game_phase:
+        background_space_orbital = pygame.image.load("Assets/Level/background_space_orbital.png")
+        screen.blit(background_space_orbital, (0, 0))
+
         # Increment angle for rotation
-        angle -= 0.5
+        angle -= 0.2
+
         # Draw and handle events for the slider
-        slider.draw(screen)
-        slider_value = slider.slider_value  # Get the current value of the slider
+        slider1.draw(screen)
+        slider_value1 = slider1.slider_value  # Get the current value of the slider
+
+        slider2.draw(screen)
+        slider_value2 = slider2.slider_value
+
+        slider3.draw(screen)
+        slider_value3 = slider3.slider_value
 
         # Draw the circle with updated angle
         orbital_game_phase = orbital_phase.draw_circle(radius, angle)
+
+        # Check if it's time to change one of the values to match
+        if value_change_timer >= 4000:
+            # Change one of the values to match randomly
+            index_to_change = random.randint(0, 2)
+            current_values_orbital[index_to_change] = random.randint(0, 100)
+            current_color_orbital = [(255, 255, 255), (255, 255, 255), (255, 255, 255)]
+            current_color_orbital[index_to_change] = (139,0,0)
+            # Reset the timer
+            value_change_timer = 0
+
+        # Display the values that the user should match on the right side of the screen
+        font = pygame.font.Font(None, 36)
+        text_value1 = font.render(str(current_values_orbital[0]), True, current_color_orbital[0])
+        text_value2 = font.render(str(current_values_orbital[1]), True, current_color_orbital[1])
+        text_value3 = font.render(str(current_values_orbital[2]), True, current_color_orbital[2])
+
+        screen.blit(text_value1, (1300, 200))
+        screen.blit(text_value2, (1300, 400))
+        screen.blit(text_value3, (1300, 600))
+
+        # Check if it's time to verify the slider values after 8 seconds
+        if value_check_timer >= 8000:
+            # Compare slider values to current values
+            if not (abs(slider_value1 - current_values_orbital[0]) <= 20 and
+                    abs(slider_value2 - current_values_orbital[1]) <= 20 and
+                    abs(slider_value3 - current_values_orbital[2]) <= 20):
+
+                # if values don't match, close the level and lose a life
+                print(abs(slider_value1 - current_values_orbital[0]))
+                print(abs(slider_value2 - current_values_orbital[1]))
+                print(abs(slider_value3 - current_values_orbital[2]))
+                current_values_orbital = [50, 50, 50]
+                slider1.reset()
+                slider2.reset()
+                slider3.reset()
+                orbital_game_phase = False
+                remove_life("game_save.txt")
+
+            # Reset the timer after checking slider values
+            value_check_timer = 0
+        else:
+            # Increment the timer
+            value_check_timer += clock.get_time()
+
+        # Increment the timer for value change
+        value_change_timer += clock.get_time()
 
     # Display the music button
     screen.blit(image_music_button, coordinate_music_button)
