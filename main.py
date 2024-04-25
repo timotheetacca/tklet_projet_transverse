@@ -24,9 +24,26 @@ pygame.mouse.set_visible(False)
 # Load a background image
 background_image = pygame.image.load("Assets/Level/background_space.png")
 
+# For Menu
+menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
+menu_background = pygame.transform.scale(menu_background_image, (screen_width, screen_height))
+
+logo_image = pygame.image.load("Assets/Menu/tklet_logo.png")
+logo = pygame.transform.scale(logo_image, (596.25,215.25))
+logo_rect = logo.get_rect()
+logo_rect.x = screen_width // 2 - 596.25/2
+logo_rect.y = screen_height // 2 - 200
+
+play_button_image = pygame.image.load("Assets/Menu/play_button.png")
+play_button = pygame.transform.scale(play_button_image, (225,100))
+play_button_rect = play_button.get_rect()
+play_button_rect.x = screen_width // 2 - 100
+play_button_rect.y = screen_height // 2 + 100
+
+# For parameters
 size_button = 75
-QUIT_button = pygame.image.load("Assets/quit.png")
-QUIT_button = pygame.transform.scale(QUIT_button, (size_button, size_button))
+QUIT_button_image = pygame.image.load("Assets/quit.png")
+QUIT_button = pygame.transform.scale(QUIT_button_image, (size_button, size_button))
 
 coordinate_QUIT_button = (screen_width - size_button - 20, screen_height - size_button - 20)
 QUIT_button_rect = QUIT_button.get_rect(topleft=coordinate_QUIT_button)
@@ -43,7 +60,7 @@ music_button_rect = ON_music_button.get_rect(topleft=coordinate_music_button)
 
 # For Level Map
 background_image_level_map = pygame.image.load("Assets/Switch_Level/background.jpg").convert()
-background_level_map = pygame.transform.scale(background_image_level_map, (screen_width // 2, screen_height))
+background_level_map = pygame.transform.scale(background_image_level_map, (screen_width//2, screen_height))
 
 all_planets_data = [{"image_path": "Assets/Level/Planets/planet1.png", "x": 650},
                     {"image_path": "Assets/Level/Planets/planet2.png", "x": 1350},
@@ -155,7 +172,7 @@ while True:
             if slider.dragging:  # Check if slider is being dragged
                 slider.dragging = False  # Stop dragging when left mouse button is released
 
-            if menu and button_rect.collidepoint(event.pos):  # Check if menu is active and button is clicked
+            if menu and play_button_rect.collidepoint(event.pos):  # Check if menu is active and button is clicked
                 menu = False  # Set menu to False on click
 
         elif event.type == pygame.MOUSEMOTION:
@@ -176,8 +193,10 @@ while True:
 
     if menu:
         # Draw the button
-        button_rect = pygame.Rect(screen_width // 2 - 100, screen_height // 2 - 50, 200, 100)
-        pygame.draw.rect(screen, (255, 255, 255), button_rect)
+        screen.blit(menu_background, (0, 0))
+        screen.blit(QUIT_button, coordinate_QUIT_button)
+        screen.blit(play_button, play_button_rect)
+        screen.blit(logo, logo_rect)
         player_save = update_save_information("game_save.txt")
         last_level = player_save[0]
         scenario = (last_level == 0)
