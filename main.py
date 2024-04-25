@@ -65,7 +65,8 @@ background_level_map = pygame.transform.scale(background_image_level_map, (scree
 all_planets_data = [{"image_path": "Assets/Level/Planets/planet1.png", "x": 650},
                     {"image_path": "Assets/Level/Planets/planet2.png", "x": 1350},
                     {"image_path": "Assets/Level/Planets/planet3.png", "x": 2050},
-                    {"image_path": "Assets/Level/Planets/planet4.png", "x": 2750}]
+                    {"image_path": "Assets/Level/Planets/planet4.png", "x": 2750},
+                    {"image_path": "Assets/Level/Planets/planet5.png", "x": 3450}]
 planets = []
 planet_rects = []
 for data in all_planets_data:
@@ -79,7 +80,8 @@ for data in all_planets_data:
 
 all_locked_planets_data = [{"image_path": "Assets/Switch_Level/planet2_locked.png", "x": 1350},
                            {"image_path": "Assets/Switch_Level/planet3_locked.png", "x": 2050},
-                           {"image_path": "Assets/Switch_Level/planet4_locked.png", "x": 2750}]
+                           {"image_path": "Assets/Switch_Level/planet4_locked.png", "x": 2750},
+                           {"image_path": "Assets/Switch_Level/planet5_locked.png", "x": 3450}]
 locked_planets = []
 locked_planet_rects = []
 for data in all_locked_planets_data:
@@ -202,7 +204,6 @@ while True:
         scenario = (last_level == 0)
 
     else:
-
         if scenario:
             add_level("game_save.txt")
             level(level_number=0, screen=screen, transparent_surface=None, time_step=None)
@@ -214,7 +215,7 @@ while True:
             pygame.mixer.music.play(-1)
             music_playing = True
 
-        if last_level < 5:
+        if last_level < 6:
             if not orbital_game_phase and not loaded_level:
                 chosen_level = level_selection(screen, background_level_map, planets, planet_rects, locked_planets,locked_planet_rects, arrows, arrow_rects, last_level)
                 player_save = update_save_information("game_save.txt")
@@ -224,7 +225,7 @@ while True:
                 if chosen_level != 0 and chosen_level <= last_level:
                     loaded_level = True
                     level_attempts = 0
-        elif last_level == 5:
+        elif last_level == 6:
             # Développer ici le scénario de fin
             pass
 

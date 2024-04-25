@@ -20,7 +20,7 @@ def level_selection(screen, background, planets, planet_rects, locked_planets, l
         screen.blit(arrows[i], (arrow_rects[i].x, arrow_rects[i].y))
 
     if arrow_rects[1].collidepoint(mouse_x, mouse_y):
-        if planet_rects[1].x > -650:
+        if planet_rects[1].x > -1425:
             for planet_rect in planet_rects:
                 planet_rect.x -= scroll
             for locked_planet_rect in locked_planet_rects:
@@ -28,7 +28,7 @@ def level_selection(screen, background, planets, planet_rects, locked_planets, l
             arrow_rects[1].x = screen_width - 150
             arrow_rects[0].x = 75
     if arrow_rects[0].collidepoint(mouse_x, mouse_y):
-        if planet_rects[3].x < 2900 or locked_planet_rects[2].x < 2900:
+        if planet_rects[4].x < -4150 or locked_planet_rects[3].x < -4150:
             for planet_rect in planet_rects:
                 planet_rect.x += scroll
             for locked_planet_rect in locked_planet_rects:
