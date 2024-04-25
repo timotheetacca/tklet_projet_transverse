@@ -1,6 +1,5 @@
 import pygame.mixer
 import math
-import random
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 
@@ -86,7 +85,6 @@ fps = 120  # Set FPS rate for frame rate
 
 # Initialize TrajectorySimulation instance
 trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height, background_image)
-orbital_phase = OrbitalPhase(5, screen)
 
 clock = pygame.time.Clock()
 level_attempts = 0
@@ -124,6 +122,8 @@ current_color_orbital =[(255, 255, 255),(255, 255, 255),(255, 255, 255)]
 # Initialize timer for value check
 value_check_timer = 0
 value_change_timer = 0
+
+orbital_phase = OrbitalPhase(390, screen,slider1, slider2, slider3)
 
 while True:
     for event in pygame.event.get():
@@ -266,7 +266,7 @@ while True:
         screen.blit(background_space_orbital, (0, 0))
 
         # Increment angle for rotation
-        angle -= 0.2
+        orbital_game_phase = orbital_phase.update_angle()
 
         # Draw and handle events for the slider
         slider1.draw(screen)
@@ -279,54 +279,14 @@ while True:
         slider_value3 = slider3.slider_value
 
         # Draw the circle with updated angle
-        orbital_game_phase = orbital_phase.draw_circle(radius, angle)
+        orbital_game_phase = orbital_phase.draw_circle(chosen_level,350,value_change_timer)
 
-        # Check if it's time to change one of the values to match
-        if value_change_timer >= 4000:
-            # Change one of the values to match randomly
-            index_to_change = random.randint(0, 2)
-            current_values_orbital[index_to_change] = random.randint(0, 100)
-            current_color_orbital = [(255, 255, 255), (255, 255, 255), (255, 255, 255)]
-            current_color_orbital[index_to_change] = (139,0,0)
-            # Reset the timer
-            value_change_timer = 0
-
-        # Display the values that the user should match on the right side of the screen
-        font = pygame.font.Font(None, 36)
-        text_value1 = font.render(str(current_values_orbital[0]), True, current_color_orbital[0])
-        text_value2 = font.render(str(current_values_orbital[1]), True, current_color_orbital[1])
-        text_value3 = font.render(str(current_values_orbital[2]), True, current_color_orbital[2])
-
-        screen.blit(text_value1, (1300, 200))
-        screen.blit(text_value2, (1300, 400))
-        screen.blit(text_value3, (1300, 600))
-
-        # Check if it's time to verify the slider values after 8 seconds
-        if value_check_timer >= 8000:
-            # Compare slider values to current values
-            if not (abs(slider_value1 - current_values_orbital[0]) <= 20 and
-                    abs(slider_value2 - current_values_orbital[1]) <= 20 and
-                    abs(slider_value3 - current_values_orbital[2]) <= 20):
-
-                # if values don't match, close the level and lose a life
-                print(abs(slider_value1 - current_values_orbital[0]))
-                print(abs(slider_value2 - current_values_orbital[1]))
-                print(abs(slider_value3 - current_values_orbital[2]))
-                current_values_orbital = [50, 50, 50]
-                slider1.reset()
-                slider2.reset()
-                slider3.reset()
-                orbital_game_phase = False
-                remove_life("game_save.txt")
-
-            # Reset the timer after checking slider values
-            value_check_timer = 0
-        else:
-            # Increment the timer
-            value_check_timer += clock.get_time()
+        orbital_phase.display_values()
+        orbital_game_phase,value_change_timer,value_check_timer = orbital_phase.check_timer(slider_value1, slider_value2, slider_value3,value_change_timer,value_check_timer)
 
         # Increment the timer for value change
         value_change_timer += clock.get_time()
+        value_check_timer += clock.get_time()
 
     # Display the music button
     screen.blit(image_music_button, coordinate_music_button)

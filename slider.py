@@ -1,6 +1,5 @@
 import pygame
 
-
 class Slider:
     def __init__(self, slider_position, slider_width, min_value, max_value, initial_value):
         self.slider_position = slider_position
@@ -8,6 +7,7 @@ class Slider:
         self.min_value = min_value
         self.max_value = max_value
         self.slider_value = initial_value
+        self.initial_value = initial_value
         self.handle_radius = 10
         self.dragging = False
         self.font = pygame.font.Font("Assets/Font/pixela-extreme.ttf", 16)

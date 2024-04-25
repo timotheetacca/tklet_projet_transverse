@@ -4,15 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Added images">
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="Fixed an error i made on kim's code">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/pixel_art_font.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenario/screen_capture_with_text_scenario.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenario/screen_capture_with_text_scenario.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_save.txt" beforeDir="false" afterPath="$PROJECT_DIR$/game_save.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/level.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/orbital_phase.py" beforeDir="false" afterPath="$PROJECT_DIR$/orbital_phase.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slider.py" beforeDir="false" afterPath="$PROJECT_DIR$/slider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trajectory_simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/trajectory_simulation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +96,7 @@
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
@@ -153,10 +152,10 @@
       <workItem from="1711659327369" duration="6831000" />
       <workItem from="1711719074174" duration="1224000" />
       <workItem from="1712399645716" duration="2993000" />
-      <workItem from="1712678830540" duration="6561000" />
-      <workItem from="1712686083934" duration="1255000" />
-      <workItem from="1713690375522" duration="1011000" />
-      <workItem from="1713874912704" duration="6863000" />
+      <workItem from="1712678830540" duration="6252000" />
+      <workItem from="1714045607916" duration="96000" />
+      <workItem from="1714045720525" duration="193000" />
+      <workItem from="1714053822435" duration="4065000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Images">
       <option name="closed" value="true" />
@@ -326,21 +325,21 @@
       <option name="project" value="LOCAL" />
       <updated>1712680344837</updated>
     </task>
-    <task id="LOCAL-00022" summary="Added lives display">
+    <task id="LOCAL-00022" summary="I FIXED A MAJOR BUG. LESSGOOOO">
       <option name="closed" value="true" />
-      <created>1712685807503</created>
+      <created>1712174348868</created>
       <option name="number" value="00022" />
       <option name="presentableId" value="LOCAL-00022" />
       <option name="project" value="LOCAL" />
-      <updated>1712685807503</updated>
+      <updated>1712174348868</updated>
     </task>
-    <task id="LOCAL-00023" summary="Added images">
+    <task id="LOCAL-00023" summary="Began to fix another issue">
       <option name="closed" value="true" />
-      <created>1712689075458</created>
+      <created>1712175674000</created>
       <option name="number" value="00023" />
       <option name="presentableId" value="LOCAL-00023" />
       <option name="project" value="LOCAL" />
-      <updated>1712689075458</updated>
+      <updated>1712175674000</updated>
     </task>
     <task id="LOCAL-00024" summary="Fixed an index issue">
       <option name="closed" value="true" />
@@ -390,13 +389,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712662437296</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="adding a second obstacle to level 3" />
+    <MESSAGE value="small fixes" />
     <MESSAGE value="a" />
     <MESSAGE value="New images for the music button" />
     <MESSAGE value="Started the &quot;scenario&quot;" />
@@ -426,11 +427,19 @@
     <MESSAGE value="added background" />
     <MESSAGE value="added cinematic too saves" />
     <MESSAGE value="Fixed an error i made on kim's code" />
-    <MESSAGE value="Added lives display" />
-    <MESSAGE value="Added images" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added images" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed an error i made on kim's code" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/scenario.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1713881771236" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tklet_test$main.coverage" NAME="main Coverage Results" MODIFIED="1714058115642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
