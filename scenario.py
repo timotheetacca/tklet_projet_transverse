@@ -15,10 +15,10 @@ font = pygame.font.Font(path_font, 30)
 
 # Load skip button image and scale it
 skip_image = pygame.image.load('Assets/skip.png')
-skip_button = pygame.transform.scale(skip_image, (150, 60))
+skip_button = pygame.transform.scale(skip_image, (75, 75))
 skip_button_rect = skip_button.get_rect()
-skip_button_rect.x = 1300
-skip_button_rect.y = 50
+skip_button_rect.x = 1400
+skip_button_rect.y = 25
 
 # Load cursor images
 cursor_image_still = pygame.image.load("Assets/Cursor/cursor_still.png")
@@ -26,7 +26,7 @@ cursor_image_hold = pygame.image.load("Assets/Cursor/cursor_hold.png")
 
 # Load space bar button image and scale it
 space_bar_button = pygame.image.load("Assets/Scenario/space_bar_scenario.png")
-space_bar_button = pygame.transform.scale(space_bar_button, (600, 300))
+space_bar_button = pygame.transform.scale(space_bar_button, (750, 350))
 space_bar_rect = space_bar_button.get_rect()
 space_bar_rect.center = (screen_width // 2, screen_height * 3 / 4)
 

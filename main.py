@@ -24,16 +24,22 @@ pygame.mouse.set_visible(False)
 # Load a background image
 background_image = pygame.image.load("Assets/Level/background_space.png")
 
-size_music_button = 90
-green_music_button = pygame.image.load("Assets/Music/Green Music Button.png")
-green_music_button = pygame.transform.scale(green_music_button, (size_music_button, size_music_button))
+size_button = 75
+QUIT_button = pygame.image.load("Assets/quit.png")
+QUIT_button = pygame.transform.scale(QUIT_button, (size_button, size_button))
 
-red_music_button = pygame.image.load("Assets/Music/Red Music Button.png")
-red_music_button = pygame.transform.scale(red_music_button, (size_music_button, size_music_button))
+coordinate_QUIT_button = (screen_width - size_button - 20, screen_height - size_button - 20)
+QUIT_button_rect = QUIT_button.get_rect(topleft=coordinate_QUIT_button)
 
-image_music_button = green_music_button
-coordinate_music_button = (screen_width - size_music_button + 20, screen_height - size_music_button + 20)
-music_button_rect = green_music_button.get_rect(topleft=coordinate_music_button)
+ON_music_button = pygame.image.load("Assets/Music/ON Music Button.png")
+ON_music_button = pygame.transform.scale(ON_music_button, (size_button, size_button))
+
+OFF_music_button = pygame.image.load("Assets/Music/OFF Music Button.png")
+OFF_music_button = pygame.transform.scale(OFF_music_button, (size_button, size_button))
+
+image_music_button = ON_music_button
+coordinate_music_button = (coordinate_QUIT_button[0] - 95, coordinate_QUIT_button[1])
+music_button_rect = ON_music_button.get_rect(topleft=coordinate_music_button)
 
 # For Level Map
 background_image_level_map = pygame.image.load("Assets/Switch_Level/background.jpg").convert()
@@ -115,11 +121,7 @@ slider = Slider((50, 50), 200, 0, 100, 50)
 
 while True:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.mixer.music.stop()
-            pygame.quit()
-
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_held = True
 
             if event.button == 1 and not music_button_rect.collidepoint(pygame.mouse.get_pos()):
@@ -130,12 +132,16 @@ while True:
                 # Cancel aiming when right mouse button is pressed
                 mouse_pressed = False
 
+            if QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.mixer.music.stop()
+                pygame.quit()
+
             if music_button_rect.collidepoint(pygame.mouse.get_pos()):
-                if image_music_button == red_music_button:
-                    image_music_button = green_music_button
+                if image_music_button == OFF_music_button:
+                    image_music_button = ON_music_button
                     pygame.mixer.music.unpause()
                 else:
-                    image_music_button = red_music_button
+                    image_music_button = OFF_music_button
                     pygame.mixer.music.pause()
 
         elif event.type == pygame.MOUSEBUTTONUP:
@@ -191,8 +197,7 @@ while True:
 
         if last_level < 5:
             if not orbital_game_phase and not loaded_level:
-                chosen_level = level_selection(screen, background_level_map, planets, planet_rects, locked_planets,
-                                               locked_planet_rects, arrows, arrow_rects, last_level)
+                chosen_level = level_selection(screen, background_level_map, planets, planet_rects, locked_planets,locked_planet_rects, arrows, arrow_rects, last_level)
                 player_save = update_save_information("game_save.txt")
                 last_level = player_save[0]
                 display_life(player_save[1], screen, "Assets/heart_image.png")
@@ -236,7 +241,7 @@ while True:
         # Display the music button
 
         screen.blit(image_music_button, coordinate_music_button)
-
+        screen.blit(QUIT_button, coordinate_QUIT_button)
 
 
     if orbital_game_phase:
