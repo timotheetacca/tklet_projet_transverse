@@ -265,9 +265,6 @@ while True:
         background_space_orbital = pygame.image.load("Assets/Level/background_space_orbital.png")
         screen.blit(background_space_orbital, (0, 0))
 
-        # Increment angle for rotation
-        orbital_game_phase = orbital_phase.update_angle()
-
         # Draw and handle events for the slider
         slider1.draw(screen)
         slider_value1 = slider1.slider_value  # Get the current value of the slider
@@ -287,6 +284,9 @@ while True:
         # Increment the timer for value change
         value_change_timer += clock.get_time()
         value_check_timer += clock.get_time()
+
+        # Increment angle for rotation
+        orbital_game_phase = orbital_phase.update_angle()
 
     # Display the music button
     screen.blit(image_music_button, coordinate_music_button)
