@@ -73,9 +73,9 @@ def display_life(num_lives, screen, life_image_path):
 
     # Calculate position to display images (top right)
     image_width, image_height = life_image.get_size()
-    start_x = screen_width - (10 + num_lives * (image_width + 10))
-    start_y = 10
+    start_x = screen_width - (20 + num_lives * (image_width + 20))
+    start_y = 25
 
     # Display lives
     for i in range(num_lives):
-        screen.blit(life_image, (start_x + i * (image_width + 10), start_y))
+        screen.blit(life_image, (start_x + i * (image_width + 20), start_y))
