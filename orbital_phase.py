@@ -33,7 +33,7 @@ class OrbitalPhase:
         planet_img = pygame.transform.scale(planet_img, (planet_scale, planet_scale))
 
         time_text = self.font.render(f"{(time_text / 1000):.1f}s", True, (255, 255, 255))
-        self.screen.blit(time_text, (center_x, (center_y + (planet_scale / 2) + 50)))
+        self.screen.blit(time_text, (center_x-25, (center_y + (planet_scale / 2) + 50)))
 
         # Blit the planet image onto the transparent surface
         self.screen.blit(planet_img, (center_x - (planet_scale / 2), center_y - (planet_scale / 2)))
