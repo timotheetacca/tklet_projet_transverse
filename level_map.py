@@ -1,6 +1,6 @@
 import pygame
 
-scroll = 15
+scroll = 30
 screen_width, screen_height = 1536, 864
 left_click = False
 
@@ -28,7 +28,7 @@ def level_selection(screen, background, planets, planet_rects, locked_planets, l
             arrow_rects[1].x = screen_width - 150
             arrow_rects[0].x = 75
     if arrow_rects[0].collidepoint(mouse_x, mouse_y):
-        if planet_rects[3].x < 3450 or locked_planet_rects[2].x < 3450:
+        if planet_rects[4].x < 3450 or locked_planet_rects[3].x < 3450:
             for planet_rect in planet_rects:
                 planet_rect.x += scroll
             for locked_planet_rect in locked_planet_rects:
