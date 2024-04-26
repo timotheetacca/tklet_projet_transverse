@@ -181,7 +181,6 @@ class TrajectorySimulation:
             if (circle_x - position[0]) ** 2 + (circle_y - position[1]) ** 2 <= orbit_radius ** 2:
                 shooting_trajectory = False
                 self.transparent_surface.fill((0, 0, 0, 0))
-                add_level("game_save.txt")
                 return shooting_trajectory, True, False, level_attempts
 
         return shooting_trajectory, False, True, level_attempts

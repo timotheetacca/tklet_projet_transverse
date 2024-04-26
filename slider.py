@@ -7,8 +7,11 @@ class Slider:
         self.min_value = min_value
         self.max_value = max_value
         self.slider_value = initial_value
+        self.initial_value = initial_value
         self.handle_radius = 10
         self.dragging = False
+        self.font = pygame.font.Font("Assets/Font/pixela-extreme.ttf", 16)
+        self.text_position = (self.slider_position[0], self.slider_position[1] + 20)
 
     def draw(self, screen):
         # Calculate the slider's position and size
@@ -20,6 +23,11 @@ class Slider:
 
         # Draw the handle
         pygame.draw.circle(screen, (100, 100, 100), handle_center, self.handle_radius)
+
+        # Render and draw the slider value text
+        slider_text = self.font.render(f"{self.slider_value:.2f}", True, (255, 255, 255))
+        screen.blit(slider_text, self.text_position)
+
 
     def is_over_handle(self, pos):
         # Check if the given position is over the slider handle
@@ -36,15 +44,21 @@ class Slider:
             mouse_x = pos[0] - self.slider_position[0]
             # Update the value within the range of min_value and max_value
             self.slider_value = max(self.min_value, min(self.max_value, mouse_x / self.slider_width * (self.max_value - self.min_value) + self.min_value))
+
+    def reset(self):
+        # Reset the slider value to its initial value
+        self.slider_value = self.initial_value
+
     def handle_event(self, event):
-        # Handle pygame events related to the slider
         if event.type == pygame.MOUSEBUTTONDOWN:
             # Check if the mouse button is pressed within the slider area
             if self.slider_rect.collidepoint(event.pos):
                 self.dragging = True  # Start dragging the slider handle
+
         elif event.type == pygame.MOUSEBUTTONUP:
             # Stop dragging the slider handle when the mouse button is released
             self.dragging = False
+
         elif event.type == pygame.MOUSEMOTION:
             # If the mouse is moved and the slider handle is being dragged, update the slider value
             if self.dragging:
