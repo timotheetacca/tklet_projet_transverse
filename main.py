@@ -60,7 +60,7 @@ music_button_rect = ON_music_button.get_rect(topleft=coordinate_music_button)
 
 # For Level Map
 background_image_level_map = pygame.image.load("Assets/Switch_Level/background.jpg").convert()
-background_level_map = pygame.transform.scale(background_image_level_map, (screen_width//2, screen_height))
+background_level_map = pygame.transform.scale(background_image_level_map, (screen_width // 2, screen_height))
 
 all_planets_data = [{"image_path": "Assets/Level/Planets/planet1.png", "x": 650},
                     {"image_path": "Assets/Level/Planets/planet2.png", "x": 1350},
@@ -110,7 +110,6 @@ fps = 120  # Set FPS rate for frame rate
 
 # Initialize TrajectorySimulation instance
 trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height, background_image)
-orbital_phase = OrbitalPhase(5, screen)
 
 clock = pygame.time.Clock()
 level_attempts = 0
@@ -135,8 +134,21 @@ menu = True
 music_loaded = False
 loaded_level = False
 
-# Initialize the slider
-slider = Slider((50, 50), 200, 0, 100, 50)
+# Initialize the sliders with initial values set to 50
+slider1 = Slider((50, 200), 200, 0, 100, 50)
+slider2 = Slider((50, 400), 200, 0, 100, 50)
+slider3 = Slider((50, 600), 200, 0, 100, 50)
+
+# Initialize variables for value change timer and current values
+value_change_timer_orbital = 0
+current_values_orbital = [50, 50, 50]
+current_color_orbital =[(255, 255, 255),(255, 255, 255),(255, 255, 255)]
+
+# Initialize timer for value check
+value_check_timer = 0
+value_change_timer = 0
+
+orbital_phase = OrbitalPhase(390, screen,slider1, slider2, slider3)
 
 while True:
     for event in pygame.event.get():
@@ -150,6 +162,16 @@ while True:
             if event.button == 3:
                 # Cancel aiming when right mouse button is pressed
                 mouse_pressed = False
+
+            # Handle the 3 sliders
+            if slider1.is_over_handle(event.pos):
+                slider1.dragging = True
+
+            if slider2.is_over_handle(event.pos):
+                slider2.dragging = True
+
+            if slider3.is_over_handle(event.pos):
+                slider3.dragging = True
 
             if QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
                 pygame.mixer.music.stop()
@@ -171,15 +193,27 @@ while True:
                     mouse_pressed = False
                     shooting_trajectory = True
 
-            if slider.dragging:  # Check if slider is being dragged
-                slider.dragging = False  # Stop dragging when left mouse button is released
+            if slider1.dragging:  # Check if slider is being dragged
+                slider1.dragging = False  # Stop dragging when left mouse button is released
+
+            if slider2.dragging:
+                slider2.dragging = False
+
+            if slider3.dragging:
+                slider3.dragging = False
 
             if menu and play_button_rect.collidepoint(event.pos):  # Check if menu is active and button is clicked
                 menu = False  # Set menu to False on click
 
         elif event.type == pygame.MOUSEMOTION:
-            if slider.dragging:  # Check if slider is being dragged
-                slider.update_value(event.pos)  # Update slider value based on mouse position
+            if slider1.dragging:  # Check if slider is being dragged
+                slider1.update_value(event.pos)  # Update slider value based on mouse position
+
+            if slider2.dragging:  #
+                slider2.update_value(event.pos)
+
+            if slider3.dragging:
+                slider3.update_value(event.pos)
 
     # Main game loop
     screen.fill((0, 0, 0))
@@ -204,6 +238,7 @@ while True:
         scenario = (last_level == 0)
 
     else:
+
         if scenario:
             add_level("game_save.txt")
             level(level_number=0, screen=screen, transparent_surface=None, time_step=None)
@@ -215,24 +250,21 @@ while True:
             pygame.mixer.music.play(-1)
             music_playing = True
 
-        if last_level < 6:
-            if not orbital_game_phase and not loaded_level:
-                chosen_level = level_selection(screen, background_level_map, planets, planet_rects, locked_planets,locked_planet_rects, arrows, arrow_rects, last_level)
-                player_save = update_save_information("game_save.txt")
-                last_level = player_save[0]
-                display_life(player_save[1], screen, "Assets/heart_image.png")
+        if not orbital_game_phase and not loaded_level:
+            chosen_level = level_selection(screen, background_level_map, planets, planet_rects, locked_planets,
+                                           locked_planet_rects, arrows, arrow_rects, last_level)
+            player_save = update_save_information("game_save.txt")
+            last_level = player_save[0]
+            display_life(player_save[1], screen, "Assets/heart_image.png")
 
-                if chosen_level != 0 and chosen_level <= last_level:
-                    loaded_level = True
-                    level_attempts = 0
-        elif last_level == 6:
-            # Développer ici le scénario de fin
-            pass
+            if chosen_level != 0 and chosen_level <= last_level:
+                loaded_level = True
+                level_attempts = 0
 
         if loaded_level:
             angle = 0
             # Calculate v continuously while mouse button is pressed
-            if mouse_held:
+            if mouse_pressed:
                 deplacement_x = position_initial_x - mouse_x
                 deplacement_y = position_initial_y - mouse_y
 
@@ -248,31 +280,45 @@ while True:
 
             # Projectile motion loop
             if shooting_trajectory:
-                # Display the motion of the projectile.
-                shooting_trajectory, orbital_game_phase, loaded_level, level_attempts = trajectory_simulation.projectile_motion(
-                    circle_x, circle_y, g, v, h, alpha, chosen_level, level_attempts, clock)
+                shooting_trajectory, orbital_game_phase, loaded_level, level_attempts = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, chosen_level, level_attempts, clock)
                 if level_attempts > 2:
                     loaded_level = False
                     remove_life("game_save.txt")
             else:
-                # Display the aim trajectory on the screen.
+                # Display the aim trajectory on the screen
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts)
 
-        # Display the music button
-
         screen.blit(image_music_button, coordinate_music_button)
-        screen.blit(QUIT_button, coordinate_QUIT_button)
-
 
     if orbital_game_phase:
-        # Increment angle for rotation
-        angle -= 0.5
+        background_space_orbital = pygame.image.load("Assets/Level/background_space_orbital.png")
+        screen.blit(background_space_orbital, (0, 0))
+
         # Draw and handle events for the slider
-        slider.draw(screen)
-        slider_value = slider.slider_value  # Get the current value of the slider
+        slider1.draw(screen)
+        slider_value1 = slider1.slider_value  # Get the current value of the slider
+
+        slider2.draw(screen)
+        slider_value2 = slider2.slider_value
+
+        slider3.draw(screen)
+        slider_value3 = slider3.slider_value
 
         # Draw the circle with updated angle
-        orbital_game_phase = orbital_phase.draw_circle(radius, angle)
+        orbital_game_phase = orbital_phase.draw_circle(chosen_level,350,value_change_timer)
+
+        orbital_phase.display_values()
+
+        # Increment the timer for value change
+        value_change_timer += clock.get_time()
+        value_check_timer += clock.get_time()
+
+        # Increment and check angle for rotation
+        orbital_game_phase = orbital_phase.update_angle()
+        orbital_game_phase, value_change_timer, value_check_timer = orbital_phase.check_timer(slider_value1,slider_value2,slider_value3,value_change_timer,value_check_timer)
+
+    # Display the music button
+    screen.blit(QUIT_button, coordinate_QUIT_button)
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
