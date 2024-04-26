@@ -264,7 +264,7 @@ while True:
         if loaded_level:
             angle = 0
             # Calculate v continuously while mouse button is pressed
-            if mouse_pressed:
+            if mouse_held:
                 deplacement_x = position_initial_x - mouse_x
                 deplacement_y = position_initial_y - mouse_y
 
