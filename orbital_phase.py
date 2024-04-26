@@ -83,6 +83,7 @@ class OrbitalPhase:
                 self.slider1.reset()
                 self.slider2.reset()
                 self.slider3.reset()
+                self.angle = 0  # Reset the angle
                 remove_life("game_save.txt")
                 return False, 0, 0
 
