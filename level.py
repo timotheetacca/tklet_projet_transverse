@@ -4,12 +4,40 @@ from scenario import display_text_scenario
 screen_width, screen_height = 1536, 864
 
 def animate_images(screen, list_images, size, position, current_image):
+    """
+    Animate an image using as a gif.
+
+    Parameters
+    ----------
+    screen(pygame.Surface) : The pygame surface where the trajectory will be drawn
+    list_images(list) : List of image paths for the animation
+    size(list) : Size of the image
+    position(list) : Position of the animation on the screen
+    current_image(int) : Index of the current image to be displayed
+
+    Returns
+    -------
+    None
+    """
     # Animate an image using as a gif
     animation_img = pygame.image.load(list_images[current_image]).convert_alpha()
     animation_img = pygame.transform.scale(animation_img, size)
     screen.blit(animation_img, position)
 
 def display_advice(screen, text, time_step):
+    """
+    Set the speech bubble for the text and display it along with a character animation
+
+    Parameters
+    ----------
+    screen(pygame.Surface) : The pygame surface where the speech bubble and character animation will be drawn
+    text(list) : List of strings containing the advice text
+    time_step(int) : Current time step used to determine character animation frame
+
+    Returns
+    -------
+    None
+    """
     # Set the speech bubble for the text
     frame_img = pygame.image.load("Assets/Level/Character/frame.png").convert_alpha()
     frame_img = pygame.transform.scale(frame_img, (400, 145))
@@ -34,6 +62,21 @@ def display_advice(screen, text, time_step):
         screen.blit(text_display, (70, 105+(22*i)))
 
 def planet(transparent_surface, position, planet_radius, orbit_radius, level_number):
+    """
+    Draw a planet on a transparent surface with orbit circle.
+
+    Parameters
+    ----------
+    transparent_surface(pygame.Surface) : Transparent surface where the planet and orbit will be drawn
+    position(list) : Position of the planet center
+    planet_radius(int) : Radius of the planet
+    orbit_radius(int) : Radius of the orbit circle
+    level_number(int) : Level number used to determine planet image
+
+    Returns
+    -------
+    None
+    """
     # Create a surface with the desired transparency
     pygame.draw.circle(transparent_surface, (255, 255, 255, 100), (position[0], position[1]), orbit_radius)
 
@@ -47,7 +90,23 @@ def planet(transparent_surface, position, planet_radius, orbit_radius, level_num
     transparent_surface.blit(planet_img, (position[0] - planet_radius, position[1] - planet_radius))
 
 def level(level_number, screen, transparent_surface, time_step):
+    """
+    Define different levels of the game and display
 
+    Parameters
+    ----------
+    level_number(int) : Current level number
+    screen(pygame.Surface) : The pygame surface where the level information will be displayed
+    transparent_surface(pygame.Surface) : Transparent surface where objects will be drawn
+    time_step(int) : Current time step used for animations
+
+    Returns
+    -------
+    int : Orbit radius
+    list: Planet position
+    list : List of obstacles
+    list : List of objects
+    """
     if level_number == 0:
 
         screen.fill((0, 0, 0))

@@ -20,6 +20,19 @@ class OrbitalPhase:
         self.current_color = [(255, 255, 255)] * 3
 
     def draw_circle(self, level_number, planet_scale, time_text):
+        """
+         Draw the circular motion of the rocket
+
+         Parameters
+         ----------
+         level_number(int) : Level number
+         planet_scale(int) : Scale of the planet image
+         time_text(int) : Time to be displayed
+
+         Returns
+         -------
+         bool : True if a full turn is made, False otherwise
+         """
         # Get the center of the screen
         center_x, center_y = screen_width // 2, screen_height // 2
 
@@ -48,7 +61,19 @@ class OrbitalPhase:
             return False
         return True
 
+
     def update_angle(self, orbital_game_phase):
+        """
+        Update the angle of rotation for the orbit.
+
+        Parameters
+        ----------
+        orbital_game_phase(bool) : Current phase of the orbital game
+
+        Returns
+        -------
+        bool : True if the angle is updated, False if a full turn is made
+        """
         self.angle -= 0.2
 
         if self.angle <= -360:
@@ -63,7 +88,24 @@ class OrbitalPhase:
         return orbital_game_phase
 
     def check_timer(self, slider_value1, slider_value2, slider_value3, value_change_timer, value_check_timer, orbital_game_phase):
+        """
+        Check timers and slider values to control the game state
 
+        Parameters
+        ----------
+        slider_value1(int) : Value of slider 1
+        slider_value2(int) : Value of slider 2
+        slider_value3(int) : Value of slider 3
+        value_change_timer(int) : Timer for changing values
+        value_check_timer(int) : Timer for checking values
+        orbital_game_phase(bool) : Current phase of the orbital game
+
+        Returns
+        -------
+        bool: Updated game phase
+        int : Change timer
+        int : Value check timer
+        """
         if value_change_timer >= 5000:
             # Change one of the values to match randomly
             index_to_change = random.randint(0, 2)
@@ -93,6 +135,17 @@ class OrbitalPhase:
         return orbital_game_phase, value_change_timer, value_check_timer
 
     def display_values(self):
+        """
+        Display the values that the user should match on the screen
+
+        Parameters
+        -------
+        None
+
+        Returns
+        -------
+        None
+        """
         # Display the values that the user should match on the right side of the screen
         font = pygame.font.Font("Assets/Font/pixela-extreme.ttf", 36)
         text_value1 = font.render(str(self.current_values[0]), True, self.current_color[0])

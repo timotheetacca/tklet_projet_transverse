@@ -39,15 +39,36 @@ menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
 menu_background = pygame.transform.scale(menu_background_image, (screen_width, screen_height))
 
 
-
-# Function to draw the cursor on the screen
 def draw_cursor(cursor):
+    """
+    Draw the cursor on the screen
+
+    Parameters
+    ----------
+    cursor(pygame.image.load) : the cursor to be displayed
+
+    Returns
+    -------
+    None
+    """
     mouse_pos = pygame.mouse.get_pos()
     screen.blit(cursor, (mouse_pos[0], mouse_pos[1]))
 
 
 # Function to darken the screen with a given transparency level
 def darken_screen(transparency_level):
+    """
+    Darken the screen with a given transparency level
+
+    Parameters
+    ----------
+    transparency_level(int) : The transparency level for darkening the screen.
+
+    Returns
+    -------
+    None
+    """
+
     surface = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
     surface.fill((0, 0, 0, transparency_level))
     screen.blit(surface, (0, 0))
@@ -55,6 +76,17 @@ def darken_screen(transparency_level):
 
 # Function to display the text scenario
 def display_text_scenario(story):
+    """
+    Display the text scenario
+
+    Parameters
+    ----------
+    story(str) : The text scenario to be displayed.
+
+    Returns
+    -------
+    None
+    """
     screen_width_divided_by_two = screen_width / 2
     screen_height_divided_by_two = screen_height / 2
     j = 0
