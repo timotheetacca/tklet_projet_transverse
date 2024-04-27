@@ -67,7 +67,8 @@ all_planets_data = [{"image_path": "Assets/Level/Planets/planet1.png", "x": 650}
                     {"image_path": "Assets/Level/Planets/planet2.png", "x": 1350},
                     {"image_path": "Assets/Level/Planets/planet3.png", "x": 2050},
                     {"image_path": "Assets/Level/Planets/planet4.png", "x": 2750},
-                    {"image_path": "Assets/Level/Planets/planet5.png", "x": 3450}]
+                    {"image_path": "Assets/Level/Planets/planet5.png", "x": 3450},
+                    {"image_path": "Assets/Level/Planets/planet6.png", "x": 4150}]
 planets = []
 planet_rects = []
 for data in all_planets_data:
@@ -82,7 +83,8 @@ for data in all_planets_data:
 all_locked_planets_data = [{"image_path": "Assets/Switch_Level/planet2_locked.png", "x": 1350},
                            {"image_path": "Assets/Switch_Level/planet3_locked.png", "x": 2050},
                            {"image_path": "Assets/Switch_Level/planet4_locked.png", "x": 2750},
-                           {"image_path": "Assets/Switch_Level/planet5_locked.png", "x": 3450}]
+                           {"image_path": "Assets/Switch_Level/planet5_locked.png", "x": 3450},
+                           {"image_path": "Assets/Switch_Level/planet6_locked.png", "x": 4150}]
 locked_planets = []
 locked_planet_rects = []
 for data in all_locked_planets_data:
@@ -331,3 +333,4 @@ while True:
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
+

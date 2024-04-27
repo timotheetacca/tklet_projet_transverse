@@ -46,7 +46,7 @@ def level_selection(screen, background, planets, planet_rects, locked_planets, l
 
     # Handle left scrolling arrow click
     if arrow_rects[1].collidepoint(mouse_x, mouse_y):
-        if planet_rects[1].x > -1425:
+        if planet_rects[1].x > -2125:
             for planet_rect in planet_rects:
                 planet_rect.x -= scroll
             for locked_planet_rect in locked_planet_rects:
@@ -56,7 +56,7 @@ def level_selection(screen, background, planets, planet_rects, locked_planets, l
 
     # Handle right scrolling arrow click
     if arrow_rects[0].collidepoint(mouse_x, mouse_y):
-        if planet_rects[len(planets)-1].x < 2750 or locked_planet_rects[len(locked_planets)-2].x < 2750:
+        if planet_rects[len(planets)-1].x < 3450 or locked_planet_rects[len(locked_planets)-2].x < 3450:
             for planet_rect in planet_rects:
                 planet_rect.x += scroll
             for locked_planet_rect in locked_planet_rects:
