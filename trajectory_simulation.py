@@ -29,6 +29,7 @@ class TrajectorySimulation:
         level_attempts(int): Number of attempts left for the current level
         circle_x(int) : Initial x-coordinate
         circle_y(int) : Initial y-coordinate
+        lamp_status(bool) : True if the lamp should be on, otherwise False
         modified_obstacles(list, optional) : List of modified obstacles
 
         Returns

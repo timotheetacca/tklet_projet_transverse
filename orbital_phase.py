@@ -49,7 +49,7 @@ class OrbitalPhase:
         color = (int(255 * color_progress), int(255 * (1 - color_progress)), 0)
 
         time_text = self.font.render(f"{(time_text / 1000):.1f}s", True, color)
-        self.screen.blit(time_text, (center_x-25, (center_y + (planet_scale / 2) + 50)))
+        self.screen.blit(time_text, (center_x - 25, (center_y + (planet_scale / 2) + 50)))
 
         # Blit the planet image onto the transparent surface
         self.screen.blit(planet_img, (center_x - (planet_scale / 2), center_y - (planet_scale / 2)))
@@ -63,7 +63,6 @@ class OrbitalPhase:
             add_level("game_save.txt")
             return False
         return True
-
 
     def update_angle(self, orbital_game_phase):
         """
@@ -90,7 +89,8 @@ class OrbitalPhase:
             return False
         return orbital_game_phase
 
-    def check_timer(self, slider_value1, slider_value2, slider_value3, value_change_timer, value_check_timer, orbital_game_phase):
+    def check_timer(self, slider_value1, slider_value2, slider_value3, value_change_timer, value_check_timer,
+                    orbital_game_phase):
         """
         Check timers and slider values to control the game state
 

@@ -179,8 +179,8 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
 
         # Load the character's text
         text = ["Drag your mouse backward to set the angle",
-                "and power of the shot, then release it",
-                "to launch ! You can cancel your shoot by",
+                "and power of the shot, then release it to",
+                "launch ! You can cancel your shoot by",
                 "right clicking when aiming !"]
 
         display_advice(screen, text, time_step)
@@ -199,9 +199,9 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
 
         # Load the character's text
         text = ["Hey, watch out for the asteroids! They",
-                "could destroy your ship if you crash into",
-                "them! So you'd better do everything you can",
-                "to avoid them !"]
+                "could destroy your rocket ship if you crash",
+                "into them! So you'd better do everything you ",
+                "can to avoid them !"]
 
         display_advice(screen, text, time_step)
 
@@ -224,9 +224,9 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
 
         # Load the character's text
         text = ["Hey, look over there! Isn't that an asteroid",
-                "shield over there ?! Go and get it, you",
-                "might be able to protect your ship against",
-                "at least one asteroid."]
+                "shield right here ?! Go and get it, you",
+                "might be able to protect your rocket ship",
+                "against at least one asteroid."]
 
         display_advice(screen, text, time_step)
 
@@ -277,7 +277,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
         text = ["I really can't see anything, can you ?! We",
                 "seem to be in a pollution cloud, the planet",
                 "shouldn't be too far away ! There should ",
-                "be lamp torch over there, try to get it !"]
+                "be a flash light over there, try to get it !"]
 
         display_advice(screen, text, time_step)
 
