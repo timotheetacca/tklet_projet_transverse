@@ -223,7 +223,6 @@ while True:
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
-    print(mouse_x, mouse_y)
 
     if mouse_held:
         cursor = pygame.transform.scale(pygame.image.load("Assets/Cursor/cursor_hold.png"), (32, 32))
@@ -244,7 +243,7 @@ while True:
 
         if scenario:
             add_level("game_save.txt")
-            level(level_number=0, screen=screen, transparent_surface=None, time_step=None)
+            level(level_number=0, screen=screen, transparent_surface=None, time_step=None,circle_x=None,circle_y= None, lamp_status=None)
             scenario = False
 
         if not music_playing:
