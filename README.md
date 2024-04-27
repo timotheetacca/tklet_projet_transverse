@@ -56,7 +56,8 @@ The first part is a shooting game, like Angry Birds, where the goal is to launch
 
 The second part is a reflex game, where you have to update your ship's orbit information to successfully reach the planet.
 
-![game_2](photo du orbital phase.png)
+
+![game_2](https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/71294e26-7958-4ec5-bda8-dbe52d9223e2)
 
 ## Feedback
 
