@@ -29,8 +29,9 @@ def display_advice(screen, text, time_step):
     animate_images(screen, character_paths, (65, 65), (15, 15), frame)
     path_font = "Assets/Font/pixela-extreme.ttf"
     font = pygame.font.Font(path_font, 16)
-    text = font.render(text, True, (0, 0, 0))
-    screen.blit(text, (70, 105))
+    for i in range (len(text)):
+        text_display = font.render(text[i], True, (0, 0, 0))
+        screen.blit(text_display, (70, 105+(22*i)))
 
 def planet(transparent_surface, position, planet_radius, orbit_radius, level_number):
     # Create a surface with the desired transparency
@@ -75,7 +76,10 @@ def level(level_number, screen, transparent_surface, time_step):
 
 
         # Load the character's text
-        text = ("Drag your mouse backward to set the angle\nand power of the shot, then release it\nto launch ! You can cancel your shoot by\nright clicking when aiming !")
+        text = ["Drag your mouse backward to set the angle",
+                "and power of the shot, then release it",
+                "to launch ! You can cancel your shoot by",
+                "right clicking when aiming !"]
 
         display_advice(screen, text, time_step)
 
@@ -92,7 +96,10 @@ def level(level_number, screen, transparent_surface, time_step):
         obstacles = [[pygame.Rect(700, 460, 40, 40), 1], [pygame.Rect(700, 250, 40, 40), 2]]
 
         # Load the character's text
-        text = ("Hey, watch out for the asteroids! They\ncould destroy your ship if you crash into\nthem! So you'd better do everything you can\nto avoid them !")
+        text = ["Hey, watch out for the asteroids! They",
+                "could destroy your ship if you crash into",
+                "them! So you'd better do everything you can",
+                "to avoid them !"]
 
         display_advice(screen, text, time_step)
 
@@ -114,7 +121,10 @@ def level(level_number, screen, transparent_surface, time_step):
         objects = [["shield", pygame.Rect(500, 500, 40, 40)],]
 
         # Load the character's text
-        text = ("Hey, look over there! Isn't that an asteroid\nshield over there ?! Go and get it, you\nmight be able to protect your ship against\nat least one asteroid.")
+        text = ["Hey, look over there! Isn't that an asteroid",
+                "shield over there ?! Go and get it, you",
+                "might be able to protect your ship against",
+                "at least one asteroid."]
 
         display_advice(screen, text, time_step)
 
