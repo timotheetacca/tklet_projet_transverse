@@ -75,10 +75,7 @@ def level(level_number, screen, transparent_surface, time_step):
 
 
         # Load the character's text
-        text = ("Drag your mouse backward to set the angle"
-                "\nand power of the shot, then release it"
-                "\nto launch ! You can cancel your shoot by"
-                "\nright clicking when aiming !")
+        text = ("Drag your mouse backward to set the angle\nand power of the shot, then release it\nto launch ! You can cancel your shoot by\nright clicking when aiming !")
 
         display_advice(screen, text, time_step)
 
@@ -95,10 +92,7 @@ def level(level_number, screen, transparent_surface, time_step):
         obstacles = [[pygame.Rect(700, 460, 40, 40), 1], [pygame.Rect(700, 250, 40, 40), 2]]
 
         # Load the character's text
-        text = ("Hey, watch out for the asteroids! They"
-                "\ncould destroy your ship if you crash into"
-                "\nthem! So you'd better do everything you can"
-                "\nto avoid them !")
+        text = ("Hey, watch out for the asteroids! They\ncould destroy your ship if you crash into\nthem! So you'd better do everything you can\nto avoid them !")
 
         display_advice(screen, text, time_step)
 
@@ -120,10 +114,7 @@ def level(level_number, screen, transparent_surface, time_step):
         objects = [["shield", pygame.Rect(500, 500, 40, 40)],]
 
         # Load the character's text
-        text = ("Hey, look over there! Isn't that an asteroid"
-                "\nshield over there ?! Go and get it, you"
-                "\nmight be able to protect your ship against"
-                "\nat least one asteroid.")
+        text = ("Hey, look over there! Isn't that an asteroid\nshield over there ?! Go and get it, you\nmight be able to protect your ship against\nat least one asteroid.")
 
         display_advice(screen, text, time_step)
 

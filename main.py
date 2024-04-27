@@ -23,6 +23,7 @@ pygame.mouse.set_visible(False)
 
 # Load a background image
 background_image = pygame.image.load("Assets/Level/background_space.png")
+background_space_orbital = pygame.image.load("Assets/Level/background_space_orbital.png")
 
 # For Menu
 menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
@@ -284,6 +285,7 @@ while True:
                 if level_attempts > 2:
                     loaded_level = False
                     remove_life("game_save.txt")
+
             else:
                 # Display the aim trajectory on the screen
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts)
@@ -291,7 +293,6 @@ while True:
         screen.blit(image_music_button, coordinate_music_button)
 
     if orbital_game_phase:
-        background_space_orbital = pygame.image.load("Assets/Level/background_space_orbital.png")
         screen.blit(background_space_orbital, (0, 0))
 
         # Draw and handle events for the slider
@@ -314,8 +315,8 @@ while True:
         value_check_timer += clock.get_time()
 
         # Increment and check angle for rotation
-        orbital_game_phase = orbital_phase.update_angle()
-        orbital_game_phase, value_change_timer, value_check_timer = orbital_phase.check_timer(slider_value1,slider_value2,slider_value3,value_change_timer,value_check_timer)
+        orbital_game_phase = orbital_phase.update_angle(orbital_game_phase)
+        orbital_game_phase, value_change_timer, value_check_timer = orbital_phase.check_timer(slider_value1,slider_value2,slider_value3,value_change_timer,value_check_timer, orbital_game_phase)
 
     # Display the music button
     screen.blit(QUIT_button, coordinate_QUIT_button)

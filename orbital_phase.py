@@ -48,7 +48,7 @@ class OrbitalPhase:
             return False
         return True
 
-    def update_angle(self):
+    def update_angle(self, orbital_game_phase):
         self.angle -= 0.2
 
         if self.angle <= -360:
@@ -60,9 +60,9 @@ class OrbitalPhase:
             self.current_values = [50, 50, 50]
             add_level("game_save.txt")
             return False
-        return True
+        return orbital_game_phase
 
-    def check_timer(self, slider_value1, slider_value2, slider_value3, value_change_timer, value_check_timer):
+    def check_timer(self, slider_value1, slider_value2, slider_value3, value_change_timer, value_check_timer, orbital_game_phase):
 
         if value_change_timer >= 5000:
             # Change one of the values to match randomly
@@ -88,9 +88,9 @@ class OrbitalPhase:
                 return False, 0, 0
 
             # Reset the timer after checking slider values
-            return True, value_change_timer, 0
+            return orbital_game_phase, value_change_timer, 0
 
-        return True, value_change_timer, value_check_timer
+        return orbital_game_phase, value_change_timer, value_check_timer
 
     def display_values(self):
         # Display the values that the user should match on the right side of the screen
