@@ -132,6 +132,7 @@ orbital_game_phase = False
 music_playing = False
 scenario = True
 menu = True
+lamp_status = False
 music_loaded = False
 loaded_level = False
 
@@ -222,6 +223,7 @@ while True:
 
     # Get the mouse x and y
     mouse_x, mouse_y = pygame.mouse.get_pos()
+    print(mouse_x, mouse_y)
 
     if mouse_held:
         cursor = pygame.transform.scale(pygame.image.load("Assets/Cursor/cursor_hold.png"), (32, 32))
@@ -281,15 +283,16 @@ while True:
 
             # Projectile motion loop
             if shooting_trajectory:
-                shooting_trajectory, orbital_game_phase, loaded_level, level_attempts = trajectory_simulation.projectile_motion(
-                    circle_x, circle_y, g, v, h, alpha, chosen_level, level_attempts, clock)
+                shooting_trajectory, orbital_game_phase, loaded_level, level_attempts, lamp_status = trajectory_simulation.projectile_motion(
+                    circle_x, circle_y, g, v, h, alpha, chosen_level, level_attempts, clock, lamp_status)
                 if level_attempts > 2:
                     loaded_level = False
+                    lamp_status = False
                     remove_life("game_save.txt")
 
             else:
                 # Display the aim trajectory on the screen
-                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts)
+                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,lamp_status)
 
         screen.blit(image_music_button, coordinate_music_button)
 

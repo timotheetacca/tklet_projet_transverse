@@ -17,7 +17,7 @@ class TrajectorySimulation:
         self.screen_height = screen_height
         self.background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
 
-    def level_display(self, level_number, full_level, time_step, level_attempts, modified_obstacles=[]):
+    def level_display(self, level_number, full_level, time_step, level_attempts, circle_x, circle_y, lamp_status, modified_obstacles=[]):
         """
         Draw a level on a screen.
 
@@ -27,6 +27,8 @@ class TrajectorySimulation:
         full_level(bool) : Indicates whether the level should be fully displayed
         time_step(int) : Current frame for character animation
         level_attempts(int): Number of attempts left for the current level
+        circle_x(int) : Initial x-coordinate
+        circle_y(int) : Initial y-coordinate
         modified_obstacles(list, optional) : List of modified obstacles
 
         Returns
@@ -56,7 +58,7 @@ class TrajectorySimulation:
 
         # Collect the level info and print it
         orbit_radius, position, obstacles, objects = level(level_number, self.screen, self.transparent_surface,
-                                                           time_step)
+                                                           time_step, circle_x, circle_y, lamp_status)
 
         if len(obstacles) > len(modified_obstacles) and not full_level:
             for obstacle, number in modified_obstacles:
@@ -79,12 +81,20 @@ class TrajectorySimulation:
                 shield_icon_img = pygame.transform.scale(shield_icon_img, (40, 40))
                 self.transparent_surface.blit(shield_icon_img, object[1])
 
+            # Draw a lamp icon for objects
+            if object[0] == "lamp":
+                # Load and blit lamp icon
+                lamp_icon_img = pygame.image.load("Assets/Level/Items/lamp.png").convert_alpha()
+                lamp_icon_img = pygame.transform.scale(lamp_icon_img, (50, 22))
+                self.transparent_surface.blit(lamp_icon_img, object[1])
+
+
 
         display_life((3 - level_attempts), self.screen, "Assets/astronaut_image.png")
 
         return orbit_radius, position, obstacles, objects
 
-    def projectile_aim(self, g, v, h, alpha, time_step, level_number, level_attempts):
+    def projectile_aim(self, g, v, h, alpha, time_step, level_number, level_attempts, lamp_status):
         """
         Display the aim trajectory on the screen.
 
@@ -96,16 +106,17 @@ class TrajectorySimulation:
         alpha(int) : Launch angle in degrees
         time_step(int): Current frame for character animation
         level_number(int) : Current level number
+        lamp_status(bool) : True if the lamp should be on, otherwise False
 
         Returns
         -------
         None
         """
         self.screen.blit(self.background_image, (0, 0))
-        self.level_display(level_number, True, time_step, level_attempts)
+        self.level_display(level_number, True, time_step,level_attempts,0 , screen_height, lamp_status)
         draw_aim(self.screen, g, v, h, alpha, self.circle_radius, self.screen_height, 22)
 
-    def projectile_motion(self, circle_x, circle_y, g, v, h, alpha, level_number, level_attempts, clock):
+    def projectile_motion(self, circle_x, circle_y, g, v, h, alpha, level_number, level_attempts, clock, lamp_status):
         """
         Display the motion of the projectile.
 
@@ -119,6 +130,7 @@ class TrajectorySimulation:
         alpha(int) : Launch angle in degrees
         level_number(int) : Current level number
         level_attempts(int) : Number of attempts on the current level
+        lamp_status(bool) : True if the lamp should be on, otherwise False
 
         Returns
         -------
@@ -131,18 +143,17 @@ class TrajectorySimulation:
         time_step = 0
         shooting_trajectory = False
         object_status = False
-
-        orbit_radius, position, obstacles, objects = self.level_display(level_number, True, time_step, level_attempts)
+        orbit_radius, position, obstacles, objects = self.level_display(level_number, True, time_step, level_attempts, circle_x, circle_y, lamp_status)
 
         # 'For' loop to avoid code locking with while and optimization in case of bugs, will stop after 1000 steps
         for steps in range(1000):
             if not (0 <= circle_x <= screen_width and 0 <= circle_y <= screen_height):
                 level_attempts += 1
                 self.transparent_surface.fill((0, 0, 0, 0))
-                return shooting_trajectory, False, True, level_attempts
+                return shooting_trajectory, False, True, level_attempts, lamp_status
 
             self.screen.blit(self.background_image, (0, 0))
-            self.level_display(level_number, False, time_step, level_attempts, obstacles)
+            self.level_display(level_number, False, time_step, level_attempts, circle_x, circle_y, lamp_status, obstacles)
 
             # Check for collisions with obstacles
             for obstacle in obstacles:
@@ -150,7 +161,8 @@ class TrajectorySimulation:
                     if not object_status:
                         level_attempts += 1
                         self.transparent_surface.fill((0, 0, 0, 0))
-                        return shooting_trajectory, False, True, level_attempts
+                        return shooting_trajectory, False, True, level_attempts, lamp_status
+
                     else:
                         # Removes the obstacle if it touched with an object
                         obstacles.remove(obstacle)
@@ -162,6 +174,9 @@ class TrajectorySimulation:
                 if object[1].collidepoint(circle_x, circle_y):
                     if object[0]== "shield":
                         object_status = True
+
+                    if object[0]== "lamp":
+                        lamp_status = True
 
             # Draw a circle around the ball to indicate it has an object
             if object_status:
@@ -181,6 +196,8 @@ class TrajectorySimulation:
             if (circle_x - position[0]) ** 2 + (circle_y - position[1]) ** 2 <= orbit_radius ** 2:
                 shooting_trajectory = False
                 self.transparent_surface.fill((0, 0, 0, 0))
-                return shooting_trajectory, True, False, level_attempts
+                return shooting_trajectory, True, False, level_attempts, lamp_status
 
-        return shooting_trajectory, False, True, level_attempts
+
+
+        return shooting_trajectory, False, True, level_attempts, lamp_status

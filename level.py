@@ -3,6 +3,7 @@ from scenario import display_text_scenario
 
 screen_width, screen_height = 1536, 864
 
+
 def animate_images(screen, list_images, size, position, current_image):
     """
     Animate an image using as a gif.
@@ -23,6 +24,7 @@ def animate_images(screen, list_images, size, position, current_image):
     animation_img = pygame.image.load(list_images[current_image]).convert_alpha()
     animation_img = pygame.transform.scale(animation_img, size)
     screen.blit(animation_img, position)
+
 
 def display_advice(screen, text, time_step):
     """
@@ -57,9 +59,10 @@ def display_advice(screen, text, time_step):
     animate_images(screen, character_paths, (65, 65), (15, 15), frame)
     path_font = "Assets/Font/pixela-extreme.ttf"
     font = pygame.font.Font(path_font, 16)
-    for i in range (len(text)):
+    for i in range(len(text)):
         text_display = font.render(text[i], True, (0, 0, 0))
-        screen.blit(text_display, (70, 105+(22*i)))
+        screen.blit(text_display, (70, 105 + (22 * i)))
+
 
 def planet(transparent_surface, position, planet_radius, orbit_radius, level_number):
     """
@@ -89,7 +92,46 @@ def planet(transparent_surface, position, planet_radius, orbit_radius, level_num
     # Blit the planet image onto the transparent surface
     transparent_surface.blit(planet_img, (position[0] - planet_radius, position[1] - planet_radius))
 
-def level(level_number, screen, transparent_surface, time_step):
+
+def blindness(screen, square_width, circle_x, circle_y):
+    """
+    Set the blidn effect on the screen
+
+    Parameters
+    ----------
+    screen(pygame.Surface) : The pygame surface where the speech bubble and character animation will be drawn
+    square_width(list) : Size of the visible part
+    circle_x(int) : Initial x-coordinate
+    circle_y(int) : Initial y-coordinate
+
+    Returns
+    -------
+    None
+    """
+    # Calculate the position of the square
+    square_x = circle_x - square_width / 2
+    square_y = circle_y - square_width / 2
+
+    # Define the coordinates for the areas around the square
+    above_square_area = pygame.Rect(0, 0, screen_width, square_y)
+    below_square_area = pygame.Rect(0, square_y + square_width, screen_width,
+                                    screen_height - (square_y + square_width))
+    left_of_square_area = pygame.Rect(0, square_y, square_x, square_width)
+    right_of_square_area = pygame.Rect(square_x + square_width, square_y,
+                                       screen_width - (square_x + square_width), square_width)
+
+    # Fill the areas around the rocket with black
+    screen.fill((0, 0, 0), above_square_area)
+    screen.fill((0, 0, 0), below_square_area)
+    screen.fill((0, 0, 0), left_of_square_area)
+    screen.fill((0, 0, 0), right_of_square_area)
+
+    blind_image = (pygame.image.load('Assets/Level/Items/blind.png'))
+    blind_rect = blind_image.get_rect(center=(circle_x, circle_y))
+    screen.blit(blind_image, blind_rect)
+
+
+def level(level_number, screen, transparent_surface, time_step, circle_x, circle_y, lamp_status):
     """
     Define different levels of the game and display
 
@@ -99,6 +141,9 @@ def level(level_number, screen, transparent_surface, time_step):
     screen(pygame.Surface) : The pygame surface where the level information will be displayed
     transparent_surface(pygame.Surface) : Transparent surface where objects will be drawn
     time_step(int) : Current time step used for animations
+    circle_x(int) : Initial x-coordinate
+    circle_y(int) : Initial y-coordinate
+    lamp_status(bool) : True if the lamp should be on, otherwise False
 
     Returns
     -------
@@ -108,7 +153,6 @@ def level(level_number, screen, transparent_surface, time_step):
     list : List of objects
     """
     if level_number == 0:
-
         screen.fill((0, 0, 0))
         pygame.display.flip()
 
@@ -124,7 +168,7 @@ def level(level_number, screen, transparent_surface, time_step):
         You know that Thorne is out there somewhere, waiting to be rescued."""
 
         display_text_scenario(story)
-        
+
     if level_number == 1:
         planet_radius = 45
         orbit_radius = 130
@@ -132,7 +176,6 @@ def level(level_number, screen, transparent_surface, time_step):
         screen.blit(transparent_surface, (0, 0))
 
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
-
 
         # Load the character's text
         text = ["Drag your mouse backward to set the angle",
@@ -177,7 +220,7 @@ def level(level_number, screen, transparent_surface, time_step):
                      [pygame.Rect(850, 260, 40, 40), 4]]
 
         # Add all the objects contained in the level
-        objects = [["shield", pygame.Rect(500, 500, 40, 40)],]
+        objects = [["shield", pygame.Rect(500, 500, 40, 40)], ]
 
         # Load the character's text
         text = ["Hey, look over there! Isn't that an asteroid",
@@ -191,14 +234,51 @@ def level(level_number, screen, transparent_surface, time_step):
 
     if level_number == 4:
         planet_radius = 35
-        orbit_radius = 85
-        position = (1200, 300)
+        orbit_radius = 65
+        position = (1300, 450)
         screen.blit(transparent_surface, (0, 0))
+        planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
 
         # Add all the obstacles contained in the level
-        obstacles = []
+        obstacles = [[pygame.Rect(650, 240, 40, 40), 1], [pygame.Rect(680, 430, 40, 40), 2],
+                     [pygame.Rect(780, 420, 40, 40), 3], [pygame.Rect(1100, 350, 40, 40), 4],
+                     [pygame.Rect(850, 260, 40, 40), 1], [pygame.Rect(1020, 425, 40, 40), 2],
+                     [pygame.Rect(1000, 530, 40, 40), 3], [pygame.Rect(850, 330, 40, 40), 4],
+                     [pygame.Rect(930, 500, 40, 40), 1], [pygame.Rect(1100, 225, 40, 40), 2],
+                     [pygame.Rect(810, 500, 40, 40), 3], [pygame.Rect(1100, 540, 40, 40), 4],
+                     [pygame.Rect(1000, 530, 40, 40), 4]
+                     ]
 
         # Add all the objects contained in the level
-        objects = []
+        objects = [["shield", pygame.Rect(710, 350, 40, 40)], ]
+        return orbit_radius, position, obstacles, objects
+
+    if level_number == 5:
+        planet_radius = 35
+        orbit_radius = 65
+        position = (1300, 450)
+        screen.blit(transparent_surface, (0, 0))
+        planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
+
+        # Add all the obstacles contained in the level
+        obstacles = [[pygame.Rect(650, 340, 40, 40), 1], [pygame.Rect(680, 430, 40, 40), 2],
+                    [pygame.Rect(1000, 530, 40, 40), 3], [pygame.Rect(900, 485, 40, 40), 4],
+                    [pygame.Rect(1000, 530, 40, 40), 1], [pygame.Rect(770, 460, 40, 40), 2],
+                    [pygame.Rect(850, 330, 40, 40), 3], [pygame.Rect(1000, 325, 40, 40), 4],
+                     ]
+
+        # Add all the objects contained in the level
+        objects = [["lamp", pygame.Rect(480, 530, 40, 40)], ]
+
+        if not lamp_status:
+            blindness(screen, 600, circle_x, circle_y)
+
+        # Load the character's text
+        text = ["I really can't see anything, can you ?! We",
+                "seem to be in a pollution cloud, the planet",
+                "shouldn't be too far away ! There should ",
+                "be lamp torch over there, try to get it !"]
+
+        display_advice(screen, text, time_step)
 
         return orbit_radius, position, obstacles, objects
