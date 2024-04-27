@@ -45,7 +45,10 @@ class OrbitalPhase:
         # Scale the planet image to the desired size
         planet_img = pygame.transform.scale(planet_img, (planet_scale, planet_scale))
 
-        time_text = self.font.render(f"{(time_text / 1000):.1f}s", True, (255, 255, 255))
+        color_progress = time_text / 5000
+        color = (int(255 * color_progress), int(255 * (1 - color_progress)), 0)
+
+        time_text = self.font.render(f"{(time_text / 1000):.1f}s", True, color)
         self.screen.blit(time_text, (center_x-25, (center_y + (planet_scale / 2) + 50)))
 
         # Blit the planet image onto the transparent surface
@@ -111,7 +114,7 @@ class OrbitalPhase:
             index_to_change = random.randint(0, 2)
             self.current_values[index_to_change] = random.randint(0, 100)
             self.current_color = [(255, 255, 255)] * 3
-            self.current_color[index_to_change] = (139, 0, 0)
+            self.current_color[index_to_change] = (165, 0, 0)
             return True, 0, value_check_timer
 
         if value_check_timer >= 4950:

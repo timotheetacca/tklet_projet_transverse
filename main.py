@@ -30,13 +30,13 @@ menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
 menu_background = pygame.transform.scale(menu_background_image, (screen_width, screen_height))
 
 logo_image = pygame.image.load("Assets/Menu/tklet_logo.png")
-logo = pygame.transform.scale(logo_image, (596.25,215.25))
+logo = pygame.transform.scale(logo_image, (596.25, 215.25))
 logo_rect = logo.get_rect()
-logo_rect.x = screen_width // 2 - 596.25/2
+logo_rect.x = screen_width // 2 - 596.25 / 2
 logo_rect.y = screen_height // 2 - 200
 
 play_button_image = pygame.image.load("Assets/Menu/play_button.png")
-play_button = pygame.transform.scale(play_button_image, (225,100))
+play_button = pygame.transform.scale(play_button_image, (225, 100))
 play_button_rect = play_button.get_rect()
 play_button_rect.x = screen_width // 2 - 100
 play_button_rect.y = screen_height // 2 + 100
@@ -143,13 +143,13 @@ slider3 = Slider((50, 600), 200, 0, 100, 50)
 # Initialize variables for value change timer and current values
 value_change_timer_orbital = 0
 current_values_orbital = [50, 50, 50]
-current_color_orbital =[(255, 255, 255),(255, 255, 255),(255, 255, 255)]
+current_color_orbital = [(255, 255, 255), (255, 255, 255), (255, 255, 255)]
 
 # Initialize timer for value check
 value_check_timer = 0
 value_change_timer = 0
 
-orbital_phase = OrbitalPhase(390, screen,slider1, slider2, slider3)
+orbital_phase = OrbitalPhase(390, screen, slider1, slider2, slider3)
 
 while True:
     for event in pygame.event.get():
@@ -281,7 +281,8 @@ while True:
 
             # Projectile motion loop
             if shooting_trajectory:
-                shooting_trajectory, orbital_game_phase, loaded_level, level_attempts = trajectory_simulation.projectile_motion(circle_x, circle_y, g, v, h, alpha, chosen_level, level_attempts, clock)
+                shooting_trajectory, orbital_game_phase, loaded_level, level_attempts = trajectory_simulation.projectile_motion(
+                    circle_x, circle_y, g, v, h, alpha, chosen_level, level_attempts, clock)
                 if level_attempts > 2:
                     loaded_level = False
                     remove_life("game_save.txt")
@@ -306,7 +307,7 @@ while True:
         slider_value3 = slider3.slider_value
 
         # Draw the circle with updated angle
-        orbital_game_phase = orbital_phase.draw_circle(chosen_level,350,value_change_timer)
+        orbital_game_phase = orbital_phase.draw_circle(chosen_level, 350, value_change_timer)
 
         orbital_phase.display_values()
 
@@ -316,7 +317,12 @@ while True:
 
         # Increment and check angle for rotation
         orbital_game_phase = orbital_phase.update_angle(orbital_game_phase)
-        orbital_game_phase, value_change_timer, value_check_timer = orbital_phase.check_timer(slider_value1,slider_value2,slider_value3,value_change_timer,value_check_timer, orbital_game_phase)
+        orbital_game_phase, value_change_timer, value_check_timer = orbital_phase.check_timer(slider_value1,
+                                                                                              slider_value2,
+                                                                                              slider_value3,
+                                                                                              value_change_timer,
+                                                                                              value_check_timer,
+                                                                                              orbital_game_phase)
 
     # Display the music button
     screen.blit(QUIT_button, coordinate_QUIT_button)
