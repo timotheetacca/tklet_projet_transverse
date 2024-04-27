@@ -15,9 +15,9 @@ font = pygame.font.Font(path_font, 30)
 
 # Load skip button image and scale it
 skip_image = pygame.image.load('Assets/skip.png')
-skip_button = pygame.transform.scale(skip_image, (75, 75))
+skip_button = pygame.transform.scale(skip_image, (150, 75))
 skip_button_rect = skip_button.get_rect()
-coord_skip_button = (screen_width - 95, 95)
+coord_skip_button = (screen_width - 175, 95)
 skip_button_rect = skip_button.get_rect(bottomleft=coord_skip_button)
 
 # Load cursor images
