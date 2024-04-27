@@ -34,16 +34,19 @@ space_bar_rect.center = (screen_width // 2, screen_height * 3 / 4)
 pygame.mixer.music.load("Assets/Scenario/sound_message_appearing.mp3")
 pygame.mixer.music.set_volume(0.25)
 
+
 # Function to draw the cursor on the screen
 def draw_cursor(cursor):
     mouse_pos = pygame.mouse.get_pos()
     screen.blit(cursor, (mouse_pos[0], mouse_pos[1]))
+
 
 # Function to darken the screen with a given transparency level
 def darken_screen(transparency_level):
     surface = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
     surface.fill((0, 0, 0, transparency_level))
     screen.blit(surface, (0, 0))
+
 
 # Function to display the text scenario
 def display_text_scenario(story):
@@ -60,6 +63,10 @@ def display_text_scenario(story):
     displaying_text = False
     screen_fill_black_time = True
     cursor = pygame.transform.scale(cursor_image_still, (32, 32))
+
+    # Loop in order to put a dot at the end of each sentence
+    for i in range(number_of_sentences - 1):
+        sentence_story[i] += "."
 
     # Loop until all sentences are displayed or the user quits
     while True:
