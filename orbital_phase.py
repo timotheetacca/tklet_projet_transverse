@@ -4,7 +4,7 @@ import random
 from save import remove_life, add_level
 
 screen_width, screen_height = 1536, 864
-
+win_sound = pygame.mixer.Sound("Assets/Music/level_win.mp3")
 
 class OrbitalPhase:
     def __init__(self, circle_radius, screen, slider1, slider2, slider3):
@@ -86,11 +86,12 @@ class OrbitalPhase:
             self.current_color = [(255, 255, 255), (255, 255, 255), (255, 255, 255)]
             self.current_values = [50, 50, 50]
             add_level("game_save.txt")
+            win_sound.play()
             return False
         return orbital_game_phase
 
     def check_timer(self, slider_value1, slider_value2, slider_value3, value_change_timer, value_check_timer,
-                    orbital_game_phase):
+                    orbital_game_phase,lose_sound):
         """
         Check timers and slider values to control the game state
 
@@ -133,6 +134,7 @@ class OrbitalPhase:
                 self.slider3.reset()
                 self.angle = 0  # Reset the angle
                 remove_life("game_save.txt")
+                lose_sound.play()
                 return False, 0, 0
 
             # Reset the timer after checking slider values

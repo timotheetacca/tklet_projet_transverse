@@ -109,6 +109,9 @@ for data in arrow_data:
     arrows.append(arrow)
     arrow_rects.append(arrow_rect)
 
+# For Sound Design
+level_lose_sound = pygame.mixer.Sound("Assets/Music/level_lose.mp3")
+
 fps = 120  # Set FPS rate for frame rate
 
 # Initialize TrajectorySimulation instance
@@ -290,6 +293,7 @@ while True:
                     loaded_level = False
                     object_state = False
                     remove_life("game_save.txt")
+                    level_lose_sound.play()
 
             else:
                 # Display the aim trajectory on the screen
@@ -326,7 +330,8 @@ while True:
                                                                                               slider_value3,
                                                                                               value_change_timer,
                                                                                               value_check_timer,
-                                                                                              orbital_game_phase)
+                                                                                              orbital_game_phase,
+                                                                                              level_lose_sound)
 
     # Display the music button
     screen.blit(QUIT_button, coordinate_QUIT_button)

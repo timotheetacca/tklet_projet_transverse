@@ -176,7 +176,7 @@ class TrajectorySimulation:
             for object in objects:
                 if object[1].collidepoint(circle_x, circle_y):
                     if not self.sound_played:
-                        sound = pygame.mixer.Sound("Assets/Music/item_pick.wav")
+                        sound = pygame.mixer.Sound("Assets/Music/item_pick.mp3")
                         sound.set_volume(0.2)
                         sound.play()
                         self.sound_played = True
