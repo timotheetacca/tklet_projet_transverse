@@ -111,6 +111,7 @@ for data in arrow_data:
 
 # For Sound Design
 level_lose_sound = pygame.mixer.Sound("Assets/Music/level_lose.mp3")
+play_sound = pygame.mixer.Sound("Assets/Music/play_button.mp3")
 
 fps = 120  # Set FPS rate for frame rate
 
@@ -210,6 +211,7 @@ while True:
                 slider3.dragging = False
 
             if menu and play_button_rect.collidepoint(event.pos):  # Check if menu is active and button is clicked
+                play_sound.play()
                 menu = False  # Set menu to False on click
 
         elif event.type == pygame.MOUSEMOTION:
