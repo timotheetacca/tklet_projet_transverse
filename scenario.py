@@ -34,10 +34,6 @@ space_bar_rect.center = (screen_width // 2, screen_height * 3 / 4)
 pygame.mixer.music.load("Assets/Scenario/sound_message_appearing.mp3")
 pygame.mixer.music.set_volume(0.25)
 
-# Background
-menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
-menu_background = pygame.transform.scale(menu_background_image, (screen_width, screen_height))
-
 
 def draw_cursor(cursor):
     """
@@ -75,7 +71,7 @@ def darken_screen(transparency_level):
 
 
 # Function to display the text scenario
-def display_text_scenario(story):
+def display_text_scenario(story, background):
     """
     Display the text scenario
 
@@ -128,8 +124,6 @@ def display_text_scenario(story):
             # Display either a black screen or background image
             if screen_fill_black_time:
                 screen.fill((0, 0, 0))
-            else:
-                screen.blit(background, (0, 0))
 
             screen.blit(skip_button, skip_button_rect)
 
@@ -143,8 +137,7 @@ def display_text_scenario(story):
 
             if go_to_next_message:
                 displaying_text = True
-                screen.blit(menu_background, (0, 0))
-
+                screen.blit(background, (0, 0))
 
                 # Split the text into lines if it's too wide
                 if text_rect.width > screen_width_divided_by_two:
@@ -171,7 +164,8 @@ def display_text_scenario(story):
                         rect.height += line_surface.get_rect().height
 
                     rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
-                    rect.topleft = ((screen_width_divided_by_two / 2) + screen_width/90, (screen_height - rect.height) / 2)
+                    rect.topleft = (
+                    (screen_width_divided_by_two / 2) + screen_width / 90, (screen_height - rect.height) / 2)
 
                     height_line = 0
                     for line in lines:
@@ -201,10 +195,9 @@ def display_text_scenario(story):
                 screen_capture.blit(screen, (0, 0))
                 os.remove('Assets/Scenario/screen_capture_with_text_scenario.png')
                 pygame.image.save(screen_capture, 'Assets/Scenario/screen_capture_with_text_scenario.png')
-                background = pygame.image.load("./Assets/Scenario/screen_capture_with_text_scenario.png")
-                screen.blit(background, (0, 0))
+                background_temp = pygame.image.load("./Assets/Scenario/screen_capture_with_text_scenario.png")
+                screen.blit(background_temp, (0, 0))
                 screen_fill_black_time = False
-
                 go_to_next_message = False
             else:
                 displaying_text = False

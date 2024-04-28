@@ -1,5 +1,10 @@
 import pygame
 from scenario import display_text_scenario
+screen_width, screen_height = 1536, 864
+
+# For Menu
+menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
+menu_background = pygame.transform.scale(menu_background_image, (screen_width, screen_height))
 
 screen_width, screen_height = 1536, 864
 value_change_position = 0
@@ -169,7 +174,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
         find your friend. Your journey will take you through the dangers of space.  But you will never give up hope.
         You know that Thorne is out there somewhere, waiting to be rescued."""
 
-        display_text_scenario(story)
+        display_text_scenario(story=story, background=menu_background)
 
     if level_number == 1:
         planet_radius = 45
