@@ -162,6 +162,9 @@ class TrajectorySimulation:
                 if obstacle[0].collidepoint(circle_x, circle_y):
                     if not object_status:
                         level_attempts += 1
+                        sound = pygame.mixer.Sound("Assets/Music/asteroid_crash.mp3")
+                        sound.set_volume(0.4)
+                        sound.play()
                         self.transparent_surface.fill((0, 0, 0, 0))
                         self.sound_played = False
                         return shooting_trajectory, False, True, level_attempts, object_state
