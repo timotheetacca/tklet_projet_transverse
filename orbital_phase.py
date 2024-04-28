@@ -119,6 +119,9 @@ class OrbitalPhase:
 
         if value_check_timer >= 4950:
             # Compare slider values to current values
+            sound = pygame.mixer.Sound("Assets/Music/validation_orbital.mp3")
+            sound.set_volume(0.5)
+            sound.play()
             if not (abs(slider_value1 - self.current_values[0]) <= 20 and
                     abs(slider_value2 - self.current_values[1]) <= 20 and
                     abs(slider_value3 - self.current_values[2]) <= 20):
