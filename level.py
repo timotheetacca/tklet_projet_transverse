@@ -2,7 +2,8 @@ import pygame
 from scenario import display_text_scenario
 
 screen_width, screen_height = 1536, 864
-
+value_change_position = 0
+clock = pygame.time.Clock()
 
 def animate_images(screen, list_images, size, position, current_image):
     """
@@ -131,7 +132,7 @@ def blindness(screen, square_width, circle_x, circle_y):
     screen.blit(blind_image, blind_rect)
 
 
-def level(level_number, screen, transparent_surface, time_step, circle_x, circle_y, lamp_status):
+def level(level_number, screen, transparent_surface, time_step, circle_x, circle_y, object_state):
     """
     Define different levels of the game and display
 
@@ -143,7 +144,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
     time_step(int) : Current time step used for animations
     circle_x(int) : Initial x-coordinate
     circle_y(int) : Initial y-coordinate
-    lamp_status(bool) : True if the lamp should be on, otherwise False
+    object_state(bool) : True if the object should be on, otherwise False
 
     Returns
     -------
@@ -152,6 +153,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
     list : List of obstacles
     list : List of objects
     """
+
     if level_number == 0:
         screen.fill((0, 0, 0))
         pygame.display.flip()
@@ -265,12 +267,13 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
                     [pygame.Rect(1000, 530, 40, 40), 3], [pygame.Rect(900, 485, 40, 40), 4],
                     [pygame.Rect(1000, 530, 40, 40), 1], [pygame.Rect(770, 460, 40, 40), 2],
                     [pygame.Rect(850, 330, 40, 40), 3], [pygame.Rect(1000, 325, 40, 40), 4],
+                    [pygame.Rect(1015, 415, 40, 40), 1],
                      ]
 
         # Add all the objects contained in the level
         objects = [["lamp", pygame.Rect(480, 530, 40, 40)], ]
 
-        if not lamp_status:
+        if not object_state:
             blindness(screen, 600, circle_x, circle_y)
 
         # Load the character's text
@@ -280,5 +283,34 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
                 "be a flash light over there, try to get it !"]
 
         display_advice(screen, text, time_step)
+
+        return orbit_radius, position, obstacles, objects
+
+    if level_number == 6:
+        planet_radius = 35
+        orbit_radius = 65
+        position = (1075, 650)
+        screen.blit(transparent_surface, (0, 0))
+        planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
+
+        # Add all the obstacles contained in the level
+        obstacles = [[pygame.Rect(640, 50, 40, 40), 3], [pygame.Rect(775, 100, 40, 40), 4],
+                    [pygame.Rect(762, 150, 40, 40), 1], [pygame.Rect(745, 200, 40, 40), 2],
+                    [pygame.Rect(682, 250, 40, 40), 3], [pygame.Rect(742, 0, 40, 40), 4],
+                    [pygame.Rect(740, 300, 40, 40), 3], [pygame.Rect(765, 350, 40, 40), 4],
+                    [pygame.Rect(772, 400, 40, 40), 1], [pygame.Rect(827, 460, 40, 40), 2],
+                    [pygame.Rect(742, 500, 40, 40), 3],
+                    [pygame.Rect(680, 550, 40, 40), 1], [pygame.Rect(640, 600, 40, 40), 2],
+                    [pygame.Rect(690, 650, 40, 40), 3], [pygame.Rect(675, 700, 40, 40), 4],
+                    [pygame.Rect(712, 750, 40, 40), 1], [pygame.Rect(725, 800, 40, 40), 2],
+                    [pygame.Rect(742, 850, 40, 40), 3],
+                     ]
+
+        # Add all the objects contained in the level
+        objects = [["lamp", pygame.Rect(530, 675, 40, 40)], ["shield", pygame.Rect(520, 150, 40, 40)],]
+
+        if not object_state:
+            blindness(screen, 600, circle_x, circle_y)
+
 
         return orbit_radius, position, obstacles, objects

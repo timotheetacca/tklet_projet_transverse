@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="fixed grammar problems and mistakes in dockstings">
+    <list default="true" id="7113848d-a248-43e0-8685-e12ab3530e58" name="Changes" comment="made level 4 easier">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenario/screen_capture_with_text_scenario.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenario/screen_capture_with_text_scenario.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_save.txt" beforeDir="false" afterPath="$PROJECT_DIR$/game_save.txt" afterDir="false" />
+
+      <change beforePath="$PROJECT_DIR$/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/level.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orbital_phase.py" beforeDir="false" afterPath="$PROJECT_DIR$/orbital_phase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trajectory_simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/trajectory_simulation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +168,7 @@
       <workItem from="1714111967768" duration="303000" />
       <workItem from="1714229917614" duration="1168000" />
       <workItem from="1714235754525" duration="14655000" />
-      <workItem from="1714291017628" duration="422000" />
+      <workItem from="1714291017628" duration="8865000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Images">
       <option name="closed" value="true" />
@@ -397,7 +402,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714249764350</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="made level 4 easier">
+      <option name="closed" value="true" />
+      <created>1714291545478</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1714291545479</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -415,7 +428,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Now, the scenario appears like if we were typing it" />
     <MESSAGE value="Started the feature consisting of : When the user presses the space button, it goes to the next message" />
     <MESSAGE value="Changed the scenario so that it is more fluid. Began to fix a bug" />
     <MESSAGE value="Implemented the functionality of : when the user presses space, it goes to the next message" />
@@ -445,6 +457,10 @@
     <MESSAGE value="Added blindness effect and level 4 + 5" />
     <MESSAGE value="fixed loading save with blindness" />
     <MESSAGE value="fixed grammar problems and mistakes in dockstings" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed grammar problems and mistakes in dockstings" />
+    <MESSAGE value="made level 4 easier" />
+    <option name="LAST_COMMIT_MESSAGE" value="made level 4 easier" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/tklet_projet_transverse$main.coverage" NAME="main Coverage Results" MODIFIED="1714300648222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
