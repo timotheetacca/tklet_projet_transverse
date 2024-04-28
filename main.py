@@ -177,7 +177,7 @@ while True:
             if slider3.is_over_handle(event.pos):
                 slider3.dragging = True
 
-            if QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
+            if QUIT_button_rect.collidepoint(pygame.mouse.get_pos()) and event.button == 1:
                 pygame.mixer.music.stop()
                 pygame.quit()
 
