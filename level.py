@@ -241,7 +241,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
 
         # Add all the obstacles contained in the level
         obstacles = [[pygame.Rect(650, 240, 40, 40), 1], [pygame.Rect(680, 430, 40, 40), 2],
-                     [pygame.Rect(780, 420, 40, 40), 3], [pygame.Rect(1100, 350, 40, 40), 4],
+                     [pygame.Rect(780, 420, 40, 40), 3], [pygame.Rect(1100, 365, 40, 40), 4],
                      [pygame.Rect(850, 260, 40, 40), 1], [pygame.Rect(1020, 425, 40, 40), 2],
                      [pygame.Rect(1000, 530, 40, 40), 3], [pygame.Rect(850, 330, 40, 40), 4],
                      [pygame.Rect(930, 500, 40, 40), 1], [pygame.Rect(1100, 225, 40, 40), 2],
