@@ -123,9 +123,9 @@ class OrbitalPhase:
             sound = pygame.mixer.Sound("Assets/Music/validation_orbital.mp3")
             sound.set_volume(0.5)
             sound.play()
-            if not (abs(slider_value1 - self.current_values[0]) <= 20 and
-                    abs(slider_value2 - self.current_values[1]) <= 20 and
-                    abs(slider_value3 - self.current_values[2]) <= 20):
+            if not (abs(slider_value1 - self.current_values[0]) <= 10 and
+                    abs(slider_value2 - self.current_values[1]) <= 10 and
+                    abs(slider_value3 - self.current_values[2]) <= 10):
                 # if values don't match, close the level and lose a life
                 self.current_color = [(255, 255, 255)] * 3
                 self.current_values = [50, 50, 50]
