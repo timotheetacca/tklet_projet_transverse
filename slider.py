@@ -36,7 +36,7 @@ class Slider:
         pygame.draw.circle(screen, (100, 100, 100), handle_center, self.handle_radius)
 
         # Render and draw the slider value text
-        slider_text = self.font.render(f"{self.slider_value:.2f}", True, (255, 255, 255))
+        slider_text = self.font.render(f"{int(self.slider_value)}", True, (255, 255, 255))
         screen.blit(slider_text, self.text_position)
 
 
