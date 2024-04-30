@@ -65,9 +65,14 @@ class OrbitalPhase:
         # Blit the planet image onto the transparent surface
         self.screen.blit(planet_img, (center_x - (planet_scale / 2), center_y - (planet_scale / 2)))
 
-        # Draw the circle
-        pygame.draw.circle(self.screen, (255, 255, 255), (int(x), int(y)), 5)
+        rocket_image = pygame.image.load('Assets/rocket.png')
+        rocket_image = pygame.transform.scale(rocket_image, (44, 30))
 
+        # Rotate the rocket image based on the trajectory angle
+        rotated_rocket = pygame.transform.rotate(rocket_image, -self.angle+90)
+        rocket_rect = rotated_rocket.get_rect(center=(x,y))
+
+        self.screen.blit(rotated_rocket, rocket_rect)
         return True
 
     def update_angle(self, orbital_game_phase, delta_time):
