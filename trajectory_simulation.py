@@ -162,6 +162,9 @@ class TrajectorySimulation:
         for steps in range(1000):
             if not (0 <= rocket_x <= screen_width and 0 <= rocket_y <= screen_height):
                 level_attempts += 1
+                sound = pygame.mixer.Sound("Assets/Music/asteroid_crash.mp3")
+                sound.set_volume(0.4)
+                sound.play()
                 self.sound_played = False
                 self.transparent_surface.fill((0, 0, 0, 0))
                 return shooting_trajectory, False, True, level_attempts, object_state
