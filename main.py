@@ -4,7 +4,7 @@ from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 
 from slider import Slider
-from save import update_save_information, add_level, remove_life, display_life
+from save import update_save_information, add_level, update_lives, remove_life, display_life
 from level_map import level_selection
 from level import level
 
@@ -43,11 +43,15 @@ play_button_rect.y = screen_height // 2 + 100
 
 # For parameters
 size_button = 75
-QUIT_button_image = pygame.image.load("Assets/quit.png")
-QUIT_button = pygame.transform.scale(QUIT_button_image, (size_button, size_button))
 
-coordinate_QUIT_button = (screen_width - size_button - 20, screen_height - size_button - 20)
-QUIT_button_rect = QUIT_button.get_rect(topleft=coordinate_QUIT_button)
+Blue_QUIT_button_image = pygame.image.load("Assets/blue_quit.png")
+Blue_QUIT_button = pygame.transform.scale(Blue_QUIT_button_image, (size_button, size_button))
+coordinate_Blue_QUIT_button = (screen_width - size_button - 20, screen_height - size_button - 20)
+Blue_QUIT_button_rect = Blue_QUIT_button.get_rect(topleft=coordinate_Blue_QUIT_button)
+Red_QUIT_button_image = pygame.image.load("Assets/Game_over/red_quit.png")
+Red_QUIT_button = pygame.transform.scale(Red_QUIT_button_image, (size_button, size_button))
+coordinate_Red_QUIT_button = coordinate_Blue_QUIT_button
+Red_QUIT_button_rect = Blue_QUIT_button_rect
 
 ON_music_button = pygame.image.load("Assets/Music/ON Music Button.png")
 ON_music_button = pygame.transform.scale(ON_music_button, (size_button, size_button))
@@ -56,8 +60,27 @@ OFF_music_button = pygame.image.load("Assets/Music/OFF Music Button.png")
 OFF_music_button = pygame.transform.scale(OFF_music_button, (size_button, size_button))
 
 image_music_button = ON_music_button
-coordinate_music_button = (coordinate_QUIT_button[0] - 95, coordinate_QUIT_button[1])
+coordinate_music_button = (coordinate_Blue_QUIT_button[0] - 95, coordinate_Blue_QUIT_button[1])
 music_button_rect = ON_music_button.get_rect(topleft=coordinate_music_button)
+
+# For Game over
+game_over_title_image=pygame.image.load("Assets/Game_over/game_over.png")
+game_over_title = pygame.transform.scale(game_over_title_image, (1092.8, 136))
+game_over_title_rect = logo.get_rect()
+game_over_title_rect.x = screen_width // 2 - 1092.8 / 2
+game_over_title_rect.y = screen_height // 3 + 100
+
+restart_button_image = pygame.image.load("Assets/Game_over/restart.png")
+restart_button = pygame.transform.scale(restart_button_image, (225, 100))
+restart_button_rect = play_button.get_rect()
+restart_button_rect.x = screen_width // 2 - 100
+restart_button_rect.y = screen_height // 2 + 150
+
+rocket_explosion_image=pygame.image.load("Assets/Game_over/explosion.png")
+rocket_explosion = pygame.transform.scale(rocket_explosion_image, (500, 500))
+rocket_explosion_rect = logo.get_rect()
+rocket_explosion_rect.x = screen_width // 2 - 500 / 2
+rocket_explosion_rect.y = screen_height // 3 - 250
 
 # For Level Map
 background_image_level_map = pygame.image.load("Assets/Switch_Level/background.jpg").convert()
@@ -178,7 +201,13 @@ while True:
             if slider3.is_over_handle(event.pos):
                 slider3.dragging = True
 
-            if QUIT_button_rect.collidepoint(pygame.mouse.get_pos()) and event.button == 1:
+            if restart_button_rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.mixer.music.unpause()
+                update_lives("game_save.txt", 3)
+                player_save = update_save_information("game_save.txt")
+
+            if Blue_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()) or Red_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
+                update_lives("game_save.txt", 3)
                 pygame.mixer.music.stop()
                 pygame.quit()
 
@@ -236,7 +265,7 @@ while True:
     if menu:
         # Draw the button
         screen.blit(menu_background, (0, 0))
-        screen.blit(QUIT_button, coordinate_QUIT_button)
+        screen.blit(Blue_QUIT_button, coordinate_Blue_QUIT_button)
         screen.blit(play_button, play_button_rect)
         screen.blit(logo, logo_rect)
         player_save = update_save_information("game_save.txt")
@@ -267,6 +296,16 @@ while True:
             if chosen_level != 0 and chosen_level <= last_level:
                 loaded_level = True
                 level_attempts = 0
+
+            screen.blit(image_music_button, coordinate_music_button)
+
+        if player_save[1] == 0:
+            pygame.mixer.music.pause()
+            screen.fill((0, 0, 0))
+            screen.blit(rocket_explosion, rocket_explosion_rect)
+            screen.blit(game_over_title, game_over_title_rect)
+            screen.blit(restart_button, restart_button_rect)
+            screen.blit(Red_QUIT_button, coordinate_Red_QUIT_button)
 
         if loaded_level:
             angle = 0
@@ -300,7 +339,7 @@ while True:
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,
                                                      object_state)
 
-        screen.blit(image_music_button, coordinate_music_button)
+            screen.blit(image_music_button, coordinate_music_button)
 
     if orbital_game_phase:
         screen.blit(background_space_orbital, (0, 0))
@@ -325,8 +364,11 @@ while True:
         orbital_game_phase = orbital_phase.check_timer(slider_value1,slider_value2,slider_value3,orbital_game_phase, level_lose_sound)
         delta_time = clock.tick(fps) / 1000
 
-    # Display the music button
-    screen.blit(QUIT_button, coordinate_QUIT_button)
+        screen.blit(image_music_button, coordinate_music_button)
+
+    if player_save[1] != 0:
+        # Display the quit button
+        screen.blit(Blue_QUIT_button, coordinate_Blue_QUIT_button)
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
