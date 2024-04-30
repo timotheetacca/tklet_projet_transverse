@@ -1,7 +1,6 @@
 import pygame
 import math
 
-
 def calculate_trajectory(g, v, h, alpha, t, screen_height):
     """
     Calculate the x and y coordinates of a projectile's trajectory at a given time.

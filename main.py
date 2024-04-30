@@ -114,6 +114,7 @@ level_lose_sound = pygame.mixer.Sound("Assets/Music/level_lose.mp3")
 play_sound = pygame.mixer.Sound("Assets/Music/play_button.mp3")
 
 fps = 120  # Set FPS rate for frame rate
+delta_time = 0
 
 # Initialize TrajectorySimulation instance
 trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height, background_image)
@@ -151,10 +152,6 @@ slider3 = Slider((50, 600), 200, 0, 100, 50)
 value_change_timer_orbital = 0
 current_values_orbital = [50, 50, 50]
 current_color_orbital = [(255, 255, 255), (255, 255, 255), (255, 255, 255)]
-
-# Initialize timer for value check
-value_check_timer = 0
-value_change_timer = 0
 
 orbital_phase = OrbitalPhase(390, screen, slider1, slider2, slider3)
 
@@ -250,7 +247,8 @@ while True:
 
         if scenario:
             add_level("game_save.txt")
-            level(level_number=0, screen=screen, transparent_surface=None, time_step=None,circle_x=None,circle_y= None, object_state=None)
+            level(level_number=0, screen=screen, transparent_surface=None, time_step=None, circle_x=None, circle_y=None,
+                  object_state=None)
             scenario = False
 
         if not music_playing:
@@ -299,7 +297,8 @@ while True:
 
             else:
                 # Display the aim trajectory on the screen
-                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,object_state)
+                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,
+                                                     object_state)
 
         screen.blit(image_music_button, coordinate_music_button)
 
@@ -317,27 +316,17 @@ while True:
         slider_value3 = slider3.slider_value
 
         # Draw the circle with updated angle
-        orbital_game_phase = orbital_phase.draw_circle(chosen_level, 350, value_change_timer)
+        orbital_game_phase = orbital_phase.draw_circle(chosen_level, 350)
 
         orbital_phase.display_values()
 
-        # Increment the timer for value change
-        value_change_timer += clock.get_time()
-        value_check_timer += clock.get_time()
-
         # Increment and check angle for rotation
-        orbital_game_phase = orbital_phase.update_angle(orbital_game_phase)
-        orbital_game_phase, value_change_timer, value_check_timer = orbital_phase.check_timer(slider_value1,
-                                                                                              slider_value2,
-                                                                                              slider_value3,
-                                                                                              value_change_timer,
-                                                                                              value_check_timer,
-                                                                                              orbital_game_phase,
-                                                                                              level_lose_sound)
+        orbital_game_phase = orbital_phase.update_angle(orbital_game_phase, delta_time)
+        orbital_game_phase = orbital_phase.check_timer(slider_value1,slider_value2,slider_value3,orbital_game_phase, level_lose_sound)
+        delta_time = clock.tick(fps) / 1000
 
     # Display the music button
     screen.blit(QUIT_button, coordinate_QUIT_button)
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
-
