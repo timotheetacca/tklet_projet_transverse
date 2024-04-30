@@ -4,7 +4,7 @@ from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 
 from slider import Slider
-from save import update_save_information, add_level,update_lives, remove_life, display_life
+from save import update_save_information, add_level, update_lives, remove_life, display_life
 from level_map import level_selection
 from level import level
 
@@ -202,6 +202,7 @@ while True:
                 slider3.dragging = True
 
             if restart_button_rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.mixer.music.unpause()
                 update_lives("game_save.txt", 3)
                 player_save = update_save_information("game_save.txt")
 
@@ -299,7 +300,7 @@ while True:
             screen.blit(image_music_button, coordinate_music_button)
 
         if player_save[1] == 0:
-            pygame.mixer.music.stop()
+            pygame.mixer.music.pause()
             screen.fill((0, 0, 0))
             screen.blit(rocket_explosion, rocket_explosion_rect)
             screen.blit(game_over_title, game_over_title_rect)
@@ -362,6 +363,8 @@ while True:
         orbital_game_phase = orbital_phase.update_angle(orbital_game_phase, delta_time)
         orbital_game_phase = orbital_phase.check_timer(slider_value1,slider_value2,slider_value3,orbital_game_phase, level_lose_sound)
         delta_time = clock.tick(fps) / 1000
+
+        screen.blit(image_music_button, coordinate_music_button)
 
     if player_save[1] != 0:
         # Display the quit button
