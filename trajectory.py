@@ -24,7 +24,7 @@ def calculate_trajectory(g, v, h, alpha, t, screen_height):
     return circle_x, circle_y
 
 
-def draw_trajectory(screen, g, v, h, alpha, t, circle_radius, screen_height, color):
+def draw_trajectory(screen, g, v, h, alpha, t, circle_radius, screen_height, color, portal, teleport,portal_input=[], portal_output=[]):
     """
     Draw a trajectory on a given pygame surface.
 
@@ -45,8 +45,18 @@ def draw_trajectory(screen, g, v, h, alpha, t, circle_radius, screen_height, col
     circle_x, circle_y (int) : Coordinates of the circle
     """
     circle_x, circle_y = calculate_trajectory(g, v, h, alpha, t, screen_height)
+
+    if portal:
+        square_rect = pygame.Rect(portal_input[0], portal_input[1], portal_input[2], portal_input[2])
+        if square_rect.collidepoint(circle_x, circle_y):
+            teleport = True
+
+        if teleport:
+            circle_x += (portal_output[0]-portal_input[0])
+            circle_y -= (portal_input[1]-portal_output[1])
+
     pygame.draw.circle(screen, color, (circle_x, circle_y), circle_radius)
-    return circle_x, circle_y
+    return circle_x, circle_y, teleport
 
 
 def draw_aim(screen, g, v, h, alpha, circle_radius, screen_height, nb_points):

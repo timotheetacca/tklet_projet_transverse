@@ -176,7 +176,6 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
         orbit_radius = 130
         position = (900, 425)
         screen.blit(transparent_surface, (0, 0))
-
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
 
         # Load the character's text
@@ -187,7 +186,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
 
         display_advice(screen, text, time_step)
 
-        return orbit_radius, position, [], []
+        return orbit_radius, position, [], [], []
 
     if level_number == 2:
         planet_radius = 35
@@ -207,7 +206,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
 
         display_advice(screen, text, time_step)
 
-        return orbit_radius, position, obstacles, []
+        return orbit_radius, position, obstacles, [], []
 
     if level_number == 3:
         planet_radius = 35
@@ -232,7 +231,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
 
         display_advice(screen, text, time_step)
 
-        return orbit_radius, position, obstacles, objects
+        return orbit_radius, position, obstacles, objects, False
 
     if level_number == 4:
         planet_radius = 35
@@ -253,7 +252,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
 
         # Add all the objects contained in the level
         objects = [["shield", pygame.Rect(710, 350, 40, 40)], ]
-        return orbit_radius, position, obstacles, objects
+        return orbit_radius, position, obstacles, objects, []
 
     if level_number == 5:
         planet_radius = 35
@@ -284,33 +283,41 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
 
         display_advice(screen, text, time_step)
 
-        return orbit_radius, position, obstacles, objects
+        return orbit_radius, position, obstacles, objects, []
 
     if level_number == 6:
-        planet_radius = 35
-        orbit_radius = 65
-        position = (1075, 650)
+        planet_radius = 30
+        orbit_radius = 60
+        position = (1280, 475)
         screen.blit(transparent_surface, (0, 0))
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
 
         # Add all the obstacles contained in the level
-        obstacles = [[pygame.Rect(640, 50, 40, 40), 3], [pygame.Rect(775, 100, 40, 40), 4],
-                    [pygame.Rect(762, 150, 40, 40), 1], [pygame.Rect(745, 200, 40, 40), 2],
-                    [pygame.Rect(682, 250, 40, 40), 3], [pygame.Rect(742, 0, 40, 40), 4],
-                    [pygame.Rect(740, 300, 40, 40), 3], [pygame.Rect(765, 350, 40, 40), 4],
-                    [pygame.Rect(772, 400, 40, 40), 1], [pygame.Rect(827, 460, 40, 40), 2],
-                    [pygame.Rect(742, 500, 40, 40), 3],
-                    [pygame.Rect(680, 550, 40, 40), 1], [pygame.Rect(640, 600, 40, 40), 2],
-                    [pygame.Rect(690, 650, 40, 40), 3], [pygame.Rect(675, 700, 40, 40), 4],
-                    [pygame.Rect(712, 750, 40, 40), 1], [pygame.Rect(725, 800, 40, 40), 2],
-                    [pygame.Rect(742, 850, 40, 40), 3],
+        # Add all the obstacles contained in the level
+        obstacles = [[pygame.Rect(640, 50, 40, 40), 1], [pygame.Rect(765, 100, 40, 40), 2],
+                     [pygame.Rect(812, 150, 40, 40), 3], [pygame.Rect(745, 200, 40, 40), 4],
+                     [pygame.Rect(682, 250, 40, 40), 1], [pygame.Rect(742, 000, 40, 40), 2],
+                     [pygame.Rect(740, 300, 40, 40), 3], [pygame.Rect(765, 350, 40, 40), 4],
+                     [pygame.Rect(772, 400, 40, 40), 1], [pygame.Rect(790, 465, 40, 40), 2],
+                     [pygame.Rect(742, 500, 40, 40), 3], [pygame.Rect(742, 850, 40, 40), 4],
+                     [pygame.Rect(680, 550, 40, 40), 1], [pygame.Rect(640, 600, 40, 40), 2],
+                     [pygame.Rect(690, 650, 40, 40), 3], [pygame.Rect(655, 700, 40, 40), 4],
+                     [pygame.Rect(712, 750, 40, 40), 1], [pygame.Rect(725, 800, 40, 40), 2],
+                     [pygame.Rect(685, 450, 40, 40), 3], [pygame.Rect(585, 360, 40, 40), 4],
+                     [pygame.Rect(609, 185, 40, 40), 1], [pygame.Rect(780, 616, 40, 40), 2],
+                     [pygame.Rect(900, 410, 40, 40), 3]
                      ]
 
-        # Add all the objects contained in the level
-        objects = [["lamp", pygame.Rect(530, 675, 40, 40)], ["shield", pygame.Rect(520, 150, 40, 40)],]
+        # Add all the portals contained in the level
+        portals = [[400, 400, 65], [970, 200, 65]]
 
-        if not object_state:
-            blindness(screen, 600, circle_x, circle_y)
+        # Load the character's text
+        text = [
+        "Wait, isn't that a black hole?! Ok, now we're",
+        "dealing with something serious! Well,this",
+        "planet seems inaccessible, you're gonna have",
+        "to go through this black hole! Good luck !!"]
 
+        display_advice(screen, text, time_step)
 
-        return orbit_radius, position, obstacles, objects
+        return orbit_radius, position, obstacles, [], portals
