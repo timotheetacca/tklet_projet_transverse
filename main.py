@@ -121,8 +121,8 @@ trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_hei
 
 clock = pygame.time.Clock()
 level_attempts = 0
-circle_x = 864
-circle_y = 0
+rocket_x = 864
+rocket_y = 0
 time_step = 0
 v = 100
 alpha = 45
@@ -247,7 +247,7 @@ while True:
 
         if scenario:
             add_level("game_save.txt")
-            level(level_number=0, screen=screen, transparent_surface=None, time_step=None, circle_x=None, circle_y=None,
+            level(level_number=0, screen=screen, transparent_surface=None, time_step=None, rocket_x=None, rocket_y=None,
                   object_state=None)
             scenario = False
 
@@ -288,7 +288,7 @@ while True:
             # Projectile motion loop
             if shooting_trajectory:
                 shooting_trajectory, orbital_game_phase, loaded_level, level_attempts, object_state = trajectory_simulation.projectile_motion(
-                    circle_x, circle_y, g, v, h, alpha, chosen_level, level_attempts, clock, object_state)
+                    rocket_x, rocket_y, g, v, h, alpha, chosen_level, level_attempts, clock, object_state)
                 if level_attempts > 2:
                     loaded_level = False
                     object_state = False

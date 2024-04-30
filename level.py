@@ -94,7 +94,7 @@ def planet(transparent_surface, position, planet_radius, orbit_radius, level_num
     transparent_surface.blit(planet_img, (position[0] - planet_radius, position[1] - planet_radius))
 
 
-def blindness(screen, square_width, circle_x, circle_y):
+def blindness(screen, square_width, rocket_x, rocket_y):
     """
     Set the blidn effect on the screen
 
@@ -102,16 +102,16 @@ def blindness(screen, square_width, circle_x, circle_y):
     ----------
     screen(pygame.Surface) : The pygame surface where the speech bubble and character animation will be drawn
     square_width(list) : Size of the visible part
-    circle_x(int) : Initial x-coordinate
-    circle_y(int) : Initial y-coordinate
+    rocket_x(int) : Initial x-coordinate
+    rocket_y(int) : Initial y-coordinate
 
     Returns
     -------
     None
     """
     # Calculate the position of the square
-    square_x = circle_x - square_width / 2
-    square_y = circle_y - square_width / 2
+    square_x = rocket_x - square_width / 2
+    square_y = rocket_y - square_width / 2
 
     # Define the coordinates for the areas around the square
     above_square_area = pygame.Rect(0, 0, screen_width, square_y)
@@ -128,11 +128,11 @@ def blindness(screen, square_width, circle_x, circle_y):
     screen.fill((0, 0, 0), right_of_square_area)
 
     blind_image = (pygame.image.load('Assets/Level/Items/blind.png'))
-    blind_rect = blind_image.get_rect(center=(circle_x, circle_y))
+    blind_rect = blind_image.get_rect(center=(rocket_x, rocket_y))
     screen.blit(blind_image, blind_rect)
 
 
-def level(level_number, screen, transparent_surface, time_step, circle_x, circle_y, object_state):
+def level(level_number, screen, transparent_surface, time_step, rocket_x, rocket_y, object_state):
     """
     Define different levels of the game and display
 
@@ -142,8 +142,8 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
     screen(pygame.Surface) : The pygame surface where the level information will be displayed
     transparent_surface(pygame.Surface) : Transparent surface where objects will be drawn
     time_step(int) : Current time step used for animations
-    circle_x(int) : Initial x-coordinate
-    circle_y(int) : Initial y-coordinate
+    rocket_x(int) : Initial x-coordinate
+    rocketv_y(int) : Initial y-coordinate
     object_state(bool) : True if the object should be on, otherwise False
 
     Returns
@@ -152,6 +152,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
     list: Planet position
     list : List of obstacles
     list : List of objects
+    list : List of portals
     """
 
     if level_number == 0:
@@ -273,7 +274,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
         objects = [["lamp", pygame.Rect(480, 530, 40, 40)], ]
 
         if not object_state:
-            blindness(screen, 600, circle_x, circle_y)
+            blindness(screen, 600, rocket_x, rocket_y)
 
         # Load the character's text
         text = ["I really can't see anything, can you ?! We",
