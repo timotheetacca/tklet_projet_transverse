@@ -59,7 +59,7 @@ def draw_trajectory(screen, g, v, h, alpha, t, screen_height, portal, teleport,p
 
     # Load the rocket image
     rocket_image = pygame.image.load('Assets/rocket.png')
-    rocket_image = pygame.transform.scale(rocket_image, (44,30))
+    rocket_image = pygame.transform.scale(rocket_image, (55,40))
 
     # Calculate the angle of the trajectory in degree at the current point
     trajectory_angle = math.degrees(math.atan2(-g * t + v * math.sin(math.radians(alpha)), v * math.cos(math.radians(alpha))))
@@ -71,7 +71,6 @@ def draw_trajectory(screen, g, v, h, alpha, t, screen_height, portal, teleport,p
     rocket_rect = rotated_rocket.get_rect(center=(rocket_x, rocket_y))
 
     screen.blit(rotated_rocket, rocket_rect)
-
     return rocket_x, rocket_y, teleport
 
 
@@ -96,7 +95,7 @@ def draw_aim(screen, g, v, h, alpha, circle_radius, screen_height, nb_points):
     """
     # Draw the rocket with the corresponding angle of launch
     rocket_image = pygame.image.load('Assets/rocket.png')
-    rocket_image = pygame.transform.scale(rocket_image, (44,30))
+    rocket_image = pygame.transform.scale(rocket_image, (55,40))
     trajectory_angle = math.degrees(math.atan2(-g + v * math.sin(math.radians(alpha)), v * math.cos(math.radians(alpha))))
     rotated_rocket = pygame.transform.rotate(rocket_image, trajectory_angle)
     screen.blit(rotated_rocket, (0,820))
