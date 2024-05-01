@@ -4,7 +4,7 @@ from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 
 from slider import Slider
-from save import update_save_information, add_level, update_lives, remove_life, display_life
+from save import update_save_information, add_level, update_lives, remove_life, display_life,update_level
 from level_map import level_selection
 from level import level
 
@@ -204,10 +204,19 @@ while True:
             if restart_button_rect.collidepoint(pygame.mouse.get_pos()):
                 pygame.mixer.music.unpause()
                 update_lives("game_save.txt", 3)
+                if last_level!=1:
+                    update_level("game_save.txt", last_level-1)
                 player_save = update_save_information("game_save.txt")
 
-            if Blue_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()) or Red_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
+            elif Red_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
                 update_lives("game_save.txt", 3)
+                if last_level != 1:
+                    update_level("game_save.txt", last_level - 1)
+                player_save = update_save_information("game_save.txt")
+                pygame.mixer.music.stop()
+                pygame.quit()
+
+            if Blue_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
                 pygame.mixer.music.stop()
                 pygame.quit()
 
