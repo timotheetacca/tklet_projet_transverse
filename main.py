@@ -25,6 +25,7 @@ pygame.mouse.set_visible(False)
 # Load a background image
 background_image = pygame.image.load("Assets/Level/background_space.png")
 background_space_orbital = pygame.image.load("Assets/Level/background_space_orbital.png")
+background_space_orbital_advice = pygame.image.load("Assets/Level/orbital_values_advice.png")
 
 # For Menu
 menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
@@ -246,7 +247,8 @@ while True:
 
         if scenario:
             add_level("game_save.txt")
-            level(level_number=0, screen=screen, transparent_surface=None, time_step=None,circle_x=None,circle_y= None, object_state=None)
+            level(level_number=0, screen=screen, transparent_surface=None, time_step=None, circle_x=None, circle_y=None,
+                  object_state=None)
             scenario = False
 
         if not music_playing:
@@ -294,7 +296,8 @@ while True:
 
             else:
                 # Display the aim trajectory on the screen
-                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,object_state)
+                trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,
+                                                     object_state)
 
         screen.blit(image_music_button, coordinate_music_button)
 
@@ -315,8 +318,8 @@ while True:
         you only have 5 seconds between each re-evaluation! I'll start a stopwatch as soon as you enter orbit, 
         but don't panic, I'll leave you alone for the first 5 seconds! Good luck !"""
 
-        display_text_scenario(text_phase3_tutorial_phase, background_space_orbital, skip_allowed=False, fade_out=False)
-
+        display_text_scenario(text_phase3_tutorial_phase, background_space_orbital_advice, skip_allowed=False,
+                              fade_out=False)
 
         # Draw and handle events for the slider
         slider1.draw(screen)
@@ -351,4 +354,3 @@ while True:
 
     screen.blit(cursor, (mouse_x, mouse_y))
     pygame.display.flip()  # Update the display
-

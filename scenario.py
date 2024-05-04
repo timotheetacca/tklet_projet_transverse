@@ -166,7 +166,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
 
                     rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
                     rect.topleft = (
-                    (screen_width_divided_by_two / 2) + screen_width / 90, (screen_height - rect.height) / 2)
+                        (screen_width_divided_by_two / 2) + screen_width / 90, (screen_height - rect.height) / 2)
 
                     height_line = 0
                     for line in lines:
@@ -207,6 +207,18 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
             pygame.mixer_music.stop()
 
         # If all sentences are displayed, fade out the screen
+        else:
+            time.sleep(0.5)
+            fading = True
+            while fading:
+                darken_screen(transparency)
+                transparency += 1
+                pygame.display.flip()
+                if transparency >= 255:
+                    fading = False
+            return
+
+        """
         elif fade_out and j == number_of_sentences:
             time.sleep(0.5)
             fading = True
@@ -220,6 +232,6 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
 
         else:
             return
-
+            """
 
         pygame.display.flip()
