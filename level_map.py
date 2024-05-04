@@ -37,8 +37,13 @@ def level_selection(screen, background, planets, planet_rects, locked_planets, l
         screen.blit(locked_planets[i], (locked_planet_rects[i].x, locked_planet_rects[i].y))
 
     # Draw unlocked planets
-    for i in range(last_level):
-        screen.blit(planets[i], (planet_rects[i].x, planet_rects[i].y))
+    if last_level<7:
+        for i in range(last_level):
+            screen.blit(planets[i], (planet_rects[i].x, planet_rects[i].y))
+
+    if last_level==7:
+        for i in range(len(planets)):
+            screen.blit(planets[i], (planet_rects[i].x, planet_rects[i].y))
 
     # Draw arrows for scrolling
     for i in range(len(arrows)):
