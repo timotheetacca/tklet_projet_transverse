@@ -1,3 +1,4 @@
+import re
 import pygame
 import time
 import os
@@ -30,13 +31,7 @@ space_bar_button = pygame.transform.scale(space_bar_button, (350, 75))
 space_bar_rect = space_bar_button.get_rect()
 space_bar_rect.center = (screen_width // 2, screen_height * 3 / 4)
 
-# Load background music
-pygame.mixer.music.load("Assets/Scenario/sound_message_appearing.mp3")
-pygame.mixer.music.set_volume(0.25)
 
-# Background
-menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
-menu_background = pygame.transform.scale(menu_background_image, (screen_width, screen_height))
 
 
 def draw_cursor(cursor):
@@ -75,7 +70,7 @@ def darken_screen(transparency_level):
 
 
 # Function to display the text scenario
-def display_text_scenario(story):
+def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     """
     Display the text scenario
 
@@ -90,8 +85,7 @@ def display_text_scenario(story):
     screen_width_divided_by_two = screen_width / 2
     screen_height_divided_by_two = screen_height / 2
     j = 0
-    sentence_story = story.split(". ")
-    number_of_sentences = len(sentence_story)
+    sentence_story = re.split(r'[.!?]', story)  # Allow to split with . or !
     rect = pygame.Rect(0, 0, 0, 0)
     rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
     white = (255, 255, 255)
@@ -100,10 +94,26 @@ def display_text_scenario(story):
     displaying_text = False
     screen_fill_black_time = True
     cursor = pygame.transform.scale(cursor_image_still, (32, 32))
+    background_temp = background
 
-    # Loop in order to put a dot at the end of each sentence
-    for i in range(number_of_sentences - 1):
-        sentence_story[i] += "."
+    # Load background music
+    pygame.mixer.music.load("Assets/Scenario/sound_message_appearing.mp3")
+    pygame.mixer.music.set_volume(0.25)
+
+    for i in range(sentence_story.count("")):
+        sentence_story.remove("")
+
+    number_of_sentences = len(sentence_story)
+
+    if '!' in story:
+        for i in range(number_of_sentences):
+            sentence_story[i] += "!"
+    elif '.' in story:
+        for i in range(number_of_sentences):
+            sentence_story[i] += "."
+    elif '?' in story:
+        for i in range(number_of_sentences):
+            sentence_story[i] += "?"
 
     # Loop until all sentences are displayed or the user quits
     while True:
@@ -114,7 +124,7 @@ def display_text_scenario(story):
                 return
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 cursor = pygame.transform.scale(cursor_image_hold, (32, 32))
-                if skip_button_rect.collidepoint(event.pos):
+                if skip_button_rect.collidepoint(event.pos) and skip_allowed:
                     return
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 cursor = pygame.transform.scale(cursor_image_still, (32, 32))
@@ -122,16 +132,16 @@ def display_text_scenario(story):
                 j += 1  # Move to the next sentence
                 go_to_next_message = True
 
-        if j < number_of_sentences:
-            pygame.mixer.music.play(-1)
+        if j <= number_of_sentences - 1:
 
             # Display either a black screen or background image
             if screen_fill_black_time:
                 screen.fill((0, 0, 0))
             else:
-                screen.blit(background, (0, 0))
+                screen.blit(background_temp, (0, 0))
 
-            screen.blit(skip_button, skip_button_rect)
+            if skip_allowed:
+                screen.blit(skip_button, skip_button_rect)
 
             # Display space bar button for the first two sentences
             if j < 2:
@@ -143,8 +153,9 @@ def display_text_scenario(story):
 
             if go_to_next_message:
                 displaying_text = True
-                screen.blit(menu_background, (0, 0))
+                screen.blit(background, (0, 0))
 
+                pygame.mixer.music.play(-1)
 
                 # Split the text into lines if it's too wide
                 if text_rect.width > screen_width_divided_by_two:
@@ -171,7 +182,8 @@ def display_text_scenario(story):
                         rect.height += line_surface.get_rect().height
 
                     rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
-                    rect.topleft = ((screen_width_divided_by_two / 2) + screen_width/90, (screen_height - rect.height) / 2)
+                    rect.topleft = (
+                        (screen_width_divided_by_two / 2) + screen_width / 90, (screen_height - rect.height) / 2)
 
                     height_line = 0
                     for line in lines:
@@ -182,7 +194,7 @@ def display_text_scenario(story):
                                 topleft=(rect.topleft[0], rect.topleft[1] + height_line))
                             screen.blit(displayed_text_surface, displayed_text_rect)
                             pygame.display.flip()
-                            time.sleep(0.020)
+                            time.sleep(0.001)
                         height_line += displayed_text_rect.height
 
                 # If the text fits the screen width, display it letter by letter
@@ -194,17 +206,16 @@ def display_text_scenario(story):
                         displayed_text_rect = text_rect
                         screen.blit(displayed_text_surface, displayed_text_rect)
                         pygame.display.flip()
-                        time.sleep(0.020)
+                        time.sleep(0.001)
 
                 # Capture the screen with the displayed text and save it
                 screen_capture = pygame.Surface((screen_width, screen_height))
                 screen_capture.blit(screen, (0, 0))
                 os.remove('Assets/Scenario/screen_capture_with_text_scenario.png')
                 pygame.image.save(screen_capture, 'Assets/Scenario/screen_capture_with_text_scenario.png')
-                background = pygame.image.load("./Assets/Scenario/screen_capture_with_text_scenario.png")
-                screen.blit(background, (0, 0))
+                background_temp = pygame.image.load("./Assets/Scenario/screen_capture_with_text_scenario.png")
+                screen.blit(background_temp, (0, 0))
                 screen_fill_black_time = False
-
                 go_to_next_message = False
             else:
                 displaying_text = False
@@ -213,7 +224,8 @@ def display_text_scenario(story):
             pygame.mixer_music.stop()
 
         # If all sentences are displayed, fade out the screen
-        else:
+
+        elif fade_out and j == number_of_sentences:
             time.sleep(0.5)
             fading = True
             while fading:
@@ -223,5 +235,9 @@ def display_text_scenario(story):
                 if transparency >= 255:
                     fading = False
             return
+
+        elif not fade_out and j == number_of_sentences:
+            return
+
 
         pygame.display.flip()

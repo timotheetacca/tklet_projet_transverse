@@ -7,6 +7,7 @@ from slider import Slider
 from save import update_save_information, add_level, update_lives, remove_life, display_life,update_level
 from level_map import level_selection
 from level import level
+from scenario import display_text_scenario
 
 pygame.init()
 pygame.mixer.init()
@@ -23,6 +24,8 @@ pygame.mouse.set_visible(False)
 
 # Load a background image
 background_image = pygame.image.load("Assets/Level/background_space.png")
+background_space_sliders = pygame.image.load("Assets/Level/orbital_sliders.png")
+background_space_sliders_advice = pygame.image.load("Assets/Level/orbital_values_advice.png")
 background_space_orbital = pygame.image.load("Assets/Level/background_space_orbital.png")
 
 # For Menu
@@ -165,6 +168,7 @@ menu = True
 object_state = False
 music_loaded = False
 loaded_level = False
+tutorial_game_phase = True
 
 # Initialize the sliders with initial values set to 50
 slider1 = Slider((50, 200), 200, 0, 100, 50)
@@ -352,6 +356,28 @@ while True:
 
     if orbital_game_phase:
         screen.blit(background_space_orbital, (0, 0))
+        pygame.mixer.music.stop()
+        if tutorial_game_phase:
+            text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
+            calibrate your rocket ship in order to achieve a state of orbital stationement! The goal is to make a 
+            full turn around the planet! Use your engineering skills to re-evaluate your rocket's parameters!"""
+
+            display_text_scenario(text_phase1_tutorial_phase, background_image, skip_allowed=False, fade_out=False)
+
+            text_phase2_tutorial_phase = """See the cursors to your left?"""
+            display_text_scenario(text_phase2_tutorial_phase, background_space_sliders, skip_allowed=False,
+                                  fade_out=False)
+
+            text_phase3_tutorial_phase = """Try to match their values with the values on your right! But be careful, 
+            you only have 5 seconds between each re-evaluation! I'll start a stopwatch as soon as you enter orbit, 
+            but don't panic, I'll leave you alone for the first 5 seconds! Good luck!"""
+
+            display_text_scenario(text_phase3_tutorial_phase, background_space_sliders_advice, skip_allowed=False,
+                                  fade_out=False)
+
+            tutorial_game_phase = False
+
+        pygame.mixer.music.play(-1)
 
         # Draw and handle events for the slider
         slider1.draw(screen)
@@ -372,7 +398,6 @@ while True:
         orbital_game_phase = orbital_phase.update_angle(orbital_game_phase, delta_time)
         orbital_game_phase = orbital_phase.check_timer(slider_value1,slider_value2,slider_value3,orbital_game_phase, level_lose_sound)
         delta_time = clock.tick(fps) / 1000
-
         screen.blit(image_music_button, coordinate_music_button)
 
     if player_save[1] != 0:
