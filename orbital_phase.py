@@ -66,7 +66,7 @@ class OrbitalPhase:
         self.screen.blit(planet_img, (center_x - (planet_scale / 2), center_y - (planet_scale / 2)))
 
         rocket_image = pygame.image.load('Assets/rocket_2.png')
-        rocket_image = pygame.transform.scale(rocket_image, (85, 40))
+        rocket_image = pygame.transform.scale(rocket_image, (62, 29))
 
         # Rotate the rocket image based on the trajectory angle
         rotated_rocket = pygame.transform.rotate(rocket_image, -self.angle+90)
