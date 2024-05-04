@@ -56,7 +56,7 @@ class OrbitalPhase:
 
         # Calculate the color in function of time left
         color_progress = self.elapsed_time / 5000
-        color = (int(255 * color_progress), int(255 * (1 - color_progress)), 0)
+        color = (min(255, int(255 * color_progress)), max(int(255 * (1 - color_progress)), 0), 0)
 
         # Display time
         time_text = self.font.render(f"{(self.elapsed_time / 1000):.1f}s", True, color)
@@ -69,8 +69,8 @@ class OrbitalPhase:
         rocket_image = pygame.transform.scale(rocket_image, (62, 29))
 
         # Rotate the rocket image based on the trajectory angle
-        rotated_rocket = pygame.transform.rotate(rocket_image, -self.angle+90)
-        rocket_rect = rotated_rocket.get_rect(center=(x,y))
+        rotated_rocket = pygame.transform.rotate(rocket_image, -self.angle + 90)
+        rocket_rect = rotated_rocket.get_rect(center=(x, y))
 
         self.screen.blit(rotated_rocket, rocket_rect)
         return True
