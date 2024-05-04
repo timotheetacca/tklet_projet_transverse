@@ -1,3 +1,4 @@
+import re
 import pygame
 import time
 import os
@@ -86,7 +87,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     screen_width_divided_by_two = screen_width / 2
     screen_height_divided_by_two = screen_height / 2
     j = 0
-    sentence_story = story.split(". ")
+    sentence_story = re.split(r'[.!]', story)  # Allow to split with . or !
     number_of_sentences = len(sentence_story)
     rect = pygame.Rect(0, 0, 0, 0)
     rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
@@ -96,10 +97,14 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     displaying_text = False
     screen_fill_black_time = True
     cursor = pygame.transform.scale(cursor_image_still, (32, 32))
+    background_temp = background
 
-    # Loop in order to put a dot at the end of each sentence
-    for i in range(number_of_sentences - 1):
-        sentence_story[i] += "."
+    if '!' in story:
+        for i in range(number_of_sentences - 1):
+            sentence_story[i] += "!"
+    else:
+        for i in range(number_of_sentences - 1):
+            sentence_story[i] += "."
 
     # Loop until all sentences are displayed or the user quits
     while True:
@@ -118,12 +123,14 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                 j += 1  # Move to the next sentence
                 go_to_next_message = True
 
-        if j < number_of_sentences:
-            pygame.mixer.music.play(-1)
+        if j < number_of_sentences - 1:
+            print(j, "number of sentences : ", number_of_sentences)
 
             # Display either a black screen or background image
             if screen_fill_black_time:
                 screen.fill((0, 0, 0))
+            else:
+                screen.blit(background_temp, (0, 0))
 
             if skip_allowed:
                 screen.blit(skip_button, skip_button_rect)
@@ -139,6 +146,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
             if go_to_next_message:
                 displaying_text = True
                 screen.blit(background, (0, 0))
+                pygame.mixer.music.play(-1)
 
                 # Split the text into lines if it's too wide
                 if text_rect.width > screen_width_divided_by_two:
@@ -207,7 +215,8 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
             pygame.mixer_music.stop()
 
         # If all sentences are displayed, fade out the screen
-        else:
+
+        elif fade_out and j == number_of_sentences-1:
             time.sleep(0.5)
             fading = True
             while fading:
@@ -218,8 +227,10 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                     fading = False
             return
 
+        elif not fade_out and j == number_of_sentences -1:
+            return
         """
-        elif fade_out and j == number_of_sentences:
+        elif fade_out and j == number_of_sentences-1:
             time.sleep(0.5)
             fading = True
             while fading:
@@ -228,10 +239,6 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                 pygame.display.flip()
                 if transparency >= 255:
                     fading = False
-            return
-
-        else:
-            return
-            """
+            return"""
 
         pygame.display.flip()

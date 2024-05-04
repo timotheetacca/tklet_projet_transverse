@@ -174,7 +174,7 @@ def level(level_number, screen, transparent_surface, time_step, circle_x, circle
         find your friend. Your journey will take you through the dangers of space.  But you will never give up hope.
         You know that Thorne is out there somewhere, waiting to be rescued."""
 
-        display_text_scenario(story=story, background=menu_background)
+        display_text_scenario(story=story, background=menu_background, skip_allowed=True, fade_out=True)
 
     if level_number == 1:
         planet_radius = 45
