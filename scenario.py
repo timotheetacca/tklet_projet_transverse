@@ -71,7 +71,7 @@ def darken_screen(transparency_level):
 
 
 # Function to display the text scenario
-def display_text_scenario(story, background):
+def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     """
     Display the text scenario
 
@@ -110,7 +110,7 @@ def display_text_scenario(story, background):
                 return
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 cursor = pygame.transform.scale(cursor_image_hold, (32, 32))
-                if skip_button_rect.collidepoint(event.pos):
+                if skip_button_rect.collidepoint(event.pos) and skip_allowed:
                     return
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 cursor = pygame.transform.scale(cursor_image_still, (32, 32))
@@ -125,7 +125,8 @@ def display_text_scenario(story, background):
             if screen_fill_black_time:
                 screen.fill((0, 0, 0))
 
-            screen.blit(skip_button, skip_button_rect)
+            if skip_allowed:
+                screen.blit(skip_button, skip_button_rect)
 
             # Display space bar button for the first two sentences
             if j < 2:
@@ -206,7 +207,7 @@ def display_text_scenario(story, background):
             pygame.mixer_music.stop()
 
         # If all sentences are displayed, fade out the screen
-        else:
+        elif fade_out and j == number_of_sentences:
             time.sleep(0.5)
             fading = True
             while fading:
@@ -216,5 +217,9 @@ def display_text_scenario(story, background):
                 if transparency >= 255:
                     fading = False
             return
+
+        else:
+            return
+
 
         pygame.display.flip()

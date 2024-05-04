@@ -7,6 +7,7 @@ from slider import Slider
 from save import update_save_information, add_level, remove_life, display_life
 from level_map import level_selection
 from level import level
+from scenario import display_text_scenario
 
 pygame.init()
 pygame.mixer.init()
@@ -299,6 +300,23 @@ while True:
 
     if orbital_game_phase:
         screen.blit(background_space_orbital, (0, 0))
+
+        text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to calibrate 
+        your rocket ship in order to achieve a state of orbital stationnement! The goal is to make a full turn around 
+        the planet! Use your engineering skills to re-evaluate your rocket's parameters!"""
+
+        display_text_scenario(text_phase1_tutorial_phase, background_image, skip_allowed=False, fade_out=False)
+
+        text_phase2_tutorial_phase = """See the cursors to your left? """
+
+        display_text_scenario(text_phase2_tutorial_phase, background_space_orbital, skip_allowed=False, fade_out=False)
+
+        text_phase3_tutorial_phase = """Try to match their values with the values on your right! But be careful, 
+        you only have 5 seconds between each re-evaluation! I'll start a stopwatch as soon as you enter orbit, 
+        but don't panic, I'll leave you alone for the first 5 seconds! Good luck !"""
+
+        display_text_scenario(text_phase3_tutorial_phase, background_space_orbital, skip_allowed=False, fade_out=False)
+
 
         # Draw and handle events for the slider
         slider1.draw(screen)
