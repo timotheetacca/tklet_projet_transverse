@@ -304,7 +304,7 @@ while True:
 
     if orbital_game_phase:
         screen.blit(background_space_orbital, (0, 0))
-
+        pygame.mixer.music.stop()
         if tutorial_game_phase:
 
             text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
@@ -327,6 +327,7 @@ while True:
 
             tutorial_game_phase = False
 
+        pygame.mixer.music.play(-1)
         # Draw and handle events for the slider
         slider1.draw(screen)
         slider_value1 = slider1.slider_value  # Get the current value of the slider
