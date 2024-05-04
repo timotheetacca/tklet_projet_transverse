@@ -17,7 +17,9 @@ traveling from planet to planet. It's a crazy bet, a suicide mission, but you're
 find your friend. Your journey will take you through the dangers of space.  But you will never give up hope.
 You know that Thorne is out there somewhere, waiting to be rescued.
 
-https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/7828488c-8f89-43c5-957a-3aabd1e23551
+
+https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/ef306eca-13d8-45bf-a9a2-70d9c7bd1141
+
 
 ## Requirements
 
