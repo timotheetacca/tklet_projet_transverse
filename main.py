@@ -66,7 +66,7 @@ image_music_button = ON_music_button
 coordinate_music_button = (coordinate_Blue_QUIT_button[0] - 95, coordinate_Blue_QUIT_button[1])
 music_button_rect = ON_music_button.get_rect(topleft=coordinate_music_button)
 
-return_button_image = pygame.image.load("Assets/blue_quit.png")
+return_button_image = pygame.image.load("Assets/return.png")
 return_button = pygame.transform.scale(return_button_image, (size_button, size_button))
 coordinate_return_button = (coordinate_music_button[0] - 95, coordinate_Blue_QUIT_button[1])
 return_button_rect = return_button.get_rect(topleft=coordinate_return_button)
