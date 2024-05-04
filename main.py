@@ -356,7 +356,7 @@ while True:
 
     if orbital_game_phase:
         screen.blit(background_space_orbital, (0, 0))
-        pygame.mixer.music.stop()
+
         if tutorial_game_phase:
             text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
             calibrate your rocket ship in order to achieve a state of orbital stationement! The goal is to make a 
@@ -377,7 +377,6 @@ while True:
 
             tutorial_game_phase = False
 
-        pygame.mixer.music.play(-1)
 
         # Draw and handle events for the slider
         slider1.draw(screen)
