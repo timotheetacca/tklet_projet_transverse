@@ -24,8 +24,10 @@ pygame.mouse.set_visible(False)
 
 # Load a background image
 background_image = pygame.image.load("Assets/Level/background_space.png")
+background_space_sliders = pygame.image.load("Assets/Level/orbital_sliders.png")
+background_space_sliders_advice = pygame.image.load("Assets/Level/orbital_values_advice.png")
 background_space_orbital = pygame.image.load("Assets/Level/background_space_orbital.png")
-background_space_orbital_advice = pygame.image.load("Assets/Level/orbital_values_advice.png")
+
 
 # For Menu
 menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
@@ -314,15 +316,14 @@ while True:
             display_text_scenario(text_phase1_tutorial_phase, background_image, skip_allowed=False, fade_out=False)
 
             text_phase2_tutorial_phase = """See the cursors to your left? """
-
-            display_text_scenario(text_phase2_tutorial_phase, background_space_orbital, skip_allowed=False,
+            display_text_scenario(text_phase2_tutorial_phase, background_space_sliders, skip_allowed=False,
                                   fade_out=False)
 
             text_phase3_tutorial_phase = """Try to match their values with the values on your right! But be careful, 
             you only have 5 seconds between each re-evaluation! I'll start a stopwatch as soon as you enter orbit, 
             but don't panic, I'll leave you alone for the first 5 seconds! Good luck!"""
 
-            display_text_scenario(text_phase3_tutorial_phase, background_space_orbital_advice, skip_allowed=False,
+            display_text_scenario(text_phase3_tutorial_phase, background_space_sliders_advice, skip_allowed=False,
                                   fade_out=False)
 
             tutorial_game_phase = False

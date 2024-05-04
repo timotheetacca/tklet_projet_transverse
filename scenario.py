@@ -88,7 +88,6 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     screen_height_divided_by_two = screen_height / 2
     j = 0
     sentence_story = re.split(r'[.!]', story)  # Allow to split with . or !
-    number_of_sentences = len(sentence_story)
     rect = pygame.Rect(0, 0, 0, 0)
     rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
     white = (255, 255, 255)
@@ -99,12 +98,18 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     cursor = pygame.transform.scale(cursor_image_still, (32, 32))
     background_temp = background
 
+    for i in range(sentence_story.count("")):
+        sentence_story.remove("")
+
+    number_of_sentences = len(sentence_story)
+
     if '!' in story:
         for i in range(number_of_sentences - 1):
             sentence_story[i] += "!"
     else:
         for i in range(number_of_sentences - 1):
             sentence_story[i] += "."
+
 
     # Loop until all sentences are displayed or the user quits
     while True:
@@ -123,8 +128,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                 j += 1  # Move to the next sentence
                 go_to_next_message = True
 
-        if j < number_of_sentences - 1:
-            print(j, "number of sentences : ", number_of_sentences)
+        if j <= number_of_sentences - 1:
 
             # Display either a black screen or background image
             if screen_fill_black_time:
@@ -216,7 +220,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
 
         # If all sentences are displayed, fade out the screen
 
-        elif fade_out and j == number_of_sentences-1:
+        elif fade_out and j == number_of_sentences:
             time.sleep(0.5)
             fading = True
             while fading:
@@ -227,18 +231,8 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                     fading = False
             return
 
-        elif not fade_out and j == number_of_sentences -1:
+        elif not fade_out and j == number_of_sentences :
             return
-        """
-        elif fade_out and j == number_of_sentences-1:
-            time.sleep(0.5)
-            fading = True
-            while fading:
-                darken_screen(transparency)
-                transparency += 1
-                pygame.display.flip()
-                if transparency >= 255:
-                    fading = False
-            return"""
+
 
         pygame.display.flip()
