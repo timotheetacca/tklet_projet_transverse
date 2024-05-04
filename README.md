@@ -51,13 +51,11 @@ The game is divided into 5 levels, each of which is divided into 2 mini-games:
 
 The first part is a shooting game, like Angry Birds, where the goal is to launch your rocket into a planet's orbit. 
 
-![game_1](https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/b37d68f1-5910-4947-bd39-caef138688c9)
-
+https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/8240f600-5866-4202-804e-e019a545d227
 
 The second part is a reflex game, where you have to update your ship's orbit information to successfully reach the planet.
 
-
-![game_2](https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/71294e26-7958-4ec5-bda8-dbe52d9223e2)
+https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/46a7f1cc-2af6-465f-835b-e58996b0c724
 
 ## Feedback
 
