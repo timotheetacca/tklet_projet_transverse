@@ -31,9 +31,7 @@ space_bar_button = pygame.transform.scale(space_bar_button, (350, 75))
 space_bar_rect = space_bar_button.get_rect()
 space_bar_rect.center = (screen_width // 2, screen_height * 3 / 4)
 
-# Load background music
-pygame.mixer.music.load("Assets/Scenario/sound_message_appearing.mp3")
-pygame.mixer.music.set_volume(0.25)
+
 
 
 def draw_cursor(cursor):
@@ -87,7 +85,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     screen_width_divided_by_two = screen_width / 2
     screen_height_divided_by_two = screen_height / 2
     j = 0
-    sentence_story = re.split(r'[.!]', story)  # Allow to split with . or !
+    sentence_story = re.split(r'[.!?]', story)  # Allow to split with . or !
     rect = pygame.Rect(0, 0, 0, 0)
     rect.center = (screen_width_divided_by_two, screen_height_divided_by_two)
     white = (255, 255, 255)
@@ -98,18 +96,24 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     cursor = pygame.transform.scale(cursor_image_still, (32, 32))
     background_temp = background
 
+    # Load background music
+    pygame.mixer.music.load("Assets/Scenario/sound_message_appearing.mp3")
+    pygame.mixer.music.set_volume(0.25)
+
     for i in range(sentence_story.count("")):
         sentence_story.remove("")
 
     number_of_sentences = len(sentence_story)
 
     if '!' in story:
-        for i in range(number_of_sentences - 1):
+        for i in range(number_of_sentences):
             sentence_story[i] += "!"
-    else:
-        for i in range(number_of_sentences - 1):
+    elif '.' in story:
+        for i in range(number_of_sentences):
             sentence_story[i] += "."
-
+    elif '?' in story:
+        for i in range(number_of_sentences):
+            sentence_story[i] += "?"
 
     # Loop until all sentences are displayed or the user quits
     while True:
@@ -150,6 +154,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
             if go_to_next_message:
                 displaying_text = True
                 screen.blit(background, (0, 0))
+
                 pygame.mixer.music.play(-1)
 
                 # Split the text into lines if it's too wide
@@ -189,7 +194,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                                 topleft=(rect.topleft[0], rect.topleft[1] + height_line))
                             screen.blit(displayed_text_surface, displayed_text_rect)
                             pygame.display.flip()
-                            time.sleep(0.020)
+                            time.sleep(0.001)
                         height_line += displayed_text_rect.height
 
                 # If the text fits the screen width, display it letter by letter
@@ -201,7 +206,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                         displayed_text_rect = text_rect
                         screen.blit(displayed_text_surface, displayed_text_rect)
                         pygame.display.flip()
-                        time.sleep(0.020)
+                        time.sleep(0.001)
 
                 # Capture the screen with the displayed text and save it
                 screen_capture = pygame.Surface((screen_width, screen_height))
@@ -231,7 +236,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                     fading = False
             return
 
-        elif not fade_out and j == number_of_sentences :
+        elif not fade_out and j == number_of_sentences:
             return
 
 
