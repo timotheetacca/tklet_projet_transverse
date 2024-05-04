@@ -1,10 +1,9 @@
 import pygame
 import math
 
-
 def calculate_trajectory(g, v, h, alpha, t, screen_height):
     """
-    Calculate the x and y coordinates of a projectile's trajectory at a given time.
+    Calculate the x and y coordinates of a projectile's trajectory at a given time
 
     Parameters
     ----------
@@ -17,15 +16,15 @@ def calculate_trajectory(g, v, h, alpha, t, screen_height):
 
     Returns
     -------
-    A tuple containing the x and y coordinates of the projectile.
+    A tuple containing the coordinates x and y
     """
     # Removes the screens height for trajectory to appear on the bottom
-    circle_y = screen_height - int((-1 / 2) * g * t ** 2 + v * math.sin(math.radians(alpha)) * t + h)
-    circle_x = int(v * math.cos(math.radians(alpha)) * t)
-    return circle_x, circle_y
+    y = screen_height - int((-1 / 2) * g * t ** 2 + v * math.sin(math.radians(alpha)) * t + h)
+    x = int(v * math.cos(math.radians(alpha)) * t)
+    return x, y
 
 
-def draw_trajectory(screen, g, v, h, alpha, t, circle_radius, screen_height, color):
+def draw_trajectory(screen, g, v, h, alpha, t, screen_height, portal, teleport,portal_input=[], portal_output=[]):
     """
     Draw a trajectory on a given pygame surface.
 
@@ -37,17 +36,42 @@ def draw_trajectory(screen, g, v, h, alpha, t, circle_radius, screen_height, col
     h(float) : Initial height
     alpha(float) : Launch angle in degrees
     t(float) : Time
-    circle_radius(int) : Radius of the circle to be drawn
     screen_height(int) : Height of the screen
-    color(int) : Color of the ball
+    portal(bool) : True if there is a portal, False if not
+    teleport(bool) : True if the rocket has been teleported
+    portal_input(list) : List of infos about the input portal
+    portal_output(list): List of infos about the ouput portal
 
     Returns
     -------
-    circle_x, circle_y (int) : Coordinates of the circle
+    rocket_x, rocket_y (int) : Coordinates of the rocket
     """
-    circle_x, circle_y = calculate_trajectory(g, v, h, alpha, t, screen_height)
-    pygame.draw.circle(screen, color, (circle_x, circle_y), circle_radius)
-    return circle_x, circle_y
+    rocket_x, rocket_y = calculate_trajectory(g, v, h, alpha, t, screen_height)
+
+    if portal:
+        square_rect = pygame.Rect(portal_input[0], portal_input[1], portal_input[2], portal_input[2])
+        if square_rect.collidepoint(rocket_x, rocket_y):
+            teleport = True
+
+        if teleport:
+            rocket_x += (portal_output[0]-portal_input[0])
+            rocket_y -= (portal_input[1]-portal_output[1])
+
+    # Load the rocket image
+    rocket_image = pygame.image.load('Assets/rocket.png')
+    rocket_image = pygame.transform.scale(rocket_image, (40,29))
+
+    # Calculate the angle of the trajectory in degree at the current point
+    trajectory_angle = math.degrees(math.atan2(-g * t + v * math.sin(math.radians(alpha)), v * math.cos(math.radians(alpha))))
+
+    # Rotate the rocket image based on the trajectory angle
+    rotated_rocket = pygame.transform.rotate(rocket_image, trajectory_angle)
+
+    # Get the rectangle for the rotated image
+    rocket_rect = rotated_rocket.get_rect(center=(rocket_x, rocket_y))
+
+    screen.blit(rotated_rocket, rocket_rect)
+    return rocket_x, rocket_y, teleport
 
 
 def draw_aim(screen, g, v, h, alpha, circle_radius, screen_height, nb_points):
@@ -61,7 +85,6 @@ def draw_aim(screen, g, v, h, alpha, circle_radius, screen_height, nb_points):
     v(float) : Initial velocity
     h(float) : Initial height
     alpha(float) : Launch angle in degrees
-    t(float) : Time
     circle_radius(int) : Radius of the circle to be drawn
     screen_height(int) : Height of the screen
     nb_points(int) : The number of points display
@@ -70,7 +93,14 @@ def draw_aim(screen, g, v, h, alpha, circle_radius, screen_height, nb_points):
     -------
     None
     """
-    for t in range(nb_points):
-        circle_x, circle_y = calculate_trajectory(g, v, h, alpha, t / 2, screen_height)
+    # Draw the rocket with the corresponding angle of launch
+    rocket_image = pygame.image.load('Assets/rocket.png')
+    rocket_image = pygame.transform.scale(rocket_image, (40,29))
+    trajectory_angle = math.degrees(math.atan2(-g + v * math.sin(math.radians(alpha)), v * math.cos(math.radians(alpha))))
+    rotated_rocket = pygame.transform.rotate(rocket_image, trajectory_angle)
+    screen.blit(rotated_rocket, (0,820))
+
+    for t in range(1,nb_points):
+        rocket_x, rocket_y = calculate_trajectory(g, v, h, alpha, t / 2, screen_height)
         # Reduce the radius of the circle to make the aiming less and less visible
-        pygame.draw.circle(screen, (250, 250, 250), (circle_x + 20, circle_y - 20), circle_radius - 0.1 * t)
+        pygame.draw.circle(screen, (250, 250, 250), (rocket_x + 20, rocket_y - 20), circle_radius - 0.1 * t)

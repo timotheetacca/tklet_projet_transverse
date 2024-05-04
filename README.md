@@ -17,12 +17,13 @@ traveling from planet to planet. It's a crazy bet, a suicide mission, but you're
 find your friend. Your journey will take you through the dangers of space.  But you will never give up hope.
 You know that Thorne is out there somewhere, waiting to be rescued.
 
-## Screenshots
 
-![gif_game](gameplay du jeu.gif)
+
+https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/d680c77e-277a-4aef-bff7-2b4a2edfc45f
+
+
 
 ## Requirements
-
 
 Install the latest release of Python from [here](https://www.python.org/downloads/) **and** install Pygame by executing `pip install pygame`.
 
@@ -51,13 +52,11 @@ The game is divided into 5 levels, each of which is divided into 2 mini-games:
 
 The first part is a shooting game, like Angry Birds, where the goal is to launch your rocket into a planet's orbit. 
 
-![game_1](https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/b37d68f1-5910-4947-bd39-caef138688c9)
-
+https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/8240f600-5866-4202-804e-e019a545d227
 
 The second part is a reflex game, where you have to update your ship's orbit information to successfully reach the planet.
 
-
-![game_2](https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/71294e26-7958-4ec5-bda8-dbe52d9223e2)
+https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/46a7f1cc-2af6-465f-835b-e58996b0c724
 
 ## Feedback
 

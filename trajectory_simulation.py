@@ -1,7 +1,7 @@
 import pygame
 from trajectory import draw_trajectory, draw_aim
 from level import level
-from save import add_level, display_life
+from save import display_life
 
 screen_width, screen_height = 1536, 864
 fps = 120
@@ -18,7 +18,8 @@ class TrajectorySimulation:
         self.sound_played = False
         self.background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
 
-    def level_display(self, level_number, full_level, time_step, level_attempts, circle_x, circle_y, object_state, modified_obstacles=[]):
+    def level_display(self, level_number, full_level, time_step, level_attempts, rocket_x, rocket_y, object_state,
+                      modified_obstacles=[]):
         """
         Draw a level on a screen.
 
@@ -28,8 +29,8 @@ class TrajectorySimulation:
         full_level(bool) : Indicates whether the level should be fully displayed
         time_step(int) : Current frame for character animation
         level_attempts(int): Number of attempts left for the current level
-        circle_x(int) : Initial x-coordinate
-        circle_y(int) : Initial y-coordinate
+        rocket_x(int) : Initial x-coordinate
+        rocket_y(int) : Initial y-coordinate
         object_state(bool) : True if the object should be on, otherwise False
         modified_obstacles(list, optional) : List of modified obstacles
 
@@ -38,6 +39,7 @@ class TrajectorySimulation:
         orbit_radius(int) : The orbit's radius
         position(tuple) : Coordinates of the planet
         obstacles(list) : List of all the obstacles in the level
+        portals(list) : List of infos about the portals
         """
 
         # Paths to the asteroid images
@@ -59,8 +61,8 @@ class TrajectorySimulation:
         asteroid_index = 0
 
         # Collect the level info and print it
-        orbit_radius, position, obstacles, objects = level(level_number, self.screen, self.transparent_surface,
-                                                           time_step, circle_x, circle_y, object_state)
+        orbit_radius, position, obstacles, objects ,portals = level(level_number, self.screen, self.transparent_surface,
+                                                           time_step, rocket_x, rocket_y, object_state)
 
         if len(obstacles) > len(modified_obstacles) and not full_level:
             for obstacle, number in modified_obstacles:
@@ -74,6 +76,15 @@ class TrajectorySimulation:
                 asteroid_index = (number - 1) % len(asteroid_images)
                 # Draw scaled asteroid image instead of rectangle
                 self.transparent_surface.blit(asteroid_images[asteroid_index], obstacle)
+
+        if portals :
+            portal_input_img = pygame.image.load("Assets/Level/Items/portal_in.png").convert_alpha()
+            portal_input_img = pygame.transform.scale(portal_input_img, (portals[0][2], portals[0][2]))
+            self.transparent_surface.blit(portal_input_img, (portals[0][0], portals[0][1]))
+
+            portal_ouput_img = pygame.image.load("Assets/Level/Items/portal_out.png").convert_alpha()
+            portal_ouput_img = pygame.transform.scale(portal_ouput_img, (portals[1][2], portals[1][2]))
+            self.transparent_surface.blit(portal_ouput_img, (portals[1][0], portals[1][1]))
 
         for object in objects:
             # Draw a shield icon for objects
@@ -90,10 +101,9 @@ class TrajectorySimulation:
                 lamp_icon_img = pygame.transform.scale(lamp_icon_img, (50, 22))
                 self.transparent_surface.blit(lamp_icon_img, object[1])
 
-
         display_life((3 - level_attempts), self.screen, "Assets/astronaut_image.png")
 
-        return orbit_radius, position, obstacles, objects
+        return orbit_radius, position, obstacles, objects, portals
 
     def projectile_aim(self, g, v, h, alpha, time_step, level_number, level_attempts, object_status):
         """
@@ -114,17 +124,17 @@ class TrajectorySimulation:
         None
         """
         self.screen.blit(self.background_image, (0, 0))
-        self.level_display(level_number, True, time_step,level_attempts,0 , screen_height, object_status)
+        self.level_display(level_number, True, time_step, level_attempts, 0, screen_height, object_status)
         draw_aim(self.screen, g, v, h, alpha, self.circle_radius, self.screen_height, 22)
 
-    def projectile_motion(self, circle_x, circle_y, g, v, h, alpha, level_number, level_attempts, clock, object_state):
+    def projectile_motion(self, rocket_x, rocket_y, g, v, h, alpha, level_number, level_attempts, clock, object_state):
         """
         Display the motion of the projectile.
 
         Parameters
         ----------
-        circle_x(int) : Initial x-coordinate
-        circle_y(int) : Initial y-coordinate
+        rocket_x(int) : Initial x-coordinate
+        rocket_y(int) : Initial y-coordinate
         g(int) : Gravitational acceleration
         v(int) : Initial velocity
         h(int) : Initial height
@@ -144,24 +154,33 @@ class TrajectorySimulation:
         time_step = 0
         shooting_trajectory = False
         object_status = False
-        orbit_radius, position, obstacles, objects = self.level_display(level_number, True, time_step, level_attempts, circle_x, circle_y, object_state)
+        teleport = False
+        orbit_radius, position, obstacles, objects, portals = self.level_display(level_number, True, time_step, level_attempts,
+                                                                        rocket_x, rocket_y, object_state)
 
         # 'For' loop to avoid code locking with while and optimization in case of bugs, will stop after 1000 steps
         for steps in range(1000):
-            if not (0 <= circle_x <= screen_width and 0 <= circle_y <= screen_height):
+            if not (0 <= rocket_x <= screen_width and 0 <= rocket_y <= screen_height):
                 level_attempts += 1
+                sound = pygame.mixer.Sound("Assets/Music/asteroid_crash.mp3")
+                sound.set_volume(0.4)
+                sound.play()
                 self.sound_played = False
                 self.transparent_surface.fill((0, 0, 0, 0))
                 return shooting_trajectory, False, True, level_attempts, object_state
 
             self.screen.blit(self.background_image, (0, 0))
-            self.level_display(level_number, False, time_step, level_attempts, circle_x, circle_y, object_state, obstacles)
+            self.level_display(level_number, False, time_step, level_attempts, rocket_x, rocket_y, object_state,
+                               obstacles)
 
             # Check for collisions with obstacles
             for obstacle in obstacles:
-                if obstacle[0].collidepoint(circle_x, circle_y):
+                if obstacle[0].collidepoint(rocket_x, rocket_y):
                     if not object_status:
                         level_attempts += 1
+                        sound = pygame.mixer.Sound("Assets/Music/asteroid_crash.mp3")
+                        sound.set_volume(0.4)
+                        sound.play()
                         self.transparent_surface.fill((0, 0, 0, 0))
                         self.sound_played = False
                         return shooting_trajectory, False, True, level_attempts, object_state
@@ -174,39 +193,42 @@ class TrajectorySimulation:
 
             # Check for collisions with objects
             for object in objects:
-                if object[1].collidepoint(circle_x, circle_y):
+                if object[1].collidepoint(rocket_x, rocket_y):
                     if not self.sound_played:
-                        sound = pygame.mixer.Sound("Assets/Music/item_pick.wav")
+                        sound = pygame.mixer.Sound("Assets/Music/item_pick.mp3")
                         sound.set_volume(0.2)
                         sound.play()
                         self.sound_played = True
 
-                    if object[0]== "shield":
+                    if object[0] == "shield":
                         object_status = True
 
-                    if object[0]== "lamp":
+                    if object[0] == "lamp":
                         object_state = True
 
             # Draw a circle around the ball to indicate it has an object
             if object_status:
                 shield_image = (pygame.image.load('Assets/Level/Items/shield.png'))
                 shield_image = pygame.transform.scale(shield_image, (50, 50))
-                shield_rect = shield_image.get_rect(center=(circle_x, circle_y))
+                shield_rect = shield_image.get_rect(center=(rocket_x, rocket_y))
                 self.screen.blit(shield_image, shield_rect)
 
             # Call the draw_trajectory function from trajectory.py
-            circle_x, circle_y = draw_trajectory(self.screen, g, v, h, alpha, time_step, self.circle_radius,
-                                                 self.screen_height, (255, 255, 255))
+            if portals:
+                rocket_x, rocket_y, teleport = draw_trajectory(self.screen, g, v, h, alpha, time_step,
+                                                     self.screen_height,True, teleport, portals[0],
+                                                     portals[1])
+            else:
+                rocket_x, rocket_y, teleport = draw_trajectory(self.screen, g, v, h, alpha, time_step,
+                                                     self.screen_height, False, False)
 
             pygame.display.update()
             time_step += clock.tick(fps) / 180  # Increment time step for the next iteration
 
             # Check if the projectile enters the planet's orbit
-            if (circle_x - position[0]) ** 2 + (circle_y - position[1]) ** 2 <= orbit_radius ** 2:
+            if (rocket_x - position[0]) ** 2 + (rocket_y - position[1]) ** 2 <= orbit_radius ** 2:
                 shooting_trajectory = False
                 self.transparent_surface.fill((0, 0, 0, 0))
                 return shooting_trajectory, True, False, level_attempts, object_state
-
-
 
         return shooting_trajectory, False, True, level_attempts, object_state
