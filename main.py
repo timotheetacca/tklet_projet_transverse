@@ -28,7 +28,6 @@ background_space_sliders = pygame.image.load("Assets/Level/orbital_sliders.png")
 background_space_sliders_advice = pygame.image.load("Assets/Level/orbital_values_advice.png")
 background_space_orbital = pygame.image.load("Assets/Level/background_space_orbital.png")
 
-
 # For Menu
 menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
 menu_background = pygame.transform.scale(menu_background_image, (screen_width, screen_height))
@@ -308,14 +307,13 @@ while True:
         screen.blit(background_space_orbital, (0, 0))
         pygame.mixer.music.stop()
         if tutorial_game_phase:
-
             text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
             calibrate your rocket ship in order to achieve a state of orbital stationement! The goal is to make a 
             full turn around the planet! Use your engineering skills to re-evaluate your rocket's parameters!"""
 
             display_text_scenario(text_phase1_tutorial_phase, background_image, skip_allowed=False, fade_out=False)
 
-            text_phase2_tutorial_phase = """See the cursors to your left? """
+            text_phase2_tutorial_phase = """See the cursors to your left?"""
             display_text_scenario(text_phase2_tutorial_phase, background_space_sliders, skip_allowed=False,
                                   fade_out=False)
 
@@ -329,6 +327,7 @@ while True:
             tutorial_game_phase = False
 
         pygame.mixer.music.play(-1)
+
         # Draw and handle events for the slider
         slider1.draw(screen)
         slider_value1 = slider1.slider_value  # Get the current value of the slider
@@ -356,7 +355,6 @@ while True:
                                                                                               value_change_timer,
                                                                                               value_check_timer,
                                                                                               orbital_game_phase)
-
 
     screen.blit(QUIT_button, coordinate_QUIT_button)
 
