@@ -17,10 +17,9 @@ traveling from planet to planet. It's a crazy bet, a suicide mission, but you're
 find your friend. Your journey will take you through the dangers of space.  But you will never give up hope.
 You know that Thorne is out there somewhere, waiting to be rescued.
 
-https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/08f1b33a-1cdc-4d5f-b84a-19751435ed05
+https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/7828488c-8f89-43c5-957a-3aabd1e23551
 
 ## Requirements
-
 
 Install the latest release of Python from [here](https://www.python.org/downloads/) **and** install Pygame by executing `pip install pygame`.
 
