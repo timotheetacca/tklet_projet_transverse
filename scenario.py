@@ -194,7 +194,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                                 topleft=(rect.topleft[0], rect.topleft[1] + height_line))
                             screen.blit(displayed_text_surface, displayed_text_rect)
                             pygame.display.flip()
-                            time.sleep(0.001)
+                            time.sleep(0.020)
                         height_line += displayed_text_rect.height
 
                 # If the text fits the screen width, display it letter by letter
@@ -206,7 +206,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                         displayed_text_rect = text_rect
                         screen.blit(displayed_text_surface, displayed_text_rect)
                         pygame.display.flip()
-                        time.sleep(0.001)
+                        time.sleep(0.020)
 
                 # Capture the screen with the displayed text and save it
                 screen_capture = pygame.Surface((screen_width, screen_height))

@@ -4,7 +4,7 @@ from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
 
 from slider import Slider
-from save import update_save_information, add_level, update_lives, remove_life, display_life,update_level
+from save import update_save_information, add_level, update_lives, remove_life, display_life, update_level
 from level_map import level_selection
 from level import level
 from scenario import display_text_scenario
@@ -67,7 +67,7 @@ coordinate_music_button = (coordinate_Blue_QUIT_button[0] - 95, coordinate_Blue_
 music_button_rect = ON_music_button.get_rect(topleft=coordinate_music_button)
 
 # For Game over
-game_over_title_image=pygame.image.load("Assets/Game_over/game_over.png")
+game_over_title_image = pygame.image.load("Assets/Game_over/game_over.png")
 game_over_title = pygame.transform.scale(game_over_title_image, (1092.8, 136))
 game_over_title_rect = logo.get_rect()
 game_over_title_rect.x = screen_width // 2 - 1092.8 / 2
@@ -79,7 +79,7 @@ restart_button_rect = play_button.get_rect()
 restart_button_rect.x = screen_width // 2 - 100
 restart_button_rect.y = screen_height // 2 + 150
 
-rocket_explosion_image=pygame.image.load("Assets/Game_over/explosion.png")
+rocket_explosion_image = pygame.image.load("Assets/Game_over/explosion.png")
 rocket_explosion = pygame.transform.scale(rocket_explosion_image, (500, 500))
 rocket_explosion_rect = logo.get_rect()
 rocket_explosion_rect.x = screen_width // 2 - 500 / 2
@@ -168,7 +168,7 @@ menu = True
 object_state = False
 music_loaded = False
 loaded_level = False
-tutorial_game_phase = True
+tutorial_game_phase_done = False
 
 # Initialize the sliders with initial values set to 50
 slider1 = Slider((50, 200), 200, 0, 100, 50)
@@ -181,6 +181,7 @@ current_values_orbital = [50, 50, 50]
 current_color_orbital = [(255, 255, 255), (255, 255, 255), (255, 255, 255)]
 
 orbital_phase = OrbitalPhase(390, screen, slider1, slider2, slider3)
+chosen_level = -1
 
 while True:
     for event in pygame.event.get():
@@ -208,8 +209,8 @@ while True:
             if restart_button_rect.collidepoint(pygame.mouse.get_pos()):
                 pygame.mixer.music.unpause()
                 update_lives("game_save.txt", 3)
-                if last_level!=1:
-                    update_level("game_save.txt", last_level-1)
+                if last_level != 1:
+                    update_level("game_save.txt", last_level - 1)
                 player_save = update_save_information("game_save.txt")
 
             elif Red_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
@@ -354,29 +355,28 @@ while True:
 
             screen.blit(image_music_button, coordinate_music_button)
 
-    if orbital_game_phase:
+    if not tutorial_game_phase_done and orbital_game_phase:
+        text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
+        calibrate your rocket ship in order to achieve a state of orbital stationement! The goal is to make a 
+        full turn around the planet! Use your engineering skills to re-evaluate your rocket's parameters!"""
+
+        display_text_scenario(text_phase1_tutorial_phase, background_image, skip_allowed=False, fade_out=False)
+
+        text_phase2_tutorial_phase = """See the cursors to your left?"""
+        display_text_scenario(text_phase2_tutorial_phase, background_space_sliders, skip_allowed=False,
+                              fade_out=False)
+
+        text_phase3_tutorial_phase = """Try to match their values with the values on your right! But be careful, 
+        you only have 5 seconds between each re-evaluation! I'll start a stopwatch as soon as you enter orbit, 
+        but don't panic, I'll leave you alone for the first 5 seconds! Good luck!"""
+
+        display_text_scenario(text_phase3_tutorial_phase, background_space_sliders_advice, skip_allowed=False,
+                              fade_out=False)
+
+        tutorial_game_phase_done = True
+
+    if orbital_game_phase and tutorial_game_phase_done:
         screen.blit(background_space_orbital, (0, 0))
-
-        if tutorial_game_phase:
-            text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
-            calibrate your rocket ship in order to achieve a state of orbital stationement! The goal is to make a 
-            full turn around the planet! Use your engineering skills to re-evaluate your rocket's parameters!"""
-
-            display_text_scenario(text_phase1_tutorial_phase, background_image, skip_allowed=False, fade_out=False)
-
-            text_phase2_tutorial_phase = """See the cursors to your left?"""
-            display_text_scenario(text_phase2_tutorial_phase, background_space_sliders, skip_allowed=False,
-                                  fade_out=False)
-
-            text_phase3_tutorial_phase = """Try to match their values with the values on your right! But be careful, 
-            you only have 5 seconds between each re-evaluation! I'll start a stopwatch as soon as you enter orbit, 
-            but don't panic, I'll leave you alone for the first 5 seconds! Good luck!"""
-
-            display_text_scenario(text_phase3_tutorial_phase, background_space_sliders_advice, skip_allowed=False,
-                                  fade_out=False)
-
-            tutorial_game_phase = False
-
 
         # Draw and handle events for the slider
         slider1.draw(screen)
@@ -395,7 +395,8 @@ while True:
 
         # Increment and check angle for rotation
         orbital_game_phase = orbital_phase.update_angle(orbital_game_phase, delta_time)
-        orbital_game_phase = orbital_phase.check_timer(slider_value1,slider_value2,slider_value3,orbital_game_phase, level_lose_sound)
+        orbital_game_phase = orbital_phase.check_timer(slider_value1, slider_value2, slider_value3, orbital_game_phase,
+                                                       level_lose_sound)
         delta_time = clock.tick(fps) / 1000
         screen.blit(image_music_button, coordinate_music_button)
 
