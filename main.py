@@ -66,6 +66,11 @@ image_music_button = ON_music_button
 coordinate_music_button = (coordinate_Blue_QUIT_button[0] - 95, coordinate_Blue_QUIT_button[1])
 music_button_rect = ON_music_button.get_rect(topleft=coordinate_music_button)
 
+return_button_image = pygame.image.load("Assets/blue_quit.png")
+return_button = pygame.transform.scale(return_button_image, (size_button, size_button))
+coordinate_return_button = (coordinate_music_button[0] - 95, coordinate_Blue_QUIT_button[1])
+return_button_rect = return_button.get_rect(topleft=coordinate_return_button)
+
 # For Game over
 game_over_title_image = pygame.image.load("Assets/Game_over/game_over.png")
 game_over_title = pygame.transform.scale(game_over_title_image, (1092.8, 136))
@@ -233,6 +238,12 @@ while True:
                     image_music_button = OFF_music_button
                     pygame.mixer.music.pause()
 
+            if return_button_rect.collidepoint(pygame.mouse.get_pos()):
+                if loaded_level:
+                    loaded_level=False
+                else:
+                    menu=True
+                    
         elif event.type == pygame.MOUSEBUTTONUP:
             mouse_held = False
 
@@ -311,6 +322,7 @@ while True:
                 loaded_level = True
                 level_attempts = 0
 
+            screen.blit(return_button, coordinate_return_button)
             screen.blit(image_music_button, coordinate_music_button)
 
         if player_save[1] == 0:
@@ -352,7 +364,8 @@ while True:
                 # Display the aim trajectory on the screen
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,
                                                      object_state)
-
+            if level_attempts<2:
+                screen.blit(return_button, coordinate_return_button)
             screen.blit(image_music_button, coordinate_music_button)
 
     if not tutorial_game_phase_done and orbital_game_phase:
