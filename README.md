@@ -18,7 +18,9 @@ find your friend. Your journey will take you through the dangers of space.  But 
 You know that Thorne is out there somewhere, waiting to be rescued.
 
 
-https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/ef306eca-13d8-45bf-a9a2-70d9c7bd1141
+
+https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/d680c77e-277a-4aef-bff7-2b4a2edfc45f
+
 
 
 ## Requirements
