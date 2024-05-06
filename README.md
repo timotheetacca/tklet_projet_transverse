@@ -39,12 +39,11 @@ Ensure `main.py` is in the same directory as the other .py files and execute pyt
 
 First, download the filethrough our github project
 
-![guide_1](photo avec download entouré en rouge.png)
-
+![guide_1](https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/f6912101-f51f-4744-aaf3-d39ef6d77154)
 
 Then, ensure `main.py` is in the same directory as the other .py files and execute python `main.py`.
 
-![files_1](photo de l'explorateur de fichier avec main.py dans le document.png)
+![guide_2](https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/a8e00b64-0f7d-4633-bf27-38cbc34a6d4a)
 
 ## Gameplay
 
