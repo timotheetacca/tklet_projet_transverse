@@ -35,8 +35,14 @@ menu_background = pygame.transform.scale(menu_background_image, (screen_width, s
 logo_image = pygame.image.load("Assets/Menu/tklet_logo.png")
 logo = pygame.transform.scale(logo_image, (596.25, 215.25))
 logo_rect = logo.get_rect()
-logo_rect.x = screen_width // 2 - 596.25 / 2
-logo_rect.y = screen_height // 2 - 200
+logo_rect.x = screen_width // 2 - 300
+logo_rect.y = screen_height // 2 - 150
+
+illus_pic = pygame.image.load("Assets/Menu/illustration.png")
+illus = pygame.transform.scale(illus_pic, (450, 450))
+illus_rect = illus.get_rect()
+illus_rect.x = screen_width // 2 - 225
+illus_rect.y = screen_height // 2 - 425
 
 play_button_image = pygame.image.load("Assets/Menu/play_button.png")
 play_button = pygame.transform.scale(play_button_image, (225, 100))
@@ -292,6 +298,7 @@ while True:
         screen.blit(menu_background, (0, 0))
         screen.blit(Blue_QUIT_button, coordinate_Blue_QUIT_button)
         screen.blit(play_button, play_button_rect)
+        screen.blit(illus, illus_rect)
         screen.blit(logo, logo_rect)
         player_save = update_save_information("game_save.txt")
         last_level = player_save[0]
