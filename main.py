@@ -182,6 +182,7 @@ loaded_level = False
 tutorial_game_phase_done = False
 ending_time = False
 ending_time_allowed = True
+game_over=False
 
 # Initialize the sliders with initial values set to 50
 slider1 = Slider((50, 200), 200, 0, 100, 50)
@@ -220,19 +221,21 @@ while True:
                 slider3.dragging = True
 
             if restart_button_rect.collidepoint(pygame.mouse.get_pos()):
+                game_over=False
                 pygame.mixer.music.unpause()
                 update_lives("game_save.txt", 3)
                 if last_level != 1:
                     update_level("game_save.txt", last_level - 1)
                 player_save = update_save_information("game_save.txt")
 
-            elif player_save[1] == 0 and Red_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
+            elif game_over and Red_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
                 update_lives("game_save.txt", 3)
                 if last_level != 1:
                     update_level("game_save.txt", last_level - 1)
                 player_save = update_save_information("game_save.txt")
                 pygame.mixer.music.stop()
                 pygame.quit()
+                game_over=False
 
             if Blue_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
                 pygame.mixer.music.stop()
@@ -306,6 +309,14 @@ while True:
         last_level = player_save[0]
         scenario = (last_level == 0)
 
+    if game_over:
+        pygame.mixer.music.pause()
+        screen.fill((0, 0, 0))
+        screen.blit(rocket_explosion, rocket_explosion_rect)
+        screen.blit(game_over_title, game_over_title_rect)
+        screen.blit(restart_button, restart_button_rect)
+        screen.blit(Red_QUIT_button, coordinate_Red_QUIT_button)
+
     else:
 
         if scenario:
@@ -340,12 +351,7 @@ while True:
             screen.blit(image_music_button, coordinate_music_button)
 
         if player_save[1] == 0:
-            pygame.mixer.music.pause()
-            screen.fill((0, 0, 0))
-            screen.blit(rocket_explosion, rocket_explosion_rect)
-            screen.blit(game_over_title, game_over_title_rect)
-            screen.blit(restart_button, restart_button_rect)
-            screen.blit(Red_QUIT_button, coordinate_Red_QUIT_button)
+            game_over=True
 
         if loaded_level:
             angle = 0
@@ -383,7 +389,6 @@ while True:
             screen.blit(image_music_button, coordinate_music_button)
 
     # Ending of the scenario
-    print(last_level)
     if last_level == 8:
 
         if ending_time:
