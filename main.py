@@ -180,6 +180,8 @@ object_state = False
 music_loaded = False
 loaded_level = False
 tutorial_game_phase_done = False
+ending_time = False
+ending_time_allowed = True
 
 # Initialize the sliders with initial values set to 50
 slider1 = Slider((50, 200), 200, 0, 100, 50)
@@ -246,10 +248,10 @@ while True:
 
             if return_button_rect.collidepoint(pygame.mouse.get_pos()):
                 if loaded_level:
-                    loaded_level=False
+                    loaded_level = False
                 else:
-                    menu=True
-                    
+                    menu = True
+
         elif event.type == pygame.MOUSEBUTTONUP:
             mouse_held = False
 
@@ -323,6 +325,11 @@ while True:
                                            locked_planet_rects, arrows, arrow_rects, last_level)
             player_save = update_save_information("game_save.txt")
             last_level = player_save[0]
+
+            if last_level == 8 and ending_time_allowed:
+                ending_time = True
+                ending_time_allowed = False
+
             display_life(player_save[1], screen, "Assets/heart_image.png")
 
             if chosen_level != 0 and chosen_level <= last_level:
@@ -371,9 +378,26 @@ while True:
                 # Display the aim trajectory on the screen
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,
                                                      object_state)
-            if level_attempts<2:
+            if level_attempts < 2:
                 screen.blit(return_button, coordinate_return_button)
             screen.blit(image_music_button, coordinate_music_button)
+
+    # Ending of the scenario
+    print(last_level)
+    if last_level == 8:
+
+        if ending_time:
+            ending = """You arrived at XFE-462. You blasted open the facility, a storm of adrenaline coursing through you. There, dazed but defiant, stood Thorne. 
+            Together you fought your way out, rockets scorching the alien sky. Back in 
+            your cobbled-together ship, the silence was broken only by relieved laughter. You weren't just returning home 
+            - you were starting a new adventure, a testament to friendship forged in the fires of space."""
+
+            black_surface = pygame.Surface((screen_width, screen_height))
+            black_surface.fill((0, 0, 0))
+            display_text_scenario(ending, black_surface)
+            update_level("game_save.txt", 7)
+            ending_time = False
+        last_level = 7
 
     if not tutorial_game_phase_done and orbital_game_phase and chosen_level == 1:
         text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
@@ -408,7 +432,6 @@ while True:
         slider3.draw(screen)
         slider_value3 = slider3.slider_value
 
-
         # Draw the circle with updated angle
         orbital_game_phase = orbital_phase.draw_circle(chosen_level, 350)
 
@@ -420,7 +443,6 @@ while True:
                                                        level_lose_sound)
 
         screen.blit(image_music_button, coordinate_music_button)
-
 
     if player_save[1] != 0:
         # Display the quit button

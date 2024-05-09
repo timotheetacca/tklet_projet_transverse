@@ -32,8 +32,6 @@ space_bar_rect = space_bar_button.get_rect()
 space_bar_rect.center = (screen_width // 2, screen_height * 3 / 4)
 
 
-
-
 def draw_cursor(cursor):
     """
     Draw the cursor on the screen
@@ -69,6 +67,13 @@ def darken_screen(transparency_level):
     screen.blit(surface, (0, 0))
 
 
+def clean_story(story):
+    for i in range(story.count("\n")):
+        story.replace("\n", "")
+
+    return story
+
+
 # Function to display the text scenario
 def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     """
@@ -82,6 +87,8 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
     -------
     None
     """
+
+    story = clean_story(story)
     screen_width_divided_by_two = screen_width / 2
     screen_height_divided_by_two = screen_height / 2
     j = 0
@@ -194,7 +201,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                                 topleft=(rect.topleft[0], rect.topleft[1] + height_line))
                             screen.blit(displayed_text_surface, displayed_text_rect)
                             pygame.display.flip()
-                            time.sleep(0.020)
+                            time.sleep(0.001)
                         height_line += displayed_text_rect.height
 
                 # If the text fits the screen width, display it letter by letter
@@ -206,7 +213,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                         displayed_text_rect = text_rect
                         screen.blit(displayed_text_surface, displayed_text_rect)
                         pygame.display.flip()
-                        time.sleep(0.020)
+                        time.sleep(0.001)
 
                 # Capture the screen with the displayed text and save it
                 screen_capture = pygame.Surface((screen_width, screen_height))
@@ -238,6 +245,5 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
 
         elif not fade_out and j == number_of_sentences:
             return
-
 
         pygame.display.flip()
