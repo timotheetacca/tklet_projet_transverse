@@ -226,7 +226,7 @@ while True:
                     update_level("game_save.txt", last_level - 1)
                 player_save = update_save_information("game_save.txt")
 
-            elif Red_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
+            elif not Blue_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()) and Red_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
                 update_lives("game_save.txt", 3)
                 if last_level != 1:
                     update_level("game_save.txt", last_level - 1)
