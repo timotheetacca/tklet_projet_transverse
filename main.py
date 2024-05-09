@@ -151,7 +151,7 @@ level_lose_sound = pygame.mixer.Sound("Assets/Music/level_lose.mp3")
 play_sound = pygame.mixer.Sound("Assets/Music/play_button.mp3")
 
 fps = 120  # Set FPS rate for frame rate
-delta_time = 0
+delta_time = 0.023
 
 # Initialize TrajectorySimulation instance
 trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height, background_image)
@@ -375,7 +375,7 @@ while True:
                 screen.blit(return_button, coordinate_return_button)
             screen.blit(image_music_button, coordinate_music_button)
 
-    if not tutorial_game_phase_done and orbital_game_phase:
+    if not tutorial_game_phase_done and orbital_game_phase and chosen_level == 1:
         text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
         calibrate your rocket ship in order to achieve a state of orbital stationement! The goal is to make a 
         full turn around the planet! Use your engineering skills to re-evaluate your rocket's parameters!"""
@@ -395,7 +395,7 @@ while True:
 
         tutorial_game_phase_done = True
 
-    if orbital_game_phase and tutorial_game_phase_done:
+    if orbital_game_phase:
         screen.blit(background_space_orbital, (0, 0))
 
         # Draw and handle events for the slider
@@ -408,6 +408,7 @@ while True:
         slider3.draw(screen)
         slider_value3 = slider3.slider_value
 
+
         # Draw the circle with updated angle
         orbital_game_phase = orbital_phase.draw_circle(chosen_level, 350)
 
@@ -417,8 +418,9 @@ while True:
         orbital_game_phase = orbital_phase.update_angle(orbital_game_phase, delta_time)
         orbital_game_phase = orbital_phase.check_timer(slider_value1, slider_value2, slider_value3, orbital_game_phase,
                                                        level_lose_sound)
-        delta_time = clock.tick(fps) / 1000
+
         screen.blit(image_music_button, coordinate_music_button)
+
 
     if player_save[1] != 0:
         # Display the quit button
