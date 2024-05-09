@@ -73,6 +73,7 @@ class OrbitalPhase:
         rocket_rect = rotated_rocket.get_rect(center=(x, y))
 
         self.screen.blit(rotated_rocket, rocket_rect)
+
         return True
 
     def update_angle(self, orbital_game_phase, delta_time):
@@ -88,6 +89,7 @@ class OrbitalPhase:
         -------
         bool : True if the angle is updated, False if a full turn is made
         """
+
         angle_increment_per_second = 20  # Angle increase per second
         angle_increment = angle_increment_per_second * delta_time
 
