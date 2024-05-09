@@ -2,6 +2,9 @@ import pygame
 from scenario import display_text_scenario
 screen_width, screen_height = 1536, 864
 
+menu_background_image = pygame.image.load("Assets/Menu/menu_background.png")
+menu_background = pygame.transform.scale(menu_background_image, (screen_width, screen_height))
+
 screen_width, screen_height = 1536, 864
 value_change_position = 0
 clock = pygame.time.Clock()
