@@ -250,10 +250,7 @@ while True:
                     pygame.mixer.music.pause()
 
             if return_button_rect.collidepoint(pygame.mouse.get_pos()):
-                if loaded_level:
-                    loaded_level = False
-                else:
-                    menu = True
+                menu = True
 
         elif event.type == pygame.MOUSEBUTTONUP:
             mouse_held = False
@@ -384,8 +381,7 @@ while True:
                 # Display the aim trajectory on the screen
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,
                                                      object_state)
-            if level_attempts < 2:
-                screen.blit(return_button, coordinate_return_button)
+              
             screen.blit(image_music_button, coordinate_music_button)
 
     # Ending of the scenario
