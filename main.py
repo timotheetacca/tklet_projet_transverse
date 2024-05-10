@@ -309,7 +309,7 @@ while True:
         last_level = player_save[0]
         scenario = (last_level == 0)
 
-    if game_over:
+    elif game_over:
         pygame.mixer.music.pause()
         screen.fill((0, 0, 0))
         screen.blit(rocket_explosion, rocket_explosion_rect)
