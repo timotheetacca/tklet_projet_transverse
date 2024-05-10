@@ -415,9 +415,9 @@ while True:
         display_text_scenario(text_phase2_tutorial_phase, background_space_sliders, skip_allowed=False,
                               fade_out=False)
 
-        text_phase3_tutorial_phase = """Try to match their values with the values on your right! But be careful, 
-        you only have 5 seconds between each re-evaluation! I'll start a stopwatch as soon as you enter orbit, 
-        but don't panic, I'll leave you alone for the first 5 seconds! Good luck!"""
+        text_phase3_tutorial_phase = """Try to match their values with the values on your right! Remember that you 
+        have a margin of error of 5 and that you only have 5 seconds between each re-evaluation! I'll start 
+        a stopwatch as soon as you enter orbit, but don't panic, I'll leave you alone for the first 5 seconds! Good luck!"""
 
         display_text_scenario(text_phase3_tutorial_phase, background_space_sliders_advice, skip_allowed=False,
                               fade_out=False)
