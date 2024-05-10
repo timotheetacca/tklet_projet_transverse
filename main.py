@@ -151,7 +151,7 @@ level_lose_sound = pygame.mixer.Sound("Assets/Music/level_lose.mp3")
 play_sound = pygame.mixer.Sound("Assets/Music/play_button.mp3")
 
 fps = 120  # Set FPS rate for frame rate
-delta_time = 0.023
+delta_time = 0
 
 # Initialize TrajectorySimulation instance
 trajectory_simulation = TrajectorySimulation(5, screen, screen_width, screen_height, background_image)
@@ -446,6 +446,8 @@ while True:
         orbital_game_phase = orbital_phase.update_angle(orbital_game_phase, delta_time)
         orbital_game_phase = orbital_phase.check_timer(slider_value1, slider_value2, slider_value3, orbital_game_phase,
                                                        level_lose_sound)
+
+        delta_time = clock.tick(fps) / 1000
 
         screen.blit(image_music_button, coordinate_music_button)
 
