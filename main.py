@@ -165,6 +165,7 @@ v = 100
 alpha = 45
 g = 9.81
 h = 0
+stop_position_music_in_seconds = 0
 
 angle = 0
 radius = 390
@@ -386,6 +387,11 @@ while True:
 
     # Ending of the scenario
     if last_level == 8:
+        if music_playing:
+            stop_position_music_in_seconds = pygame.mixer.music.get_pos() / 1000
+            print(stop_position_music_in_seconds)
+            pygame.mixer.music.stop()
+            pygame.mixer.music.unload()
 
         if ending_time:
             ending = """You arrived at XFE-462. You blasted open the facility, a storm of adrenaline coursing through you. There, dazed but defiant, stood Thorne. 
@@ -400,7 +406,21 @@ while True:
             ending_time = False
         last_level = 7
 
+        if music_playing:
+            pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
+            pygame.mixer.music.set_volume(0.25)
+            print(stop_position_music_in_seconds)
+            pygame.mixer.music.play(-1, start=stop_position_music_in_seconds)
+
     if not tutorial_game_phase_done and orbital_game_phase and chosen_level == 1:
+
+        if music_playing:
+            stop_position_music_in_seconds = pygame.mixer.music.get_pos() / 1000
+            print(stop_position_music_in_seconds)
+            pygame.mixer.music.stop()
+            pygame.mixer.music.unload()
+
+
         text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
         calibrate your rocket ship in order to achieve a state of orbital stationement! The goal is to make a 
         full turn around the planet! Use your engineering skills to re-evaluate your rocket's parameters!"""
@@ -420,6 +440,13 @@ while True:
         clock.tick(fps)
 
         tutorial_game_phase_done = True
+
+        if music_playing:
+            pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
+            pygame.mixer.music.set_volume(0.25)
+            print(stop_position_music_in_seconds)
+            pygame.mixer.music.play(-1, start=stop_position_music_in_seconds)
+
 
     if orbital_game_phase:
         screen.blit(background_space_orbital, (0, 0))
@@ -444,7 +471,7 @@ while True:
         orbital_game_phase = orbital_phase.check_timer(slider_value1, slider_value2, slider_value3, orbital_game_phase,
                                                        level_lose_sound)
 
-        print(delta_time)
+
         delta_time = clock.tick(fps) / 1000
 
         screen.blit(image_music_button, coordinate_music_button)

@@ -241,9 +241,13 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                 pygame.display.flip()
                 if transparency >= 255:
                     fading = False
+            pygame.mixer.music.stop()
+            pygame.mixer.music.unload()
             return
 
         elif not fade_out and j == number_of_sentences:
+            pygame.mixer.music.stop()
+            pygame.mixer.music.unload()
             return
 
         pygame.display.flip()
