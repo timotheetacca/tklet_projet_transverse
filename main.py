@@ -183,7 +183,7 @@ loaded_level = False
 tutorial_game_phase_done = False
 ending_time = False
 ending_time_allowed = True
-game_over=False
+game_over = False
 
 # Initialize the sliders with initial values set to 50
 slider1 = Slider((50, 200), 200, 0, 100, 50)
@@ -221,8 +221,9 @@ while True:
             if slider3.is_over_handle(event.pos):
                 slider3.dragging = True
 
-            if restart_button_rect.collidepoint(pygame.mouse.get_pos()):
-                game_over=False
+            in_level_selection = not orbital_game_phase and not loaded_level
+            if restart_button_rect.collidepoint(pygame.mouse.get_pos()) and not menu and not in_level_selection and not loaded_level and not orbital_game_phase:
+                game_over = False
                 pygame.mixer.music.unpause()
                 update_lives("game_save.txt", 3)
                 if last_level != 1:
@@ -236,7 +237,7 @@ while True:
                 player_save = update_save_information("game_save.txt")
                 pygame.mixer.music.stop()
                 pygame.quit()
-                game_over=False
+                game_over = False
 
             if Blue_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
                 pygame.mixer.music.stop()
@@ -335,7 +336,7 @@ while True:
             player_save = update_save_information("game_save.txt")
             last_level = player_save[0]
 
-            if last_level == 8 and ending_time_allowed:
+            if last_level == 7 and ending_time_allowed:
                 ending_time = True
                 ending_time_allowed = False
 
@@ -349,7 +350,7 @@ while True:
             screen.blit(image_music_button, coordinate_music_button)
 
         if player_save[1] == 0:
-            game_over=True
+            game_over = True
 
         if loaded_level:
             angle = 0
@@ -382,16 +383,20 @@ while True:
                 # Display the aim trajectory on the screen
                 trajectory_simulation.projectile_aim(g, v, h, alpha, time_step, chosen_level, level_attempts,
                                                      object_state)
-              
+
             screen.blit(image_music_button, coordinate_music_button)
 
+
     # Ending of the scenario
-    if last_level == 8:
+    if last_level >= 7:
+
+        # Stop the music for the ending
         if music_playing:
             stop_position_music_in_seconds = pygame.mixer.music.get_pos() / 1000
             pygame.mixer.music.stop()
             pygame.mixer.music.unload()
 
+        # Display of the ending
         if ending_time:
             ending = """You arrived at XFE-462. You blasted open the facility, a storm of adrenaline coursing through you. There, dazed but defiant, stood Thorne. 
             Together you fought your way out, rockets scorching the alien sky. Back in 
@@ -401,10 +406,11 @@ while True:
             black_surface = pygame.Surface((screen_width, screen_height))
             black_surface.fill((0, 0, 0))
             display_text_scenario(ending, black_surface)
-            update_level("game_save.txt", 7)
+            update_level("game_save.txt", 6)
             ending_time = False
-        last_level = 7
+        last_level = 6
 
+        # Replay of the music
         if music_playing:
             pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
             pygame.mixer.music.set_volume(0.25)
@@ -412,11 +418,11 @@ while True:
 
     if not tutorial_game_phase_done and orbital_game_phase and chosen_level == 1:
 
+        # Stop the music for the tutorial
         if music_playing:
             stop_position_music_in_seconds = pygame.mixer.music.get_pos() / 1000
             pygame.mixer.music.stop()
             pygame.mixer.music.unload()
-
 
         text_phase1_tutorial_phase = """Oh, you’ve managed to enter this planet’s orbit! Now you have to 
         calibrate your rocket ship in order to achieve a state of orbital stationement! The goal is to make a 
@@ -429,8 +435,8 @@ while True:
                               fade_out=False)
 
         text_phase3_tutorial_phase = """Try to match their values with the values on your right! Remember that you 
-        have a margin of error of 5 and that you only have 5 seconds between each re-evaluation! I'll start 
-        a stopwatch as soon as you enter orbit, but don't panic, I'll leave you alone for the first 5 seconds! Good luck!"""
+        have a margin of error of 5 and that you only have 5 seconds between each re-evaluation! I'll start a 
+        stopwatch as soon as you enter orbit, but don't panic, I'll leave you alone for the first 5 seconds! Good luck!"""
 
         display_text_scenario(text_phase3_tutorial_phase, background_space_sliders_advice, skip_allowed=False,
                               fade_out=False)
@@ -438,11 +444,11 @@ while True:
 
         tutorial_game_phase_done = True
 
+        # Replay the music since it is the end of the tutorial
         if music_playing:
             pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
             pygame.mixer.music.set_volume(0.25)
             pygame.mixer.music.play(-1, start=stop_position_music_in_seconds)
-
 
     if orbital_game_phase:
         screen.blit(background_space_orbital, (0, 0))
@@ -466,7 +472,6 @@ while True:
         orbital_game_phase = orbital_phase.update_angle(orbital_game_phase, delta_time)
         orbital_game_phase = orbital_phase.check_timer(slider_value1, slider_value2, slider_value3, orbital_game_phase,
                                                        level_lose_sound)
-
 
         delta_time = clock.tick(fps) / 1000
 

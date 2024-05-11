@@ -68,6 +68,17 @@ def darken_screen(transparency_level):
 
 
 def clean_story(story):
+    """
+    Remove the \n from a text
+
+    Parameters
+    ----------
+    story(string) : The story of the game
+
+    Returns
+    -------
+    story
+    """
     for i in range(story.count("\n")):
         story.replace("\n", "")
 
@@ -230,9 +241,10 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
             draw_cursor(cursor)
             pygame.mixer_music.stop()
 
-        # If all sentences are displayed, fade out the screen
+
 
         elif fade_out and j == number_of_sentences:
+            # If all sentences are displayed, fade out the screen
             time.sleep(0.5)
             fading = True
             while fading:
