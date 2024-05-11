@@ -417,6 +417,7 @@ while True:
 
         display_text_scenario(text_phase3_tutorial_phase, background_space_sliders_advice, skip_allowed=False,
                               fade_out=False)
+        clock.tick(fps)
 
         tutorial_game_phase_done = True
 
@@ -443,6 +444,7 @@ while True:
         orbital_game_phase = orbital_phase.check_timer(slider_value1, slider_value2, slider_value3, orbital_game_phase,
                                                        level_lose_sound)
 
+        print(delta_time)
         delta_time = clock.tick(fps) / 1000
 
         screen.blit(image_music_button, coordinate_music_button)
