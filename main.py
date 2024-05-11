@@ -389,7 +389,6 @@ while True:
     if last_level == 8:
         if music_playing:
             stop_position_music_in_seconds = pygame.mixer.music.get_pos() / 1000
-            print(stop_position_music_in_seconds)
             pygame.mixer.music.stop()
             pygame.mixer.music.unload()
 
@@ -409,14 +408,12 @@ while True:
         if music_playing:
             pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
             pygame.mixer.music.set_volume(0.25)
-            print(stop_position_music_in_seconds)
             pygame.mixer.music.play(-1, start=stop_position_music_in_seconds)
 
     if not tutorial_game_phase_done and orbital_game_phase and chosen_level == 1:
 
         if music_playing:
             stop_position_music_in_seconds = pygame.mixer.music.get_pos() / 1000
-            print(stop_position_music_in_seconds)
             pygame.mixer.music.stop()
             pygame.mixer.music.unload()
 
@@ -444,7 +441,6 @@ while True:
         if music_playing:
             pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
             pygame.mixer.music.set_volume(0.25)
-            print(stop_position_music_in_seconds)
             pygame.mixer.music.play(-1, start=stop_position_music_in_seconds)
 
 
