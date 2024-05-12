@@ -222,10 +222,12 @@ while True:
             if slider3.is_over_handle(event.pos):
                 slider3.dragging = True
 
-            in_level_selection = not orbital_game_phase and not loaded_level
-            if restart_button_rect.collidepoint(pygame.mouse.get_pos()) and not menu and not in_level_selection and not loaded_level and not orbital_game_phase:
+
+            if restart_button_rect.collidepoint(pygame.mouse.get_pos()) and not loaded_level and not orbital_game_phase and not menu and player_save[1] == 0:
+
                 game_over = False
                 pygame.mixer.music.unpause()
+                image_music_button = ON_music_button
                 update_lives("game_save.txt", 3)
                 if last_level != 1:
                     update_level("game_save.txt", last_level - 1)
@@ -245,7 +247,6 @@ while True:
                 pygame.mixer.music.stop()
                 pygame.quit()
                 sys.exit()
-
 
             if music_button_rect.collidepoint(pygame.mouse.get_pos()):
                 if image_music_button == OFF_music_button:
@@ -423,6 +424,7 @@ while True:
         if image_music_button == ON_music_button:
             pygame.mixer.music.unpause()
 
+        mouse_held = False
 
     if not tutorial_game_phase_done and orbital_game_phase and chosen_level == 1:
 
@@ -443,7 +445,7 @@ while True:
                               fade_out=False)
 
         text_phase3_tutorial_phase = """Try to match their values with the values on your right! Remember that you 
-        have a margin of error of 5 and that you only have 5 seconds between each re-evaluation! I'll start a 
+        have a margin of error of 10 and that you only have 5 seconds between each re-evaluation! I'll start a 
         stopwatch as soon as you enter orbit, but don't panic, I'll leave you alone for the first 5 seconds! Good luck!"""
 
         display_text_scenario(text_phase3_tutorial_phase, background_space_sliders_advice, skip_allowed=False,
