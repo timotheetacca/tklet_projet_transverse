@@ -1,6 +1,7 @@
-# TKLET Projet Transverse
+# [TKLET Projet Transverse] (https://github.com/timotheetacca/tklet_projet_transversev)
 > ###### 2023-L1 EFREI TACCA Timothée, TRAN Kim-Lan, LOESCH Thomas & MASSE Evan
 
+![tklet_logo](https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/d3cbb430-b14e-4f03-8584-468feeb863e9)
 
 In 2378, in a parallel universe called Nebulaëris, the Orion System shines like a beacon in the black immensity. It is an oasis of life in a sea of nebulae and dead stars.
 
