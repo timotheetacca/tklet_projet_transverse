@@ -1,4 +1,5 @@
 import pygame.mixer
+import sys
 import math
 from trajectory_simulation import TrajectorySimulation
 from orbital_phase import OrbitalPhase
@@ -237,11 +238,14 @@ while True:
                 player_save = update_save_information("game_save.txt")
                 pygame.mixer.music.stop()
                 pygame.quit()
+                sys.exit()
                 game_over = False
 
             if Blue_QUIT_button_rect.collidepoint(pygame.mouse.get_pos()):
                 pygame.mixer.music.stop()
                 pygame.quit()
+                sys.exit()
+
 
             if music_button_rect.collidepoint(pygame.mouse.get_pos()):
                 if image_music_button == OFF_music_button:
