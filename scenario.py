@@ -116,6 +116,9 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
 
     # Load background music
     pygame.mixer.music.load("Assets/Scenario/sound_message_appearing.mp3")
+    pygame.mixer.music.set_volume(0)
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.pause()
     pygame.mixer.music.set_volume(0.25)
 
     for i in range(sentence_story.count("")):
@@ -173,7 +176,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                 displaying_text = True
                 screen.blit(background, (0, 0))
 
-                pygame.mixer.music.play(-1)
+                pygame.mixer.music.unpause()
 
                 # Split the text into lines if it's too wide
                 if text_rect.width > screen_width_divided_by_two:
@@ -204,6 +207,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                         (screen_width_divided_by_two / 2) + screen_width / 90, (screen_height - rect.height) / 2)
 
                     height_line = 0
+                    # Display the text letter by letter
                     for line in lines:
                         for i in range(len(line) + 1):
                             displayed_text = line[:i]
@@ -212,7 +216,7 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                                 topleft=(rect.topleft[0], rect.topleft[1] + height_line))
                             screen.blit(displayed_text_surface, displayed_text_rect)
                             pygame.display.flip()
-                            time.sleep(0.001)
+                            time.sleep(0.013)
                         height_line += displayed_text_rect.height
 
                 # If the text fits the screen width, display it letter by letter
@@ -224,7 +228,9 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                         displayed_text_rect = text_rect
                         screen.blit(displayed_text_surface, displayed_text_rect)
                         pygame.display.flip()
-                        time.sleep(0.001)
+                        time.sleep(0.013)
+
+                pygame.mixer.music.pause()
 
                 # Capture the screen with the displayed text and save it
                 screen_capture = pygame.Surface((screen_width, screen_height))
@@ -239,9 +245,6 @@ def display_text_scenario(story, background, skip_allowed=True, fade_out=True):
                 displaying_text = False
 
             draw_cursor(cursor)
-            pygame.mixer_music.stop()
-
-
 
         elif fade_out and j == number_of_sentences:
             # If all sentences are displayed, fade out the screen
