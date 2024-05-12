@@ -203,7 +203,7 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_held = True
 
-            if event.button == 1 and not music_button_rect.collidepoint(pygame.mouse.get_pos()):
+            if event.button == 1 and not music_button_rect.collidepoint(pygame.mouse.get_pos()) and loaded_level:
                 mouse_pressed = True
                 position_initial_x, position_initial_y = pygame.mouse.get_pos()
 
@@ -258,7 +258,7 @@ while True:
             mouse_held = False
 
             if loaded_level:
-                if event.button == 1 and mouse_pressed:
+                if event.button == 1 and mouse_pressed and not music_button_rect.collidepoint(pygame.mouse.get_pos()):
                     mouse_pressed = False
                     shooting_trajectory = True
 
@@ -391,10 +391,9 @@ while True:
     if last_level >= 7:
 
         # Stop the music for the ending
-        if music_playing:
-            stop_position_music_in_seconds = pygame.mixer.music.get_pos() / 1000
-            pygame.mixer.music.stop()
-            pygame.mixer.music.unload()
+        stop_position_music_in_seconds = pygame.mixer.music.get_pos() / 1000
+        pygame.mixer.music.stop()
+        pygame.mixer.music.unload()
 
         # Display of the ending
         if ending_time:
@@ -408,13 +407,18 @@ while True:
             display_text_scenario(ending, black_surface)
             update_level("game_save.txt", 6)
             ending_time = False
+
         last_level = 6
 
-        # Replay of the music
-        if music_playing:
-            pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
-            pygame.mixer.music.set_volume(0.25)
-            pygame.mixer.music.play(-1, start=stop_position_music_in_seconds)
+        # Restart of the music
+        pygame.mixer.music.load("Assets/Music/musicTKLET-Game.mp3")
+        pygame.mixer.music.set_volume(0)
+        pygame.mixer.music.play(-1, start=stop_position_music_in_seconds)
+        pygame.mixer.music.pause()
+        pygame.mixer.music.set_volume(0.25)
+        if image_music_button == ON_music_button:
+            pygame.mixer.music.unpause()
+
 
     if not tutorial_game_phase_done and orbital_game_phase and chosen_level == 1:
 
