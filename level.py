@@ -298,7 +298,6 @@ def level(level_number, screen, transparent_surface, time_step, rocket_x, rocket
         planet(transparent_surface, position, planet_radius, orbit_radius, level_number)
 
         # Add all the obstacles contained in the level
-        # Add all the obstacles contained in the level
         obstacles = [[pygame.Rect(640, 50, 40, 40), 1], [pygame.Rect(765, 100, 40, 40), 2],
                      [pygame.Rect(812, 150, 40, 40), 3], [pygame.Rect(745, 200, 40, 40), 4],
                      [pygame.Rect(682, 250, 40, 40), 1], [pygame.Rect(742, 000, 40, 40), 2],
