@@ -321,7 +321,7 @@ def level(level_number, screen, transparent_surface, time_step, rocket_x, rocket
         "Wait, isn't that a black hole?! Ok, now we're",
         "dealing with something serious! Well,this",
         "planet seems inaccessible, you're gonna have",
-        "to go through this black hole! Good luck !!"]
+        "to go through this black hole! Good luck !"]
 
         display_advice(screen, text, time_step)
 
