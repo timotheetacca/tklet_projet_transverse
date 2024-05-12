@@ -451,6 +451,12 @@ while True:
             pygame.mixer.music.play(-1, start=stop_position_music_in_seconds)
 
     if orbital_game_phase:
+
+        if image_music_button == OFF_music_button:
+            pygame.mixer.music.pause()
+        else:
+            pygame.mixer.music.unpause()
+
         screen.blit(background_space_orbital, (0, 0))
 
         # Draw and handle events for the slider
