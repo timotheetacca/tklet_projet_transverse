@@ -213,7 +213,7 @@ class TrajectorySimulation:
                 shield_rect = shield_image.get_rect(center=(rocket_x, rocket_y))
                 self.screen.blit(shield_image, shield_rect)
 
-            # Call the draw_trajectory function from trajectory.py
+            # Call the draw_trajectory function from trajectory.py to change coordinates with the portal
             if portals:
                 rocket_x, rocket_y, teleport = draw_trajectory(self.screen, g, v, h, alpha, time_step,
                                                      self.screen_height,True, teleport, portals[0],
