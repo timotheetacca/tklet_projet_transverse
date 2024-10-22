@@ -1,5 +1,5 @@
 # [TKLET Projet Transverse](https://github.com/timotheetacca/tklet_projet_transverse)
-> ###### 2023-L1 EFREI TACCA Timothée, TRAN Kim-Lan, LOESCH Thomas & MASSE Evan
+> ###### 2024-L1 EFREI TACCA Timothée, TRAN Kim-Lan, LOESCH Thomas & MASSE Evan
 
 ![tklet_logo](https://github.com/timotheetacca/tklet_projet_transverse/assets/66522009/d3cbb430-b14e-4f03-8584-468feeb863e9)
 
